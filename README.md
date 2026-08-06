@@ -1,0 +1,16 @@
+[README.md](https://github.com/user-attachments/files/30784215/README.md)
+# Hackathon2027team17
+
+## フォルダ構成
+
+- `src/` — ソースコード
+- `tests/` — テストコード
+- `docs/` — 資料・設計メモ・議事録
+
+## セットアップ
+
+（ここに環境構築手順を記載）
+
+## チームメンバー
+
+（ここに担当・役割を記載）
