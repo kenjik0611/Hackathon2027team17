@@ -1,0 +1,135 @@
+{
+  "id": "b",
+  "name": "Bさん",
+  "label": "Bさん編",
+  "tagline": "直球型・マイペース",
+  "description": "率直で行動が早いBさん。遠回しな表現より、分かりやすい言葉とテンポのよい会話を好みます。",
+  "portrait": "/assets/b-avatar.svg",
+  "theme": {
+    "accent": "#f05f78",
+    "soft": "#fff0f2",
+    "deep": "#b82e4a"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "category": "友人関係",
+      "question": "Bさんが少し不機嫌そう。でも理由は話してくれません。あなたなら？",
+      "note": "いつもより返事が短くなっています。",
+      "choices": [
+        { "id": "A", "text": "気づかないふりをして様子を見る", "moral": 1, "understanding": 0 },
+        { "id": "B", "text": "何かあった？と率直に一度だけ聞く", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "共通の友人に理由を聞いて回る", "moral": 0, "understanding": 0 },
+        { "id": "D", "text": "今は話さなくてもいい、と伝えて待つ", "moral": 3, "understanding": 2 }
+      ]
+    },
+    {
+      "id": 2,
+      "category": "恋愛",
+      "question": "Bさんから「今日、少しだけ会える？」と急に連絡が来ました。どう返す？",
+      "note": "あなたは今夜なら時間を作れそうです。",
+      "choices": [
+        { "id": "A", "text": "急すぎるので、理由を聞いてから決める", "moral": 2, "understanding": 1 },
+        { "id": "B", "text": "会える時間を具体的に返す", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "うれしい気持ちだけ伝え、返事は後にする", "moral": 2, "understanding": 1 },
+        { "id": "D", "text": "難しければ、代わりの日をすぐ提案する", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 3,
+      "category": "LINE",
+      "question": "Bさんとの予定を変更したいとき、伝え方はどれがよさそう？",
+      "note": "予定は3日後です。",
+      "choices": [
+        { "id": "A", "text": "察してもらえるよう、忙しさを遠回しに話す", "moral": 1, "understanding": 0 },
+        { "id": "B", "text": "変更したい理由と候補日を簡潔に送る", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "直前まで予定が決まらないふりをする", "moral": 0, "understanding": 0 },
+        { "id": "D", "text": "まず謝り、変更できるか率直に聞く", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 4,
+      "category": "SNS",
+      "question": "Bさんの投稿に少し誤解を招きそうな表現を見つけました。どうする？",
+      "note": "まだ反応はほとんど付いていません。",
+      "choices": [
+        { "id": "A", "text": "コメント欄で間違いを指摘する", "moral": 1, "understanding": 2 },
+        { "id": "B", "text": "個別メッセージで、気になった点を端的に伝える", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "本人の自由なので何もしない", "moral": 2, "understanding": 1 },
+        { "id": "D", "text": "他の友人にどう思うか相談する", "moral": 1, "understanding": 0 }
+      ]
+    },
+    {
+      "id": 5,
+      "category": "学校・仕事",
+      "question": "Bさんと共同作業中。進め方について意見が割れました。どう話す？",
+      "note": "どちらの案にも良い点があります。",
+      "choices": [
+        { "id": "A", "text": "空気を悪くしないよう、自分の意見を引っ込める", "moral": 2, "understanding": 0 },
+        { "id": "B", "text": "目的と期限を確認し、案を率直に比べる", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "多数決ですぐに決める", "moral": 2, "understanding": 2 },
+        { "id": "D", "text": "小さく両方試して、結果で決める", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 6,
+      "category": "飲み会",
+      "question": "飲み会でBさんが「そろそろ帰る」と立ち上がりました。あなたなら？",
+      "note": "場はまだ盛り上がっています。",
+      "choices": [
+        { "id": "A", "text": "あと少しだけ、と引き止める", "moral": 1, "understanding": 1 },
+        { "id": "B", "text": "了解、気をつけてと気持ちよく送り出す", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "理由をみんなの前で聞く", "moral": 0, "understanding": 0 },
+        { "id": "D", "text": "必要なら駅まで一緒に行こうかと聞く", "moral": 3, "understanding": 2 }
+      ]
+    },
+    {
+      "id": 7,
+      "category": "約束",
+      "question": "Bさんとの旅行計画がなかなか決まりません。どう進める？",
+      "note": "Bさんは細かな比較が少し苦手です。",
+      "choices": [
+        { "id": "A", "text": "候補をたくさん集め、全部見てもらう", "moral": 2, "understanding": 0 },
+        { "id": "B", "text": "候補を2つに絞り、どちらがよいか聞く", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "自分がすべて決めて、あとで知らせる", "moral": 1, "understanding": 2 },
+        { "id": "D", "text": "日程と予算だけ先に一緒に決める", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 8,
+      "category": "相談",
+      "question": "Bさんから「どっちがいいと思う？」と相談されました。あなたなら？",
+      "note": "Bさんは今日中に決めたいようです。",
+      "choices": [
+        { "id": "A", "text": "どちらも良いと思う、と濁す", "moral": 2, "understanding": 0 },
+        { "id": "B", "text": "自分ならこちら、と理由を添えて答える", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "もっと時間をかけた方がよいと止める", "moral": 2, "understanding": 1 },
+        { "id": "D", "text": "優先したい条件を一つ聞いてから答える", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 9,
+      "category": "趣味",
+      "question": "Bさんが最近始めた趣味について熱く話しています。どう反応する？",
+      "note": "あなたには詳しくない分野です。",
+      "choices": [
+        { "id": "A", "text": "興味があるふりをして、話を合わせる", "moral": 1, "understanding": 0 },
+        { "id": "B", "text": "詳しくないけど面白そう、と率直に質問する", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "自分の趣味の話へすぐ切り替える", "moral": 1, "understanding": 1 },
+        { "id": "D", "text": "おすすめを一つだけ教えて、と聞く", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 10,
+      "category": "価値観",
+      "question": "Bさんへのお礼を考えています。どんな方法が合いそう？",
+      "note": "Bさんは形式ばった場が少し苦手です。",
+      "choices": [
+        { "id": "A", "text": "大勢の前で、長い感謝のスピーチをする", "moral": 2, "understanding": 0 },
+        { "id": "B", "text": "ありがとう、と直接伝えて好きそうな物を渡す", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "気を遣わせないよう、何も伝えない", "moral": 1, "understanding": 0 },
+        { "id": "D", "text": "今度は自分が手伝うよ、と具体的に伝える", "moral": 3, "understanding": 3 }
+      ]
+    }
+  ]
+}

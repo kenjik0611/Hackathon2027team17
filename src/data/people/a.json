@@ -1,0 +1,135 @@
+{
+  "id": "a",
+  "name": "Aさん",
+  "label": "Aさん編",
+  "tagline": "気遣い型・慎重派",
+  "description": "距離感を大切にし、多くを語らないAさん。言葉よりも、さりげない行動に本音が表れます。",
+  "portrait": "/assets/a-avatar.svg",
+  "theme": {
+    "accent": "#6d5dfc",
+    "soft": "#efedff",
+    "deep": "#4435bd"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "category": "友人関係",
+      "question": "Aさんが「大丈夫」と言っていますが、明らかに落ち込んでいます。あなたなら？",
+      "note": "本人は話題を変えようとしています。",
+      "choices": [
+        { "id": "A", "text": "何があったのか、その場で詳しく聞く", "moral": 2, "understanding": 1 },
+        { "id": "B", "text": "無理に聞かず、あとで短く連絡する", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "気分転換になりそうな軽い話をする", "moral": 3, "understanding": 3 },
+        { "id": "D", "text": "大丈夫と言うなら、何もしない", "moral": 1, "understanding": 1 }
+      ]
+    },
+    {
+      "id": 2,
+      "category": "恋愛",
+      "question": "Aさんとの約束が急にキャンセルに。理由は「ちょっと疲れたから」でした。どう返す？",
+      "note": "Aさんは申し訳なさそうにしています。",
+      "choices": [
+        { "id": "A", "text": "楽しみにしていた気持ちを強く伝える", "moral": 1, "understanding": 1 },
+        { "id": "B", "text": "了解と伝え、別の日は落ち着いてから決める", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "心配なので、電話して詳しく聞く", "moral": 2, "understanding": 1 },
+        { "id": "D", "text": "気にしないで、と一言添えて休んでもらう", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 3,
+      "category": "LINE",
+      "question": "Aさんから既読がついたまま、半日返信がありません。あなたなら？",
+      "note": "急ぎの用事ではありません。",
+      "choices": [
+        { "id": "A", "text": "返信を忘れていないか、すぐ追いLINEする", "moral": 1, "understanding": 1 },
+        { "id": "B", "text": "自分の時間を過ごしながら、気長に待つ", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "別の話題を送って反応を見る", "moral": 2, "understanding": 1 },
+        { "id": "D", "text": "次に会ったとき、責めずに確認する", "moral": 3, "understanding": 2 }
+      ]
+    },
+    {
+      "id": 4,
+      "category": "SNS",
+      "question": "みんなで撮った写真をSNSに載せたい。Aさんも写っています。どうする？",
+      "note": "AさんはSNSへの投稿が少ないタイプです。",
+      "choices": [
+        { "id": "A", "text": "集合写真なので、そのまま投稿する", "moral": 1, "understanding": 0 },
+        { "id": "B", "text": "載せてよい写真か、投稿前に本人へ聞く", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "顔だけ隠して、確認せず投稿する", "moral": 2, "understanding": 1 },
+        { "id": "D", "text": "Aさんが写っていない写真を選ぶ", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 5,
+      "category": "学校・仕事",
+      "question": "共同作業でAさんの担当が少し遅れています。まずどうする？",
+      "note": "締め切りまでは、まだ余裕があります。",
+      "choices": [
+        { "id": "A", "text": "みんなの前で進み具合を確認する", "moral": 1, "understanding": 0 },
+        { "id": "B", "text": "個別に声をかけ、困りごとがないか聞く", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "何も言わず、Aさんの分まで進める", "moral": 2, "understanding": 1 },
+        { "id": "D", "text": "期限と必要な作業を短く共有し直す", "moral": 3, "understanding": 2 }
+      ]
+    },
+    {
+      "id": 6,
+      "category": "飲み会",
+      "question": "飲み会でAさんが静かになり、端の席に移動しました。あなたなら？",
+      "note": "帰りたいとは言っていません。",
+      "choices": [
+        { "id": "A", "text": "盛り上がる輪の中心へ連れていく", "moral": 1, "understanding": 0 },
+        { "id": "B", "text": "隣で少し話し、帰りたければ言ってねと伝える", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "一人になりたいかもしれないので見守る", "moral": 2, "understanding": 2 },
+        { "id": "D", "text": "体調だけさりげなく確認する", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 7,
+      "category": "約束",
+      "question": "Aさんが待ち合わせに10分遅れ、何度も謝っています。どう返す？",
+      "note": "事前に遅れる連絡はありました。",
+      "choices": [
+        { "id": "A", "text": "次から気をつけて、ときっぱり言う", "moral": 2, "understanding": 1 },
+        { "id": "B", "text": "連絡ありがとう、もう大丈夫と伝える", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "冗談にして場を明るくする", "moral": 3, "understanding": 2 },
+        { "id": "D", "text": "遅れた理由を詳しく確認する", "moral": 1, "understanding": 1 }
+      ]
+    },
+    {
+      "id": 8,
+      "category": "相談",
+      "question": "Aさんが悩みを話し始めました。まだ考えがまとまっていない様子です。",
+      "note": "話すペースはゆっくりです。",
+      "choices": [
+        { "id": "A", "text": "先に解決策をいくつか提案する", "moral": 2, "understanding": 0 },
+        { "id": "B", "text": "急かさず、言葉が出てくるまで待つ", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "自分の似た経験を長く話す", "moral": 1, "understanding": 1 },
+        { "id": "D", "text": "聞いてほしいか、意見がほしいか確認する", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 9,
+      "category": "趣味",
+      "question": "Aさんを新しい趣味の集まりに誘うと、返事が少し曖昧でした。どうする？",
+      "note": "初対面が多い集まりです。",
+      "choices": [
+        { "id": "A", "text": "絶対楽しいから、と参加を強く勧める", "moral": 1, "understanding": 0 },
+        { "id": "B", "text": "少人数の回もあると伝え、選んでもらう", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "興味がなさそうなので、もう誘わない", "moral": 2, "understanding": 1 },
+        { "id": "D", "text": "気が向いたらで大丈夫、と情報だけ渡す", "moral": 3, "understanding": 3 }
+      ]
+    },
+    {
+      "id": 10,
+      "category": "価値観",
+      "question": "Aさんへ誕生日プレゼントを贈ります。喜ばれそうなのは？",
+      "note": "Aさんは好みをあまり口にしません。",
+      "choices": [
+        { "id": "A", "text": "話題の高価なアイテムをサプライズで贈る", "moral": 2, "understanding": 0 },
+        { "id": "B", "text": "以前さりげなく使っていた物に近い品を選ぶ", "moral": 3, "understanding": 3 },
+        { "id": "C", "text": "好みを直接聞いて、一緒に選ぶ", "moral": 3, "understanding": 2 },
+        { "id": "D", "text": "負担にならない小さな品とメッセージを贈る", "moral": 3, "understanding": 3 }
+      ]
+    }
+  ]
+}
