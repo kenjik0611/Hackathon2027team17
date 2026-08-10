@@ -1,66 +1,81 @@
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.6;
-  color: #222;
-  background: #fafafa;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
 }
 
-header {
-  background: #2d2d88;
-  color: #fff;
-  padding: 3rem 1.5rem;
+.container {
+  width: 90%;
+  max-width: 600px;
   text-align: center;
 }
 
-header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
 }
 
-main {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
+.description {
+  color: #666;
+  margin-bottom: 30px;
 }
 
-section {
-  margin-bottom: 2.5rem;
+.question-box {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-section h2 {
-  margin-bottom: 0.75rem;
-  border-left: 4px solid #2d2d88;
-  padding-left: 0.6rem;
+.question-box h2 {
+  color: #555;
 }
 
-ul {
-  list-style: disc;
-  padding-left: 1.5rem;
+.situation {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 button {
-  background: #2d2d88;
-  color: #fff;
+  padding: 15px;
+
   border: none;
-  padding: 0.7rem 1.4rem;
-  border-radius: 6px;
-  font-size: 1rem;
+  border-radius: 10px;
+
+  background: #333;
+  color: white;
+
+  font-size: 16px;
   cursor: pointer;
+
+  transition: 0.2s;
 }
 
 button:hover {
-  background: #1e1e63;
+  background: #555;
+  transform: scale(1.02);
 }
 
-footer {
-  text-align: center;
-  padding: 1.5rem;
-  color: #888;
-  font-size: 0.9rem;
+.result {
+  margin-top: 25px;
+  font-size: 28px;
+  font-weight: bold;
 }

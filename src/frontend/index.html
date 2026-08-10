@@ -3,40 +3,165 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hackathon 2027 - Team 17</title>
-  <link rel="stylesheet" href="style.css">
+
+  <title>モラルチェッカー</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      color: #666;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .question-box {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .situation {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    button {
+      padding: 17px;
+      border: none;
+      border-radius: 10px;
+      background: #333;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #555;
+    }
+
+    #result {
+      display: none;
+      margin-top: 25px;
+      padding: 25px;
+      background: white;
+      border-radius: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
+
 <body>
-  <header>
-    <h1>Hackathon 2027 Team 17</h1>
-    <p>駆動テスト</p>
-  </header>
 
-  <main>
-    <section id="about">
-      <h2>About</h2>
-      <p>このプロジェクトの概要を説明します。</p>
-    </section>
+<div class="container">
 
-    <section id="features">
-      <h2>Features</h2>
-      <ul>
-        <li>機能1</li>
-        <li>機能2</li>
-        <li>機能3</li>
-      </ul>
-    </section>
+  <h1>😇 モラルチェッカー 😈</h1>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <button id="contact-btn">お問い合わせ</button>
-    </section>
-  </main>
+  <p class="description">
+    あなたならこの状況、どうする？
+  </p>
 
-  <footer>
-    <p>&copy; 2027 Team 17</p>
-  </footer>
+  <div class="question-box">
 
-  <script src="script.js"></script>
+    <h2>QUESTION</h2>
+
+    <p class="situation">
+      あなたは道を歩いていると、目の前の人が1万円札を落としました。<br>
+      しかし、その人は気づかずに歩いていきます。<br><br>
+      あなたならどうする？
+    </p>
+
+    <div class="choices">
+
+      <button onclick="checkMoral(100)">
+        すぐに拾って本人に渡す
+      </button>
+
+      <button onclick="checkMoral(50)">
+        少し迷うけど本人に渡す
+      </button>
+
+      <button onclick="checkMoral(25)">
+        周りに人がいたら渡す
+      </button>
+
+      <button onclick="checkMoral(0)">
+        ありがたくいただく
+      </button>
+
+    </div>
+
+  </div>
+
+  <div id="result"></div>
+
+</div>
+
+
+<script>
+
+function checkMoral(score) {
+
+  const result = document.getElementById("result");
+
+  result.style.display = "block";
+
+  if (score === 100) {
+    result.innerHTML =
+      "モラル度 100点 😇<br><small>あなたは聖人です！</small>";
+  }
+
+  else if (score === 50) {
+    result.innerHTML =
+      "モラル度 50点 🙂<br><small>まあまあ良い人です！</small>";
+  }
+
+  else if (score === 25) {
+    result.innerHTML =
+      "モラル度 25点 😅<br><small>ちょっと怪しいかも...</small>";
+  }
+
+  else {
+    result.innerHTML =
+      "モラル度 0点 😈<br><small>モラルはどこへ...</small>";
+  }
+
+}
+
+</script>
+
 </body>
 </html>
