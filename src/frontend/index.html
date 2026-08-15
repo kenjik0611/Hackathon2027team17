@@ -3,38 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hackathon 2027 - Team 17</title>
+  <title>Team 17 Moral Checker</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:,">
 </head>
 <body>
-  <header>
-    <h1>Hackathon 2027 Team 17</h1>
-    <p>深澤test</p>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="hero-copy">
+        <p class="kicker">Team 17 Prototype</p>
+        <h1>モラルチェッカー兼・男心理解ゲーム</h1>
+        <p class="lead">最初に遊ぶモードを選び、問題バンクから重複なしでランダム出題します。</p>
+
+        <div class="score-board" aria-label="現在のプレイ状況">
+          <div class="score-item">
+            <span>スコア</span>
+            <strong><span id="total-score">0</span> pt</strong>
+          </div>
+          <div class="score-item">
+            <span>正解数</span>
+            <strong><span id="correct-count">0</span> 問</strong>
+          </div>
+          <div class="score-item">
+            <span>進行</span>
+            <strong><span id="progress-count">0</span> / <span id="target-count">10</span></strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <svg class="hero-illustration" viewBox="0 0 360 260" role="img">
+          <defs>
+            <linearGradient id="hero-card-gradient" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#d8fff6"/>
+            </linearGradient>
+          </defs>
+          <rect x="48" y="28" width="214" height="164" rx="18" fill="url(#hero-card-gradient)" stroke="#17202a" stroke-width="5"/>
+          <rect x="74" y="60" width="120" height="14" rx="7" fill="#ffb703"/>
+          <rect x="74" y="92" width="158" height="12" rx="6" fill="#7bdff2"/>
+          <rect x="74" y="118" width="132" height="12" rx="6" fill="#f7a8b8"/>
+          <rect x="74" y="144" width="92" height="12" rx="6" fill="#a7f3d0"/>
+          <circle cx="274" cy="60" r="34" fill="#ffcf5a" stroke="#17202a" stroke-width="5"/>
+          <path d="M258 61l10 10 22-24" fill="none" stroke="#17202a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M204 176c18-27 60-27 80 0" fill="#ffffff" stroke="#17202a" stroke-width="5"/>
+          <circle cx="226" cy="142" r="20" fill="#7bdff2" stroke="#17202a" stroke-width="5"/>
+          <circle cx="264" cy="142" r="20" fill="#f7a8b8" stroke="#17202a" stroke-width="5"/>
+          <path d="M38 212h256" stroke="#17202a" stroke-width="5" stroke-linecap="round"/>
+          <path d="M304 103h30M319 88v30" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+          <path d="M38 78h22M49 67v22" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <section id="about">
-      <h2>About</h2>
-      <p>このプロジェクトの概要を説明します。</p>
+  <main class="app-layout">
+    <section class="start-panel" id="start-panel" aria-labelledby="start-title">
+      <p class="kicker">Mode Select</p>
+      <h2 id="start-title">どちらで遊びますか？</h2>
+
+      <div class="mode-tabs" role="tablist" aria-label="ゲームモード">
+        <button class="mode-tab active" id="moral-mode-button" type="button" role="tab" aria-selected="true" data-mode="moral">
+          <span class="mode-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3l7 3v5c0 4.4-2.8 8.4-7 10-4.2-1.6-7-5.6-7-10V6l7-3z"/>
+              <path d="M8.5 12l2.2 2.2 4.8-5"/>
+            </svg>
+          </span>
+          <span>
+            <strong>モラルチェッカー</strong>
+            <small>日常判断クイズ</small>
+          </span>
+        </button>
+        <button class="mode-tab" id="insight-mode-button" type="button" role="tab" aria-selected="false" data-mode="insight">
+          <span class="mode-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 6.5h14v8H9l-4 3v-11z"/>
+              <path d="M8.5 10h.01M12 10h.01M15.5 10h.01"/>
+            </svg>
+          </span>
+          <span>
+            <strong>男心理解ゲーム</strong>
+            <small>会話読み取りクイズ</small>
+          </span>
+        </button>
+      </div>
+
+      <div class="mode-description" id="mode-description">
+        日常の迷いやすい場面で、相手や周囲に配慮した選択を選びます。
+      </div>
+
+      <div class="option-grid" aria-label="ゲーム設定">
+        <label class="option-field" for="question-count-select">
+          <span class="option-label">問題数</span>
+          <select id="question-count-select">
+            <option value="5">5問</option>
+            <option value="10" selected>10問</option>
+            <option value="15">15問</option>
+            <option value="20">20問</option>
+          </select>
+        </label>
+
+        <label class="option-field" for="difficulty-select">
+          <span class="option-label">難易度</span>
+          <select id="difficulty-select">
+            <option value="all" selected>ミックス</option>
+            <option value="easy">やさしめ</option>
+            <option value="normal">ふつう</option>
+            <option value="hard">むずかしめ</option>
+          </select>
+        </label>
+
+        <label class="toggle-field" for="feedback-toggle">
+          <input id="feedback-toggle" type="checkbox" checked>
+          <span>毎問解説を表示</span>
+        </label>
+
+        <label class="toggle-field" for="shuffle-toggle">
+          <input id="shuffle-toggle" type="checkbox" checked>
+          <span>選択肢をシャッフル</span>
+        </label>
+      </div>
+
+      <div class="panel-actions">
+        <button class="primary-button" id="start-button" type="button">スタート</button>
+      </div>
     </section>
 
-    <section id="features">
-      <h2>Features</h2>
-      <ul>
-        <li>機能1</li>
-        <li>機能2</li>
-        <li>機能3</li>
-      </ul>
+    <section class="game-panel" id="game-panel" aria-labelledby="question-title" hidden>
+      <div class="question-meta">
+        <span class="category-tag" id="question-category">モラルチェック</span>
+        <span class="question-count" id="question-count">1 / 10</span>
+      </div>
+
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <h2 id="question-title">質問タイトル</h2>
+      <p class="difficulty-label" id="question-difficulty">難易度: ふつう</p>
+      <p class="question-text" id="question-text">質問文</p>
+
+      <div class="answer-grid" id="answer-options" aria-label="回答選択肢"></div>
+
+      <div class="feedback" id="feedback" aria-live="polite" hidden></div>
+
+      <div class="panel-actions">
+        <button class="ghost-button" id="quit-button" type="button">モード選択へ</button>
+        <button class="secondary-button" id="next-button" type="button" disabled>次の問題へ</button>
+      </div>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <button id="contact-btn">お問い合わせ</button>
+    <section class="result-panel" id="result-panel" aria-labelledby="result-title" hidden>
+      <p class="kicker">Result</p>
+      <h2 id="result-title">診断結果</h2>
+      <p class="result-score"><span id="final-score">0</span> / <span id="final-max-score">100</span> pt</p>
+      <p class="result-message" id="result-message"></p>
+
+      <div class="result-breakdown">
+        <div>
+          <span>モード</span>
+          <strong id="final-mode-name">モラルチェッカー</strong>
+        </div>
+        <div>
+          <span>正解数</span>
+          <strong><span id="final-correct-count">0</span> / <span id="final-question-count">10</span> 問</strong>
+        </div>
+        <div>
+          <span>難易度</span>
+          <strong id="final-difficulty">ミックス</strong>
+        </div>
+        <div>
+          <span>問題バンク</span>
+          <strong><span id="final-bank-size">100</span> 問から出題</strong>
+        </div>
+      </div>
+
+      <div class="review-panel">
+        <h3>今回の出題レビュー</h3>
+        <div class="review-list" id="review-list"></div>
+      </div>
+
+      <div class="panel-actions">
+        <button class="ghost-button" id="back-to-start-button" type="button">モード選択へ</button>
+        <button class="primary-button" id="restart-button" type="button">同じ設定でもう一度</button>
+      </div>
     </section>
+
+    <aside class="side-panel" aria-label="ゲーム概要">
+      <h2>Prototype</h2>
+      <dl class="summary-list">
+        <div>
+          <dt>出題方式</dt>
+          <dd>ランダム抽選</dd>
+        </div>
+        <div>
+          <dt>重複</dt>
+          <dd>なし</dd>
+        </div>
+        <div>
+          <dt>配点</dt>
+          <dd>1問10点</dd>
+        </div>
+        <div>
+          <dt>問題バンク</dt>
+          <dd><span id="bank-summary">各100問</span></dd>
+        </div>
+      </dl>
+
+      <div class="mode-status">
+        <div>
+          <span class="status-dot moral-dot"></span>
+          <span>モラルチェッカー</span>
+        </div>
+        <div>
+          <span class="status-dot insight-dot"></span>
+          <span>男心理解ゲーム</span>
+        </div>
+      </div>
+
+      <p class="prototype-note">
+        男心理解ゲームは「男性全員の心理」を断定するものではなく、会話や関係性で起きやすい受け取り方を考える仮説型クイズです。
+      </p>
+    </aside>
   </main>
 
   <footer>
-    <p>&copy; 2027 Team 17</p>
+    <p>Hackathon 2027 Team 17</p>
   </footer>
 
   <script src="script.js"></script>
