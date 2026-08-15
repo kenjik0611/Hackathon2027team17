@@ -1,167 +1,1928 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>モラルチェッカー</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <title>
+    MORAL CHECKER | あなたの価値観を可視化
+  </title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 650px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-
-    .description {
-      color: #666;
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    .question-box {
-      background: white;
-      padding: 35px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
-
-    .situation {
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 30px;
-    }
-
-    .choices {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    button {
-      padding: 17px;
-      border: none;
-      border-radius: 10px;
-      background: #333;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #555;
-    }
-
-    #result {
-      display: none;
-      margin-top: 25px;
-      padding: 25px;
-      background: white;
-      border-radius: 20px;
-      font-size: 24px;
-      font-weight: bold;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
-  </style>
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 </head>
+
 
 <body>
 
-<div class="container">
+<!-- =========================================================
+     GLOBAL BACKGROUND
+========================================================= -->
 
-  <h1>😇 モラルチェッカー 😈</h1>
+<div class="global-bg">
 
-  <p class="description">
-    あなたならこの状況、どうする？
-  </p>
+  <div class="noise"></div>
 
-  <div class="question-box">
+  <div class="stars stars-a"></div>
+  <div class="stars stars-b"></div>
+  <div class="stars stars-c"></div>
 
-    <h2>QUESTION</h2>
+  <div class="ambient ambient-1"></div>
+  <div class="ambient ambient-2"></div>
+  <div class="ambient ambient-3"></div>
 
-    <p class="situation">
-      あなたは道を歩いていると、目の前の人が1万円札を落としました。<br>
-      しかし、その人は気づかずに歩いていきます。<br><br>
-      あなたならどうする？
+</div>
+
+
+<!-- =========================================================
+     START SCREEN
+========================================================= -->
+
+<section
+  id="start-screen"
+  class="screen active"
+>
+
+
+  <!-- NAVIGATION -->
+
+  <nav class="navbar">
+
+    <div class="brand">
+
+      <div class="brand-symbol">
+        ◇
+      </div>
+
+      <div class="brand-text">
+
+        <strong>
+          MORAL CHECKER
+        </strong>
+
+        <small>
+          VALUE ANALYSIS SYSTEM
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="nav-menu">
+
+      <a href="#about">
+        診断について
+      </a>
+
+      <a href="#factors">
+        8つの因子
+      </a>
+
+      <a href="#mechanism">
+        診断の仕組み
+      </a>
+
+    </div>
+
+
+    <button
+      class="nav-button"
+      id="nav-start-button"
+    >
+      診断を始める
+      <span>→</span>
+    </button>
+
+  </nav>
+
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="hero">
+
+    <div class="hero-grid"></div>
+
+    <div class="hero-orbit orbit-a"></div>
+    <div class="hero-orbit orbit-b"></div>
+
+
+    <div class="hero-container">
+
+
+      <!-- LEFT -->
+
+      <div class="hero-copy">
+
+
+        <div class="system-badge">
+
+          <span class="status-dot"></span>
+
+          AI VALUE ANALYSIS
+
+          <span class="version">
+            PROTOTYPE 01
+          </span>
+
+        </div>
+
+
+        <h1 class="hero-title">
+
+          <span class="hero-title-small">
+            DISCOVER YOUR
+          </span>
+
+          MORAL
+
+          <strong>
+            CHECKER
+          </strong>
+
+        </h1>
+
+
+        <p class="hero-japanese">
+
+          あなたの
+
+          <span>
+            「選択」
+          </span>
+
+          から、<br>
+
+          価値観の輪郭を可視化する。
+
+        </p>
+
+
+        <p class="hero-description">
+
+          日常に潜む12のシチュエーションから、<br>
+
+          あなたが
+
+          <strong>
+            「何を大切にして判断するのか」
+          </strong>
+
+          を分析。<br>
+
+          8つの価値観因子から、
+          あなた自身の判断傾向を可視化します。
+
+        </p>
+
+
+        <!-- STATS -->
+
+        <div class="hero-stats">
+
+          <div class="hero-stat">
+
+            <strong>
+              12
+            </strong>
+
+            <span>
+              QUESTIONS
+            </span>
+
+            <small>
+              シチュエーション
+            </small>
+
+          </div>
+
+
+          <div class="stat-divider"></div>
+
+
+          <div class="hero-stat">
+
+            <strong>
+              8
+            </strong>
+
+            <span>
+              FACTORS
+            </span>
+
+            <small>
+              価値観因子
+            </small>
+
+          </div>
+
+
+          <div class="stat-divider"></div>
+
+
+          <div class="hero-stat">
+
+            <strong>
+              1
+            </strong>
+
+            <span>
+              PERSONAL
+            </span>
+
+            <small>
+              分析レポート
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <!-- START -->
+
+        <button
+          class="primary-button hero-button"
+          id="hero-start-button"
+        >
+
+          <span class="button-background"></span>
+
+          <span class="button-icon">
+            ◇
+          </span>
+
+          <span>
+            診断を始める
+          </span>
+
+          <span class="button-arrow">
+            →
+          </span>
+
+        </button>
+
+
+        <div class="hero-meta">
+
+          <span>
+            ◷ 約3分
+          </span>
+
+          <span>
+            ◆ 全12問
+          </span>
+
+          <span>
+            ✓ 登録不要
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           HERO VISUAL
+      ================================================== -->
+
+      <div class="hero-visual">
+
+
+        <div class="visual-glow"></div>
+
+
+        <!-- giant sphere -->
+
+        <div class="moral-sphere">
+
+          <div class="sphere-grid"></div>
+
+          <div class="sphere-core">
+
+            <span class="core-symbol">
+              ◇
+            </span>
+
+            <small>
+              MORAL
+            </small>
+
+          </div>
+
+
+          <div class="sphere-ring sphere-ring-1"></div>
+          <div class="sphere-ring sphere-ring-2"></div>
+          <div class="sphere-ring sphere-ring-3"></div>
+
+
+          <div class="sphere-point point-1"></div>
+          <div class="sphere-point point-2"></div>
+          <div class="sphere-point point-3"></div>
+          <div class="sphere-point point-4"></div>
+
+        </div>
+
+
+        <!-- floating cards -->
+
+        <div class="float-card card-empathy">
+
+          <div class="float-icon">
+            ♡
+          </div>
+
+          <div>
+
+            <small>
+              EMPATHY
+            </small>
+
+            <strong>
+              共感性
+            </strong>
+
+            <div class="tiny-progress">
+              <span style="width:88%"></span>
+            </div>
+
+          </div>
+
+          <b>
+            88
+          </b>
+
+        </div>
+
+
+        <div class="float-card card-judgment">
+
+          <div class="float-icon">
+            ◎
+          </div>
+
+          <div>
+
+            <small>
+              JUDGMENT
+            </small>
+
+            <strong>
+              判断力
+            </strong>
+
+            <div class="tiny-progress">
+              <span style="width:81%"></span>
+            </div>
+
+          </div>
+
+          <b>
+            81
+          </b>
+
+        </div>
+
+
+        <div class="float-card card-fairness">
+
+          <div class="float-icon">
+            ⚖
+          </div>
+
+          <div>
+
+            <small>
+              FAIRNESS
+            </small>
+
+            <strong>
+              公正さ
+            </strong>
+
+            <div class="tiny-progress">
+              <span style="width:93%"></span>
+            </div>
+
+          </div>
+
+          <b>
+            93
+          </b>
+
+        </div>
+
+
+        <!-- floating symbols -->
+
+        <div class="floating-symbol fs-1">
+          ♡
+        </div>
+
+        <div class="floating-symbol fs-2">
+          ⚖
+        </div>
+
+        <div class="floating-symbol fs-3">
+          ◎
+        </div>
+
+        <div class="floating-symbol fs-4">
+          ◇
+        </div>
+
+        <div class="floating-symbol fs-5">
+          ⬡
+        </div>
+
+
+        <!-- bottom landscape -->
+
+        <div class="digital-landscape">
+
+          <div class="land-line line-1"></div>
+          <div class="land-line line-2"></div>
+          <div class="land-line line-3"></div>
+          <div class="land-line line-4"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SCROLL -->
+
+    <div class="scroll-guide">
+
+      <span>
+        SCROLL TO DISCOVER
+      </span>
+
+      <div class="scroll-stick"></div>
+
+      <strong>
+        ↓
+      </strong>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       ABOUT
+  ====================================================== -->
+
+  <section
+    id="about"
+    class="landing-section"
+  >
+
+    <div class="section-heading">
+
+      <div class="section-kicker">
+
+        <span>
+          01
+        </span>
+
+        ABOUT THE EXPERIENCE
+
+      </div>
+
+      <h2>
+        この診断について
+      </h2>
+
+      <p>
+
+        MORAL CHECKERは、
+        「あなたは善人ですか？」を判定するテストではありません。
+
+        日常の選択から、
+        あなたがどの価値観を優先して意思決定する傾向があるのかを
+        多角的に可視化する診断プロトタイプです。
+
+      </p>
+
+    </div>
+
+
+    <div class="about-grid">
+
+
+      <article class="glass-card about-card">
+
+        <div class="about-card-number">
+          01
+        </div>
+
+        <div class="large-card-icon">
+          ◎
+        </div>
+
+        <span class="card-en">
+          MULTI ANALYSIS
+        </span>
+
+        <h3>
+          多角的に分析
+        </h3>
+
+        <p>
+
+          1つの回答を単純な
+          「100点・50点・0点」だけで評価しません。
+
+          1回の選択から8つの価値観因子を
+          同時に分析します。
+
+        </p>
+
+      </article>
+
+
+      <article class="glass-card about-card">
+
+        <div class="about-card-number">
+          02
+        </div>
+
+        <div class="large-card-icon">
+          ◇
+        </div>
+
+        <span class="card-en">
+          NO SINGLE ANSWER
+        </span>
+
+        <h3>
+          正解はひとつじゃない
+        </h3>
+
+        <p>
+
+          同じ行動でも、
+          「共感」「ルール」「責任」「自律」など
+          評価される観点は異なります。
+
+          あなた自身の判断軸を分析します。
+
+        </p>
+
+      </article>
+
+
+      <article class="glass-card about-card">
+
+        <div class="about-card-number">
+          03
+        </div>
+
+        <div class="large-card-icon">
+          ⬡
+        </div>
+
+        <span class="card-en">
+          VISUAL REPORT
+        </span>
+
+        <h3>
+          結果を可視化
+        </h3>
+
+        <p>
+
+          診断結果は総合スコアだけでなく、
+          レーダーチャートやランキング、
+          タイプ分析として表示します。
+
+        </p>
+
+      </article>
+
+
+      <article class="glass-card about-card">
+
+        <div class="about-card-number">
+          04
+        </div>
+
+        <div class="large-card-icon">
+          ⇄
+        </div>
+
+        <span class="card-en">
+          RANDOM CHOICE
+        </span>
+
+        <h3>
+          選択肢をランダム化
+        </h3>
+
+        <p>
+
+          「一番上が正解」のような
+          回答パターンを防ぐため、
+          選択肢は問題ごとにランダム表示されます。
+
+        </p>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FACTORS
+  ====================================================== -->
+
+  <section
+    id="factors"
+    class="landing-section factor-section"
+  >
+
+    <div class="section-heading">
+
+      <div class="section-kicker">
+
+        <span>
+          02
+        </span>
+
+        ANALYSIS FACTORS
+
+      </div>
+
+      <h2>
+        8つの価値観因子
+      </h2>
+
+      <p>
+        あなたの回答は、
+        以下8つの観点から同時に分析されます。
+      </p>
+
+    </div>
+
+
+    <div class="factor-grid">
+
+
+      <article class="factor-card factor-pink">
+
+        <div class="factor-icon">
+          ♡
+        </div>
+
+        <span>
+          EMPATHY
+        </span>
+
+        <h3>
+          共感性
+        </h3>
+
+        <p>
+          他者の感情や立場を理解し、
+          相手の視点から物事を考える力。
+        </p>
+
+        <div class="factor-decoration"></div>
+
+      </article>
+
+
+      <article class="factor-card factor-red">
+
+        <div class="factor-icon">
+          ◈
+        </div>
+
+        <span>
+          INTEGRITY
+        </span>
+
+        <h3>
+          誠実性
+        </h3>
+
+        <p>
+          嘘やごまかしを避け、
+          正直で一貫した行動を取ろうとする力。
+        </p>
+
+        <div class="factor-decoration"></div>
+
+      </article>
+
+
+      <article class="factor-card factor-yellow">
+
+        <div class="factor-icon">
+          ⚖
+        </div>
+
+        <span>
+          NORM
+        </span>
+
+        <h3>
+          規範意識
+        </h3>
+
+        <p>
+          社会のルールや約束、
+          公共性を尊重して判断する力。
+        </p>
+
+        <div class="factor-decoration"></div>
+
+      </article>
+
+
+      <article class="factor-card factor-blue">
+
+        <div class="factor-icon">
+          ◎
+        </div>
+
+        <span>
+          JUDGMENT
+        </span>
+
+        <h3>
+          判断力
+        </h3>
+
+        <p>
+          状況を整理し、
+          複数の選択肢から適切な行動を考える力。
+        </p>
+
+        <div class="factor-decoration"></div>
+
+      </article>
+
+
+      <article class="factor-card factor-cyan">
+
+        <div class="factor-icon">
+          ◉
+        </div>
+
+        <span>
+          RESPONSIBILITY
+        </span>
+
+        <h3>
+          責任感
+        </h3>
+
+        <p>
+          自分の役割や行動の結果を認識し、
+          最後まで向き合う力。
+        </p>
+
+        <div class="factor-decoration"></div>
+
+      </article>
+
+
+      <article class="factor-card factor-purple">
+
+        <div class="factor-icon">
+          ♡
+        </div>
+
+        <span>
+          COMPASSION
+        </span>
+
+        <h3>
+          思いやり
+        </h3>
+
+        <p>
+          困っている人を支え、
+          必要に応じて行動へ移す力。
+        </p>
+
+        <div class="factor-decoration"></div>
+
+      </article>
+
+
+      <article class="factor-card factor-sky">
+
+        <div class="factor-icon">
+          ↗
+        </div>
+
+        <span>
+          AUTONOMY
+        </span>
+
+        <h3>
+          自律性
+        </h3>
+
+        <p>
+          周囲に流されず、
+          自分自身で考えて意思決定する力。
+        </p>
+
+        <div class="factor-decoration"></div>
+
+      </article>
+
+
+      <article class="factor-card factor-violet">
+
+        <div class="factor-icon">
+          ◇
+        </div>
+
+        <span>
+          FAIRNESS
+        </span>
+
+        <h3>
+          公正さ
+        </h3>
+
+        <p>
+          個人的な好き嫌いだけでなく、
+          公平な視点から判断する力。
+        </p>
+
+        <div class="factor-decoration"></div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MECHANISM
+  ====================================================== -->
+
+  <section
+    id="mechanism"
+    class="landing-section mechanism-section"
+  >
+
+    <div class="section-heading">
+
+      <div class="section-kicker">
+
+        <span>
+          03
+        </span>
+
+        HOW IT WORKS
+
+      </div>
+
+      <h2>
+        診断の仕組み
+      </h2>
+
+    </div>
+
+
+    <div class="mechanism-flow">
+
+
+      <div class="mechanism-item">
+
+        <div class="mechanism-number">
+          01
+        </div>
+
+        <div class="mechanism-icon">
+          ◫
+        </div>
+
+        <h3>
+          シチュエーション
+        </h3>
+
+        <p>
+          日常で起こり得る
+          12の状況を提示。
+        </p>
+
+      </div>
+
+
+      <div class="mechanism-arrow">
+        →
+      </div>
+
+
+      <div class="mechanism-item">
+
+        <div class="mechanism-number">
+          02
+        </div>
+
+        <div class="mechanism-icon">
+          ◇
+        </div>
+
+        <h3>
+          あなたの選択
+        </h3>
+
+        <p>
+          4つの行動から
+          最も近いものを選択。
+        </p>
+
+      </div>
+
+
+      <div class="mechanism-arrow">
+        →
+      </div>
+
+
+      <div class="mechanism-item">
+
+        <div class="mechanism-number">
+          03
+        </div>
+
+        <div class="mechanism-icon">
+          ◎
+        </div>
+
+        <h3>
+          多軸分析
+        </h3>
+
+        <p>
+          1回答を8つの
+          価値観因子で評価。
+        </p>
+
+      </div>
+
+
+      <div class="mechanism-arrow">
+        →
+      </div>
+
+
+      <div class="mechanism-item">
+
+        <div class="mechanism-number">
+          04
+        </div>
+
+        <div class="mechanism-icon">
+          ◈
+        </div>
+
+        <h3>
+          結果を可視化
+        </h3>
+
+        <p>
+          あなたの判断傾向を
+          レポート化。
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FINAL CTA -->
+
+  <section class="final-cta">
+
+    <div class="cta-orb"></div>
+
+    <span>
+      READY TO DISCOVER?
+    </span>
+
+    <h2>
+      さあ、あなた自身の<br>
+      価値観を見つけましょう。
+    </h2>
+
+    <button
+      class="primary-button"
+      id="bottom-start-button"
+    >
+
+      <span class="button-icon">
+        ◇
+      </span>
+
+      今すぐ診断を始める
+
+      <span class="button-arrow">
+        →
+      </span>
+
+    </button>
+
+  </section>
+
+
+  <footer>
+
+    <div class="brand">
+      <div class="brand-symbol">
+        ◇
+      </div>
+
+      <div class="brand-text">
+        <strong>MORAL CHECKER</strong>
+        <small>PROTOTYPE</small>
+      </div>
+    </div>
+
+    <p>
+      Hackathon 2027 Team 17
     </p>
 
-    <div class="choices">
+  </footer>
 
-      <button onclick="checkMoral(100)">
-        すぐに拾って本人に渡す
-      </button>
+</section>
 
-      <button onclick="checkMoral(50)">
-        少し迷うけど本人に渡す
-      </button>
 
-      <button onclick="checkMoral(25)">
-        周りに人がいたら渡す
-      </button>
+<!-- =========================================================
+     QUIZ SCREEN
+========================================================= -->
 
-      <button onclick="checkMoral(0)">
-        ありがたくいただく
-      </button>
+<section
+  id="quiz-screen"
+  class="screen"
+>
+
+  <header class="quiz-header">
+
+    <div class="brand">
+
+      <div class="brand-symbol">
+        ◇
+      </div>
+
+      <div class="brand-text">
+        <strong>MORAL CHECKER</strong>
+        <small>DIAGNOSIS MODE</small>
+      </div>
+
+    </div>
+
+
+    <button
+      id="quit-button"
+      class="quit-button"
+    >
+      × 中断する
+    </button>
+
+  </header>
+
+
+  <!-- QUESTION NAVIGATION -->
+
+  <div class="question-navigation">
+
+    <div
+      id="question-dots"
+      class="question-dots"
+    ></div>
+
+  </div>
+
+
+  <!-- PROGRESS -->
+
+  <div class="quiz-progress-wrapper">
+
+    <div class="quiz-progress-top">
+
+      <span>
+        DIAGNOSIS PROGRESS
+      </span>
+
+      <strong>
+        <span id="current-question-number">
+          01
+        </span>
+
+        /
+
+        <span>
+          12
+        </span>
+      </strong>
+
+    </div>
+
+
+    <div class="quiz-progress">
+
+      <div
+        id="quiz-progress-fill"
+        class="quiz-progress-fill"
+      ></div>
 
     </div>
 
   </div>
 
-  <div id="result"></div>
 
-</div>
+  <!-- QUIZ CONTENT -->
+
+  <main class="quiz-main">
 
 
-<script>
+    <!-- SCENARIO -->
 
-function checkMoral(score) {
+    <article
+      id="scenario-panel"
+      class="scenario-panel"
+    >
 
-  const result = document.getElementById("result");
+      <div class="scenario-top">
 
-  result.style.display = "block";
+        <span class="scenario-label">
+          SITUATION
+        </span>
 
-  if (score === 100) {
-    result.innerHTML =
-      "モラル度 100点 😇<br><small>あなたは聖人です！</small>";
-  }
+        <span
+          id="question-category"
+          class="scenario-category"
+        >
+          日常生活
+        </span>
 
-  else if (score === 50) {
-    result.innerHTML =
-      "モラル度 50点 🙂<br><small>まあまあ良い人です！</small>";
-  }
+      </div>
 
-  else if (score === 25) {
-    result.innerHTML =
-      "モラル度 25点 😅<br><small>ちょっと怪しいかも...</small>";
-  }
 
-  else {
-    result.innerHTML =
-      "モラル度 0点 😈<br><small>モラルはどこへ...</small>";
-  }
+      <div
+        id="scenario-art"
+        class="scenario-art"
+      >
 
-}
+        <div class="art-grid"></div>
 
-</script>
+        <div class="art-circle circle-one"></div>
+        <div class="art-circle circle-two"></div>
+
+        <div
+          id="scenario-icon"
+          class="scenario-icon"
+        >
+          💴
+        </div>
+
+        <div class="art-data art-data-1">
+          VALUE / 01
+        </div>
+
+        <div class="art-data art-data-2">
+          ANALYZING...
+        </div>
+
+      </div>
+
+
+      <div class="scenario-content">
+
+        <span class="scenario-question-label">
+          QUESTION
+        </span>
+
+        <h1
+          id="question-title"
+        >
+          落とし物
+        </h1>
+
+        <p
+          id="question-text"
+        >
+        </p>
+
+      </div>
+
+
+      <div class="scenario-hint">
+
+        <span>
+          💡
+        </span>
+
+        <div>
+
+          <strong>
+            判断のヒント
+          </strong>
+
+          <p>
+            正解・不正解はありません。
+            「自分なら実際にどうするか」で選択してください。
+          </p>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- ANSWERS -->
+
+    <section class="answer-panel">
+
+      <div class="answer-heading">
+
+        <div>
+
+          <span>
+            YOUR CHOICE
+          </span>
+
+          <h2>
+            あなたなら、どうする？
+          </h2>
+
+        </div>
+
+
+        <div class="random-badge">
+          ⇄ RANDOMIZED
+        </div>
+
+      </div>
+
+
+      <div
+        id="answer-grid"
+        class="answer-grid"
+      ></div>
+
+
+      <div class="answer-footer">
+
+        <span>
+          ◇
+        </span>
+
+        選択肢は毎回ランダムに表示されます。
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FACTOR DISPLAY -->
+
+  <div class="quiz-factor-footer">
+
+    <span>
+      ANALYSIS FACTORS
+    </span>
+
+    <div>
+
+      <i>♡ 共感性</i>
+      <i>◈ 誠実性</i>
+      <i>⚖ 規範意識</i>
+      <i>◎ 判断力</i>
+      <i>◉ 責任感</i>
+      <i>♡ 思いやり</i>
+      <i>↗ 自律性</i>
+      <i>◇ 公正さ</i>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     LOADING SCREEN
+========================================================= -->
+
+<section
+  id="loading-screen"
+  class="screen"
+>
+
+  <div class="analysis-background">
+
+    <div class="analysis-grid"></div>
+
+    <div class="analysis-particle p1"></div>
+    <div class="analysis-particle p2"></div>
+    <div class="analysis-particle p3"></div>
+    <div class="analysis-particle p4"></div>
+
+  </div>
+
+
+  <div class="analysis-container">
+
+
+    <div class="analysis-heading">
+
+      <span>
+        MORAL ANALYSIS SYSTEM
+      </span>
+
+      <h1>
+        あなたの価値観を分析中...
+      </h1>
+
+      <p>
+        12の回答から8つの価値観因子を解析しています。
+      </p>
+
+    </div>
+
+
+    <div class="analysis-layout">
+
+
+      <div class="analysis-steps">
+
+
+        <div
+          class="analysis-step active"
+          id="analysis-step-1"
+        >
+
+          <span class="step-check">
+            ✓
+          </span>
+
+          <div>
+            <strong>
+              回答データの収集
+            </strong>
+
+            <small>
+              RESPONSE DATA
+            </small>
+          </div>
+
+        </div>
+
+
+        <div
+          class="analysis-step"
+          id="analysis-step-2"
+        >
+
+          <span class="step-check">
+            ◇
+          </span>
+
+          <div>
+            <strong>
+              価値観因子の解析
+            </strong>
+
+            <small>
+              FACTOR ANALYSIS
+            </small>
+          </div>
+
+        </div>
+
+
+        <div
+          class="analysis-step"
+          id="analysis-step-3"
+        >
+
+          <span class="step-check">
+            ◇
+          </span>
+
+          <div>
+            <strong>
+              判断パターンの検出
+            </strong>
+
+            <small>
+              PATTERN DETECTION
+            </small>
+          </div>
+
+        </div>
+
+
+        <div
+          class="analysis-step"
+          id="analysis-step-4"
+        >
+
+          <span class="step-check">
+            ◇
+          </span>
+
+          <div>
+            <strong>
+              診断タイプの生成
+            </strong>
+
+            <small>
+              TYPE GENERATION
+            </small>
+          </div>
+
+        </div>
+
+
+        <div
+          class="analysis-step"
+          id="analysis-step-5"
+        >
+
+          <span class="step-check">
+            ◇
+          </span>
+
+          <div>
+            <strong>
+              レポート作成
+            </strong>
+
+            <small>
+              REPORT
+            </small>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ANALYSIS CORE -->
+
+      <div class="analysis-core-wrapper">
+
+        <div class="analysis-ring ring-one"></div>
+        <div class="analysis-ring ring-two"></div>
+        <div class="analysis-ring ring-three"></div>
+
+        <div class="analysis-core">
+
+          <span>
+            ◇
+          </span>
+
+          <strong>
+            ANALYZING
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- percentage -->
+
+      <div class="analysis-percent">
+
+        <strong
+          id="analysis-percent"
+        >
+          0
+        </strong>
+
+        <span>
+          %
+        </span>
+
+        <small>
+          ANALYSIS PROGRESS
+        </small>
+
+        <div class="analysis-bars">
+
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="analysis-progress">
+
+      <div
+        id="analysis-progress-fill"
+      ></div>
+
+    </div>
+
+
+    <p
+      id="analysis-message"
+      class="analysis-message"
+    >
+      回答データを読み込んでいます...
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     RESULT SCREEN
+========================================================= -->
+
+<section
+  id="result-screen"
+  class="screen"
+>
+
+
+  <header class="result-header">
+
+    <div class="brand">
+
+      <div class="brand-symbol">
+        ◇
+      </div>
+
+      <div class="brand-text">
+        <strong>MORAL CHECKER</strong>
+        <small>ANALYSIS REPORT</small>
+      </div>
+
+    </div>
+
+
+    <button
+      id="restart-top"
+      class="nav-button"
+    >
+      ↻ もう一度診断
+    </button>
+
+  </header>
+
+
+  <main class="result-main">
+
+
+    <div class="result-intro">
+
+      <span class="complete-badge">
+        ✓ ANALYSIS COMPLETE
+      </span>
+
+      <h1>
+        診断結果
+      </h1>
+
+      <p>
+        あなたの12の回答をもとに作成した
+        価値観分析レポートです。
+      </p>
+
+    </div>
+
+
+    <!-- TOP RESULT -->
+
+    <div class="result-top-grid">
+
+
+      <!-- SCORE -->
+
+      <article class="result-card score-result">
+
+        <span class="result-card-label">
+          TOTAL MORAL SCORE
+        </span>
+
+
+        <div class="score-ring">
+
+          <div class="score-ring-inner">
+
+            <strong
+              id="grade"
+            >
+              A
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="score-number">
+
+          <strong
+            id="total-score"
+          >
+            82
+          </strong>
+
+          <span>
+            /100
+          </span>
+
+        </div>
+
+
+        <div class="type-divider"></div>
+
+
+        <span class="your-type">
+          YOUR TYPE
+        </span>
+
+        <h2
+          id="type-name"
+        >
+          バランス型モラリスト
+        </h2>
+
+        <p
+          id="type-description"
+        >
+        </p>
+
+      </article>
+
+
+      <!-- RADAR -->
+
+      <article class="result-card radar-result">
+
+        <div class="result-card-heading">
+
+          <div>
+
+            <span class="result-card-label">
+              VALUE BALANCE
+            </span>
+
+            <h2>
+              価値観バランスチャート
+            </h2>
+
+          </div>
+
+          <span class="chart-badge">
+            8 FACTORS
+          </span>
+
+        </div>
+
+
+        <canvas
+          id="radar-chart"
+          width="650"
+          height="520"
+        ></canvas>
+
+      </article>
+
+    </div>
+
+
+    <!-- FACTOR SCORES -->
+
+    <section class="result-section">
+
+      <div class="result-section-heading">
+
+        <div>
+
+          <span>
+            DETAILED ANALYSIS
+          </span>
+
+          <h2>
+            8つの価値観因子スコア
+          </h2>
+
+        </div>
+
+        <p>
+          各項目を100点満点で表示
+        </p>
+
+      </div>
+
+
+      <div
+        id="factor-score-grid"
+        class="factor-score-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- TOP AND GROWTH -->
+
+    <div class="ranking-grid">
+
+
+      <section class="ranking-card">
+
+        <div class="ranking-heading">
+
+          <span class="ranking-icon">
+            ✦
+          </span>
+
+          <div>
+
+            <small>
+              YOUR STRENGTH
+            </small>
+
+            <h2>
+              あなたの強み TOP3
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="strength-ranking"
+          class="ranking-list"
+        ></div>
+
+      </section>
+
+
+      <section class="ranking-card">
+
+        <div class="ranking-heading">
+
+          <span class="ranking-icon">
+            ↗
+          </span>
+
+          <div>
+
+            <small>
+              GROWTH POINT
+            </small>
+
+            <h2>
+              伸ばせるポイント TOP3
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="growth-ranking"
+          class="ranking-list"
+        ></div>
+
+      </section>
+
+    </div>
+
+
+    <!-- AI COMMENT -->
+
+    <section class="ai-comment">
+
+      <div class="ai-comment-decoration"></div>
+
+      <div class="ai-icon">
+        ◇
+      </div>
+
+      <div>
+
+        <span>
+          PERSONAL ANALYSIS COMMENT
+        </span>
+
+        <h2>
+          あなたへの総合コメント
+        </h2>
+
+        <p
+          id="result-comment"
+        ></p>
+
+      </div>
+
+    </section>
+
+
+    <!-- VALUE SIGNATURE -->
+
+    <section class="signature-card">
+
+      <div>
+
+        <span>
+          YOUR VALUE SIGNATURE
+        </span>
+
+        <h2>
+          あなたの価値観シグネチャ
+        </h2>
+
+        <p>
+          8つの因子の組み合わせから、
+          あなたの判断傾向を一言で表現すると――
+        </p>
+
+      </div>
+
+      <strong
+        id="signature-text"
+      >
+        THINK WITH HEART.
+      </strong>
+
+    </section>
+
+
+    <!-- RESTART -->
+
+    <div class="result-actions">
+
+      <button
+        id="restart-button"
+        class="primary-button"
+      >
+        ↻ もう一度診断する
+      </button>
+
+      <button
+        id="back-home-button"
+        class="secondary-button"
+      >
+        表紙に戻る
+      </button>
+
+    </div>
+
+
+    <p class="disclaimer">
+
+      ※ MORAL CHECKERはハッカソン用プロトタイプです。
+      診断結果は人格や人間性の優劣を判断するものではありません。
+
+    </p>
+
+  </main>
+
+</section>
+
+
+<script src="script.js"></script>
 
 </body>
+
 </html>
