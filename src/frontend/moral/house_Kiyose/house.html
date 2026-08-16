@@ -1,2 +1,80 @@
-<meta charset="UTF-8">
-<a href="../../index.html">トップへ戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モラルチェック：家庭編</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="house.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner scene-select-header">
+      <div class="hero-copy">
+        <p class="kicker">House</p>
+        <h1>モラルチェック：家庭編</h1>
+        <p class="lead">家族や同居人との日常の場面で、モラル判断クイズに挑戦しましょう。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout scene-select-layout">
+    <section class="start-panel" id="start-panel" aria-labelledby="start-title">
+      <p class="kicker">家庭編</p>
+      <h2 id="start-title">家庭の場面クイズ、はじめますか？</h2>
+      <p class="lead">全10問、家庭内でのモラル判断を問う問題が出題されます。</p>
+
+      <div class="panel-actions">
+        <a class="ghost-button" href="../main.html">シーン選択へ</a>
+        <button class="primary-button" id="start-button" type="button">はじめる</button>
+      </div>
+    </section>
+
+    <section class="start-panel" id="game-panel" aria-labelledby="question-title" hidden>
+      <div class="question-meta">
+        <span class="category-tag" id="question-count">1 / 10</span>
+      </div>
+
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <h2 id="question-title">質問タイトル</h2>
+      <p class="question-text" id="question-text">質問文</p>
+
+      <div class="answer-grid" id="answer-options" aria-label="回答選択肢"></div>
+
+      <div class="feedback" id="feedback" aria-live="polite" hidden></div>
+
+      <div class="panel-actions">
+        <button class="ghost-button" id="quit-button" type="button">シーン選択へ</button>
+        <button class="primary-button" id="next-button" type="button" disabled>次の問題へ</button>
+      </div>
+    </section>
+
+    <section class="start-panel" id="result-panel" aria-labelledby="result-title" hidden>
+      <p class="kicker">Result</p>
+      <h2 id="result-title">家庭編の結果</h2>
+      <p class="result-score"><span id="final-score">0</span> / <span id="final-max-score">100</span> pt</p>
+      <p class="result-message" id="result-message"></p>
+
+      <div class="review-panel">
+        <h3>今回の出題レビュー</h3>
+        <div class="review-list" id="review-list"></div>
+      </div>
+
+      <div class="panel-actions">
+        <a class="ghost-button" href="../main.html">シーン選択へ</a>
+        <button class="primary-button" id="restart-button" type="button">もう一度</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="house.js"></script>
+</body>
+</html>
