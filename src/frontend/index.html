@@ -14,21 +14,6 @@
         <p class="kicker">Team 17 Prototype</p>
         <h1>モラルチェッカー兼・男心理解ゲーム</h1>
         <p class="lead">最初に遊ぶモードを選び、問題バンクから重複なしでランダム出題します。</p>
-
-        <div class="score-board" aria-label="現在のプレイ状況">
-          <div class="score-item">
-            <span>スコア</span>
-            <strong><span id="total-score">0</span> pt</strong>
-          </div>
-          <div class="score-item">
-            <span>正解数</span>
-            <strong><span id="correct-count">0</span> 問</strong>
-          </div>
-          <div class="score-item">
-            <span>進行</span>
-            <strong><span id="progress-count">0</span> / <span id="target-count">10</span></strong>
-          </div>
-        </div>
       </div>
 
       <div class="hero-visual" aria-hidden="true">
@@ -93,139 +78,10 @@
         日常の迷いやすい場面で、相手や周囲に配慮した選択を選びます。
       </div>
 
-      <div class="option-grid" aria-label="ゲーム設定">
-        <label class="option-field" for="question-count-select">
-          <span class="option-label">問題数</span>
-          <select id="question-count-select">
-            <option value="5">5問</option>
-            <option value="10" selected>10問</option>
-            <option value="15">15問</option>
-            <option value="20">20問</option>
-          </select>
-        </label>
-
-        <label class="option-field" for="difficulty-select">
-          <span class="option-label">難易度</span>
-          <select id="difficulty-select">
-            <option value="all" selected>ミックス</option>
-            <option value="easy">やさしめ</option>
-            <option value="normal">ふつう</option>
-            <option value="hard">むずかしめ</option>
-          </select>
-        </label>
-
-        <label class="toggle-field" for="feedback-toggle">
-          <input id="feedback-toggle" type="checkbox" checked>
-          <span>毎問解説を表示</span>
-        </label>
-
-        <label class="toggle-field" for="shuffle-toggle">
-          <input id="shuffle-toggle" type="checkbox" checked>
-          <span>選択肢をシャッフル</span>
-        </label>
-      </div>
-
       <div class="panel-actions">
         <button class="primary-button" id="start-button" type="button">スタート</button>
       </div>
     </section>
-
-    <section class="game-panel" id="game-panel" aria-labelledby="question-title" hidden>
-      <div class="question-meta">
-        <span class="category-tag" id="question-category">モラルチェック</span>
-        <span class="question-count" id="question-count">1 / 10</span>
-      </div>
-
-      <div class="progress-track" aria-hidden="true">
-        <div class="progress-bar" id="progress-bar"></div>
-      </div>
-
-      <h2 id="question-title">質問タイトル</h2>
-      <p class="difficulty-label" id="question-difficulty">難易度: ふつう</p>
-      <p class="question-text" id="question-text">質問文</p>
-
-      <div class="answer-grid" id="answer-options" aria-label="回答選択肢"></div>
-
-      <div class="feedback" id="feedback" aria-live="polite" hidden></div>
-
-      <div class="panel-actions">
-        <button class="ghost-button" id="quit-button" type="button">モード選択へ</button>
-        <button class="secondary-button" id="next-button" type="button" disabled>次の問題へ</button>
-      </div>
-    </section>
-
-    <section class="result-panel" id="result-panel" aria-labelledby="result-title" hidden>
-      <p class="kicker">Result</p>
-      <h2 id="result-title">診断結果</h2>
-      <p class="result-score"><span id="final-score">0</span> / <span id="final-max-score">100</span> pt</p>
-      <p class="result-message" id="result-message"></p>
-
-      <div class="result-breakdown">
-        <div>
-          <span>モード</span>
-          <strong id="final-mode-name">モラルチェッカー</strong>
-        </div>
-        <div>
-          <span>正解数</span>
-          <strong><span id="final-correct-count">0</span> / <span id="final-question-count">10</span> 問</strong>
-        </div>
-        <div>
-          <span>難易度</span>
-          <strong id="final-difficulty">ミックス</strong>
-        </div>
-        <div>
-          <span>問題バンク</span>
-          <strong><span id="final-bank-size">100</span> 問から出題</strong>
-        </div>
-      </div>
-
-      <div class="review-panel">
-        <h3>今回の出題レビュー</h3>
-        <div class="review-list" id="review-list"></div>
-      </div>
-
-      <div class="panel-actions">
-        <button class="ghost-button" id="back-to-start-button" type="button">モード選択へ</button>
-        <button class="primary-button" id="restart-button" type="button">同じ設定でもう一度</button>
-      </div>
-    </section>
-
-    <aside class="side-panel" aria-label="ゲーム概要">
-      <h2>Prototype</h2>
-      <dl class="summary-list">
-        <div>
-          <dt>出題方式</dt>
-          <dd>ランダム抽選</dd>
-        </div>
-        <div>
-          <dt>重複</dt>
-          <dd>なし</dd>
-        </div>
-        <div>
-          <dt>配点</dt>
-          <dd>1問10点</dd>
-        </div>
-        <div>
-          <dt>問題バンク</dt>
-          <dd><span id="bank-summary">各100問</span></dd>
-        </div>
-      </dl>
-
-      <div class="mode-status">
-        <div>
-          <span class="status-dot moral-dot"></span>
-          <span>モラルチェッカー</span>
-        </div>
-        <div>
-          <span class="status-dot insight-dot"></span>
-          <span>男心理解ゲーム</span>
-        </div>
-      </div>
-
-      <p class="prototype-note">
-        男心理解ゲームは「男性全員の心理」を断定するものではなく、会話や関係性で起きやすい受け取り方を考える仮説型クイズです。
-      </p>
-    </aside>
   </main>
 
   <footer>
