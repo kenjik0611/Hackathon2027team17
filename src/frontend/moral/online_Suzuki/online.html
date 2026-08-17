@@ -1,2 +1,129 @@
-<meta charset="UTF-8">
-<a href="../../index.html">トップへ戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オンライン編 - モラルチェック</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="online.css">
+  <link rel="icon" href="data:,">
+</head>
+<body class="online-page">
+  <header class="app-header">
+    <div class="header-inner online-header-inner">
+      <div class="hero-copy">
+        <p class="kicker">Online Mission</p>
+        <h1>オンライン編</h1>
+        <p class="lead">Web会議や在宅勤務に潜む「うっかり」を、5つのミッションで見抜こう。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout online-layout">
+    <section class="start-panel online-panel" aria-live="polite">
+      <div id="intro-screen">
+        <p class="kicker">5 Missions</p>
+        <h2>そのクリック、本当に大丈夫？</h2>
+        <p class="intro-copy">
+          画面共有、在宅勤務、チャット、ファイル共有、情報を見せてしまった後の対応。
+          オンライン業務で迷いやすい5場面に挑戦します。
+        </p>
+
+        <ol class="mission-preview" aria-label="出題テーマ">
+          <li><span>01</span><strong>画面共有前の危険箇所探し</strong></li>
+          <li><span>02</span><strong>在宅勤務で席を離れるとき</strong></li>
+          <li><span>03</span><strong>チャットに届いた緊急連絡</strong></li>
+          <li><span>04</span><strong>私物サービスへのファイル共有</strong></li>
+          <li><span>05</span><strong>誤共有してしまった後の初動</strong></li>
+        </ol>
+
+        <div class="provisional-note">
+          <strong>現在は仮採点です</strong>
+          <p>8月23日のミーティングで採点方法を決めた後、設定だけで変更できる構造にしています。</p>
+        </div>
+
+        <div class="panel-actions intro-actions">
+          <a class="ghost-button link-button" href="../main.html">シーン選択へ戻る</a>
+          <button class="primary-button" id="start-game" type="button">ミッション開始</button>
+        </div>
+      </div>
+
+      <div id="quiz-screen" hidden>
+        <div class="quiz-topbar">
+          <strong id="progress-label">MISSION 1 / 5</strong>
+          <span class="score-chip" id="score-chip">仮スコア 0</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <span id="progress-bar"></span>
+        </div>
+
+        <article class="question-card" aria-labelledby="question-title">
+          <div class="question-meta">
+            <span class="question-number" id="question-number">01</span>
+            <span class="question-tag" id="question-tag">Web会議</span>
+          </div>
+
+          <p class="scenario-eyebrow">Scenario</p>
+          <h2 id="question-title"></h2>
+          <p class="scenario-copy" id="scenario-copy"></p>
+          <div id="question-visual"></div>
+
+          <p class="question-prompt" id="question-prompt"></p>
+          <div id="answer-area"></div>
+          <p class="answer-hint" id="answer-hint"></p>
+
+          <div class="panel-actions answer-actions" id="answer-actions">
+            <button class="primary-button" id="submit-answer" type="button" disabled>回答する</button>
+          </div>
+
+          <section class="feedback-panel" id="feedback-panel" aria-labelledby="feedback-title" hidden>
+            <div class="feedback-heading">
+              <span class="feedback-badge" id="feedback-badge"></span>
+              <span class="feedback-score" id="feedback-score"></span>
+            </div>
+            <h3 id="feedback-title"></h3>
+            <p id="feedback-body"></p>
+            <div class="takeaway-box">
+              <strong>明日から使える一言</strong>
+              <p id="feedback-takeaway"></p>
+            </div>
+            <div class="panel-actions">
+              <button class="primary-button" id="next-question" type="button">次のミッションへ</button>
+            </div>
+          </section>
+        </article>
+      </div>
+
+      <div id="result-screen" hidden>
+        <p class="kicker">Mission Complete</p>
+        <h2>5つのミッション、完了！</h2>
+        <p class="result-lead">結果は評価ではなく、次に気をつけるポイントを見つけるための振り返りです。</p>
+
+        <div class="result-summary">
+          <div class="result-score" id="result-score-wrap">
+            <span id="result-score">0 / 10</span>
+            <small>仮スコア</small>
+          </div>
+          <div>
+            <h3 id="result-title"></h3>
+            <p id="result-body"></p>
+          </div>
+        </div>
+
+        <div class="result-review" id="result-review" aria-label="ミッションごとの振り返り"></div>
+
+        <div class="panel-actions result-actions">
+          <a class="ghost-button link-button" href="../main.html">シーン選択へ戻る</a>
+          <button class="primary-button" id="retry-game" type="button">もう一度挑戦</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="online.js"></script>
+</body>
+</html>
