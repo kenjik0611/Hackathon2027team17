@@ -3,7 +3,37 @@
 
 ## フォルダ構成
 
-- `src/` — ソースコード　
+```
+.
+├── docs/
+│   └── PROJECT_CONTEXT.md        # プロジェクトの背景・要件整理メモ
+└── src/
+    └── frontend/                 # フロントエンド一式（静的HTML/CSS/JS）
+        ├── index.html             # トップページ（モラル／男心理解のモード選択）
+        ├── style.css              # 全ページ共通のスタイル
+        ├── script.js              # トップページの挙動（モード切替・遷移）
+        │
+        ├── moral/                 # モラルチェック編
+        │   ├── main.html           # シーン選択画面
+        │   ├── main.css
+        │   ├── house_Kiyose/           # シーンごとに担当者が実装
+        │   ├── office_Arita/
+        │   ├── online_Suzuki/
+        │   ├── outsideCompany_Fukazawa/
+        │   └── publicSpace_Kudo/
+        │
+        └── Otokogokoro/           # 男心理解ゲーム編
+            ├── main.html           # 担当者選択画面
+            ├── main.css
+            ├── Arita/
+            ├── Kiyose/
+            ├── Suzuki/
+            ├── Kudo/
+            └── Fukazawa/
+```
+
+- `moral/` と `Otokogokoro/` はそれぞれ「シーン／担当者ごとのフォルダ」に分かれており、各フォルダの中には同名の `.html` / `.css` / `.js` が入っています（例: `house_Kiyose/house.html`, `house.css`, `house.js`）。担当者は自分のフォルダの3ファイルだけを編集すればよく、他の人のファイルとは衝突しません。
+- `index.html` でモードを選んでスタートすると `moral/main.html` または `Otokogokoro/main.html` に遷移し、そこからさらに各シーン／担当者のページへ進みます。
 
 
 ## セットアップ
