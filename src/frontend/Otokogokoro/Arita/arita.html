@@ -1,2 +1,106 @@
-<meta charset="UTF-8">
-<a href="../../index.html">トップへ戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>有田編 ことばの余白ラボ</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="arita.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header arita-header">
+    <div class="header-inner arita-header-inner">
+      <div class="hero-copy">
+        <p class="kicker">Arita / Conversation Lab</p>
+        <h1>ことばの余白ラボ</h1>
+        <p class="lead">ひとつの言葉を、ひとつの意味に決めつけない。会話に隠れた可能性を並べて、次のひと言を考える全5ケースです。</p>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg class="hero-illustration" viewBox="0 0 340 230">
+          <path class="hero-shadow" d="M44 50h174a18 18 0 0 1 18 18v69a18 18 0 0 1-18 18h-73l-38 31 8-31H44a18 18 0 0 1-18-18V68a18 18 0 0 1 18-18Z"/>
+          <path class="hero-bubble-one" d="M44 42h174a18 18 0 0 1 18 18v69a18 18 0 0 1-18 18h-73l-38 31 8-31H44a18 18 0 0 1-18-18V60a18 18 0 0 1 18-18Z"/>
+          <path class="hero-bubble-two" d="M183 104h113a17 17 0 0 1 17 17v50a17 17 0 0 1-17 17h-37l12 24-34-24h-54a17 17 0 0 1-17-17v-50a17 17 0 0 1 17-17Z"/>
+          <circle cx="77" cy="94" r="9"/><circle cx="113" cy="94" r="9"/><circle cx="149" cy="94" r="9"/>
+          <path class="hero-question" d="M220 137c2-13 29-13 29 3 0 13-15 12-15 24M234 174v1"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout arita-layout">
+    <section class="start-panel intro-panel" id="start-panel" aria-labelledby="start-title">
+      <p class="kicker">How To Play</p>
+      <h2 id="start-title">会話を「二つのレンズ」で見てみよう</h2>
+      <div class="steps" aria-label="遊び方">
+        <div class="step-item"><span>1</span><p>相手のひと言にあり得そうな見方を、4枚から2枚選びます。</p></div>
+        <div class="step-item"><span>2</span><p>気持ちを決めつけずに話せる、次のひと言を選びます。</p></div>
+        <div class="step-item"><span>3</span><p>会話のヒントを読み、次のケースへ進みます。</p></div>
+      </div>
+      <p class="lab-note"><strong>このラボの前提</strong> 性別だけで気持ちは決まりません。ここでは「男性の正解」を当てるのではなく、相手を一人の人として理解する練習をします。</p>
+      <div class="panel-actions">
+        <a class="ghost-button" href="../main.html">担当選択へ</a>
+        <button class="primary-button" id="start-button" type="button">ラボを始める</button>
+      </div>
+    </section>
+
+    <section class="start-panel game-panel" id="game-panel" aria-labelledby="case-title" hidden>
+      <div class="case-meta">
+        <span class="category-tag" id="case-count">CASE 1 / 5</span>
+        <span class="phase-tag" id="phase-tag">見方を選ぶ</span>
+      </div>
+      <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+      <p class="scene-label" id="scene-label">グループチャット</p>
+      <h2 id="case-title">ケースタイトル</h2>
+      <p class="case-context" id="case-context">状況説明</p>
+      <div class="conversation" aria-label="会話">
+        <span class="speaker" id="speaker">相手</span>
+        <blockquote id="case-line">「会話」</blockquote>
+      </div>
+
+      <div id="lens-step">
+        <div class="section-heading">
+          <div><p class="mini-label">STEP 1</p><h3>あり得る見方を2つ置く</h3></div>
+          <span class="selection-count" id="selection-count">0 / 2</span>
+        </div>
+        <p class="helper-text">本心を当てる問題ではありません。今の情報から残しておきたい可能性を選びましょう。</p>
+        <div class="lens-board" id="lens-board" aria-live="polite"></div>
+        <div class="interpretation-grid" id="interpretation-options" aria-label="考えられる見方"></div>
+        <div class="step-action"><button class="primary-button" id="confirm-lenses-button" type="button" disabled>2つの見方で考える</button></div>
+      </div>
+
+      <div id="response-step" hidden>
+        <div class="perspective-note" id="perspective-note"></div>
+        <div class="section-heading"><div><p class="mini-label">STEP 2</p><h3>次のひと言を選ぶ</h3></div></div>
+        <p class="helper-text">相手に説明の余地を残せる声かけはどれでしょう。</p>
+        <div class="response-list" id="response-options" aria-label="次のひと言"></div>
+        <div class="feedback" id="feedback" aria-live="polite" hidden></div>
+      </div>
+
+      <div class="panel-actions game-actions">
+        <button class="ghost-button" id="quit-button" type="button">担当選択へ</button>
+        <button class="primary-button" id="next-button" type="button" disabled>次のケースへ</button>
+      </div>
+    </section>
+
+    <section class="start-panel result-panel" id="result-panel" aria-labelledby="result-title" hidden>
+      <p class="kicker">Lab Complete</p>
+      <h2 id="result-title">5つの会話を読み終えました</h2>
+      <p class="result-lead">相手の気持ちは、選択肢の外にもあります。迷ったときは「決めつけない・聞きすぎない・逃げ道を残す」の3つを思い出してみてください。</p>
+      <div class="takeaway-grid">
+        <div class="takeaway"><span>01</span><strong>解釈を一つにしない</strong><p>沈黙や短い返事にも、状況によって複数の理由があります。</p></div>
+        <div class="takeaway"><span>02</span><strong>確認できる形にする</strong><p>推測で結論を出さず、答えやすい聞き方に変えます。</p></div>
+        <div class="takeaway"><span>03</span><strong>断る余地を残す</strong><p>相手が自分のペースや境界を選べる言葉を添えます。</p></div>
+      </div>
+      <div class="review-panel"><h3>今回のケース</h3><div class="review-list" id="review-list"></div></div>
+      <div class="panel-actions">
+        <a class="ghost-button" href="../main.html">担当選択へ</a>
+        <button class="primary-button" id="restart-button" type="button">もう一度考える</button>
+      </div>
+    </section>
+  </main>
+
+  <footer><p>Hackathon 2027 Team 17</p></footer>
+  <script src="arita.js"></script>
+</body>
+</html>
