@@ -1,2 +1,83 @@
-<meta charset="UTF-8">
-<a href="../../index.html">トップへ戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>清瀬タイプ攻略シナリオ</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="kiyose.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner scene-select-header">
+      <div class="hero-copy">
+        <p class="kicker">Kiyose</p>
+        <h1>清瀬タイプ攻略シナリオ</h1>
+        <p class="lead">「束縛より信頼」「理解しようとしすぎない」がテーマの全10問。好感度の変化を確かめながら選択肢を選びましょう。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout scene-select-layout">
+    <section class="start-panel" id="start-panel" aria-labelledby="start-title">
+      <p class="kicker">清瀬編</p>
+      <h2 id="start-title">清瀬シナリオ、はじめますか？</h2>
+      <p class="lead">全10問、会話の場面ごとに3つの選択肢から好感度が一番上がる対応を選んでください。</p>
+
+      <div class="panel-actions">
+        <a class="ghost-button" href="../main.html">シーン選択へ</a>
+        <button class="primary-button" id="start-button" type="button">はじめる</button>
+      </div>
+    </section>
+
+    <section class="start-panel" id="game-panel" aria-labelledby="question-title" hidden>
+      <div class="question-meta">
+        <span class="category-tag" id="question-count">1 / 10</span>
+        <span class="score-tag" id="score-tag">好感度 0</span>
+      </div>
+
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <h2 id="question-title">シチュエーション</h2>
+      <p class="question-text" id="question-text">状況説明</p>
+      <p class="question-line" id="question-line">清瀬くんの一言</p>
+
+      <div class="answer-grid" id="answer-options" aria-label="回答選択肢"></div>
+
+      <div class="feedback" id="feedback" aria-live="polite" hidden></div>
+
+      <div class="panel-actions">
+        <button class="ghost-button" id="quit-button" type="button">シーン選択へ</button>
+        <button class="primary-button" id="next-button" type="button" disabled>次の問題へ</button>
+      </div>
+    </section>
+
+    <section class="start-panel" id="result-panel" aria-labelledby="result-title" hidden>
+      <p class="kicker">Result</p>
+      <h2 id="result-title">清瀬編の結果</h2>
+      <p class="result-score"><span id="final-score">0</span> / <span id="final-max-score">150</span> pt</p>
+      <p class="result-ending" id="result-ending"></p>
+      <p class="result-message" id="result-message"></p>
+
+      <div class="review-panel">
+        <h3>今回の出題レビュー</h3>
+        <div class="review-list" id="review-list"></div>
+      </div>
+
+      <div class="panel-actions">
+        <a class="ghost-button" href="../main.html">シーン選択へ</a>
+        <button class="primary-button" id="restart-button" type="button">もう一度</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="kiyose.js"></script>
+</body>
+</html>
