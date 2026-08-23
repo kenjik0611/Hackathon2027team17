@@ -1,2 +1,833 @@
-<meta charset="UTF-8">
-<a href="../../index.html">トップへ戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>公共モラルチェッカー</title>
+
+  <link rel="stylesheet" href="publicSpace.css">
+</head>
+
+<body>
+
+  <div class="background-decoration" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+
+  <main class="app">
+
+    <!-- ========================================
+         START
+    ========================================= -->
+
+    <section id="start-screen" class="screen active">
+
+      <div class="start-card">
+
+        <a href="../../index.html" class="back-link">
+          ← トップへ戻る
+        </a>
+
+        <div class="start-icon">
+          🚉
+        </div>
+
+        <p class="eyebrow">
+          MORAL CHECKER
+        </p>
+
+        <h1 class="start-title">
+          公共モラル<br>
+          <span>チェッカー</span>
+        </h1>
+
+        <p class="start-description">
+          電車、街中、公共施設——。<br>
+          日常のちょっとした場面で、
+          あなたならどう行動しますか？
+        </p>
+
+
+        <div class="feature-list">
+
+          <div class="feature">
+
+            <div class="feature-icon">
+              🎯
+            </div>
+
+            <div>
+              <strong>全5問</strong>
+              <span>直感でサクサク回答</span>
+            </div>
+
+          </div>
+
+
+          <div class="feature">
+
+            <div class="feature-icon">
+              ⚖️
+            </div>
+
+            <div>
+              <strong>3つの評価軸</strong>
+              <span>モラル・配慮・状況判断</span>
+            </div>
+
+          </div>
+
+
+          <div class="feature">
+
+            <div class="feature-icon">
+              ✨
+            </div>
+
+            <div>
+              <strong>9タイプ診断</strong>
+              <span>最後にまとめて結果発表</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <button id="start-button" class="primary-button">
+
+          <span>
+            診断をはじめる
+          </span>
+
+          <span class="button-arrow">
+            →
+          </span>
+
+        </button>
+
+
+        <p class="start-note">
+          深く考えすぎず、
+          「自分ならこうする」で選んでみてください。
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         QUIZ
+    ========================================= -->
+
+    <section id="quiz-screen" class="screen">
+
+      <div class="quiz-container">
+
+
+        <header class="quiz-header">
+
+          <a href="../../index.html" class="mini-back-link">
+            ← トップへ戻る
+          </a>
+
+
+          <div class="question-counter">
+
+            QUESTION
+
+            <strong>
+
+              <span id="current-question-number">
+                1
+              </span>
+
+              <span class="counter-slash">
+                /
+              </span>
+
+              <span id="total-question-number">
+                5
+              </span>
+
+            </strong>
+
+          </div>
+
+        </header>
+
+
+
+        <!-- 進捗 -->
+
+        <div class="progress-wrapper">
+
+          <div class="progress-info">
+
+            <span>
+              診断進捗
+            </span>
+
+            <span id="progress-percent">
+              20%
+            </span>
+
+          </div>
+
+
+          <div class="progress-track">
+
+            <div
+              id="progress-bar"
+              class="progress-bar">
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- 問題カード -->
+
+        <article
+          id="question-card"
+          class="question-card">
+
+
+          <div class="question-meta">
+
+            <span
+              id="question-category"
+              class="category-badge">
+
+              🚃 電車
+
+            </span>
+
+
+            <span
+              id="question-focus"
+              class="focus-label">
+
+              MORAL CHECK
+
+            </span>
+
+          </div>
+
+
+
+          <h2
+            id="question-title"
+            class="question-title">
+
+            問題タイトル
+
+          </h2>
+
+
+
+          <!-- AI画像 -->
+
+          <div class="scenario-image-wrapper">
+
+            <img
+              id="scenario-image"
+              class="scenario-image"
+              src=""
+              alt=""
+            >
+
+
+            <div
+              id="image-placeholder"
+              class="image-placeholder">
+
+              <div
+                id="placeholder-icon"
+                class="placeholder-icon">
+
+                🚉
+
+              </div>
+
+
+              <p>
+                SCENARIO IMAGE
+              </p>
+
+
+              <span>
+                AI生成画像を追加予定
+              </span>
+
+            </div>
+
+
+            <div class="image-number">
+
+              SCENE
+
+              <span id="scene-number">
+                01
+              </span>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- 状況 -->
+
+          <div class="scenario-box">
+
+            <div class="scenario-label">
+
+              <span>
+                📍
+              </span>
+
+              SITUATION
+
+            </div>
+
+
+            <p
+              id="question-situation"
+              class="scenario-text">
+
+              状況説明
+
+            </p>
+
+          </div>
+
+
+
+          <!-- 質問 -->
+
+          <div class="question-prompt">
+
+            <span class="prompt-icon">
+              ?
+            </span>
+
+
+            <p id="question-prompt">
+
+              あなたならどうする？
+
+            </p>
+
+          </div>
+
+
+
+          <!-- 4択 -->
+
+          <div
+            id="answer-list"
+            class="answer-list">
+
+          </div>
+
+
+          <p class="answer-guide">
+
+            最も自分の行動に近いものを選んでください
+
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         RESULT
+    ========================================= -->
+
+    <section id="result-screen" class="screen">
+
+      <div class="result-container">
+
+
+        <div class="result-heading">
+
+          <p class="result-eyebrow">
+            DIAGNOSIS COMPLETE
+          </p>
+
+          <h2>
+            診断結果
+          </h2>
+
+          <p>
+            5つの選択から、あなたの公共モラルを分析しました
+          </p>
+
+        </div>
+
+
+
+        <!-- 総合結果 -->
+
+        <div class="overall-score-card">
+
+
+          <div class="score-ring">
+
+            <div class="score-ring-inner">
+
+              <span class="score-label">
+                公共モラル度
+              </span>
+
+
+              <div class="score-number-wrapper">
+
+                <strong id="overall-score">
+                  0
+                </strong>
+
+                <span>
+                  点
+                </span>
+
+              </div>
+
+
+              <span class="score-max">
+                / 100
+              </span>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="overall-message">
+
+            <span
+              id="overall-rank"
+              class="rank-badge">
+
+              GREAT
+
+            </span>
+
+
+            <h3 id="overall-title">
+
+              診断タイトル
+
+            </h3>
+
+
+            <p id="overall-comment">
+
+              診断結果についてのコメント
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ========================================
+             3軸
+        ========================================= -->
+
+        <div class="analysis-card">
+
+
+          <div class="section-heading">
+
+            <div>
+
+              <span class="section-number">
+                01
+              </span>
+
+              <h3>
+                3つのモラル分析
+              </h3>
+
+            </div>
+
+
+            <p>
+              あなたの判断傾向を3つの視点から分析
+            </p>
+
+          </div>
+
+
+
+          <div class="score-bars">
+
+
+            <!-- モラル -->
+
+            <div class="score-bar-item">
+
+              <div class="score-bar-heading">
+
+                <div class="score-bar-name">
+
+                  <span class="axis-icon">
+                    ⚖️
+                  </span>
+
+
+                  <div>
+
+                    <strong>
+                      モラル・常識
+                    </strong>
+
+                    <small>
+                      RULE & MORAL
+                    </small>
+
+                  </div>
+
+                </div>
+
+
+                <span class="axis-score">
+
+                  <strong id="moral-score">
+                    0
+                  </strong>
+
+                  /100
+
+                </span>
+
+              </div>
+
+
+              <div class="axis-track">
+
+                <div
+                  id="moral-bar"
+                  class="axis-bar moral-bar">
+                </div>
+
+              </div>
+
+
+              <p>
+                公共のルールや基本的なマナーを理解し、
+                周囲と気持ちよく過ごせる行動を選ぶ力。
+              </p>
+
+            </div>
+
+
+
+            <!-- 思いやり -->
+
+            <div class="score-bar-item">
+
+              <div class="score-bar-heading">
+
+                <div class="score-bar-name">
+
+                  <span class="axis-icon">
+                    🤝
+                  </span>
+
+
+                  <div>
+
+                    <strong>
+                      思いやり・配慮
+                    </strong>
+
+                    <small>
+                      CONSIDERATION
+                    </small>
+
+                  </div>
+
+                </div>
+
+
+                <span class="axis-score">
+
+                  <strong id="care-score">
+                    0
+                  </strong>
+
+                  /100
+
+                </span>
+
+              </div>
+
+
+              <div class="axis-track">
+
+                <div
+                  id="care-bar"
+                  class="axis-bar care-bar">
+                </div>
+
+              </div>
+
+
+              <p>
+                自分の都合だけでなく、
+                周囲の人の気持ちや立場まで考えて行動する力。
+              </p>
+
+            </div>
+
+
+
+            <!-- 状況判断 -->
+
+            <div class="score-bar-item">
+
+              <div class="score-bar-heading">
+
+                <div class="score-bar-name">
+
+                  <span class="axis-icon">
+                    🧠
+                  </span>
+
+
+                  <div>
+
+                    <strong>
+                      状況判断
+                    </strong>
+
+                    <small>
+                      JUDGMENT
+                    </small>
+
+                  </div>
+
+                </div>
+
+
+                <span class="axis-score">
+
+                  <strong id="judgment-score">
+                    0
+                  </strong>
+
+                  /100
+
+                </span>
+
+              </div>
+
+
+              <div class="axis-track">
+
+                <div
+                  id="judgment-bar"
+                  class="axis-bar judgment-bar">
+                </div>
+
+              </div>
+
+
+              <p>
+                「正しいか」だけでなく、
+                その場の状況に合わせて現実的な判断をする力。
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ========================================
+             タイプ診断
+        ========================================= -->
+
+        <div class="type-card">
+
+
+          <div class="section-heading type-section-heading">
+
+            <div>
+
+              <span class="section-number">
+                02
+              </span>
+
+              <h3>
+                あなたのモラルタイプ
+              </h3>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="type-result">
+
+            <div
+              id="type-icon"
+              class="type-icon">
+
+              👑
+
+            </div>
+
+
+            <div class="type-content">
+
+              <p class="type-label">
+                YOUR MORAL TYPE
+              </p>
+
+
+              <h3 id="type-name">
+
+                モラルマスター
+
+              </h3>
+
+
+              <p id="type-description">
+
+                タイプの詳しい説明が表示されます。
+
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="type-comment">
+
+            <span>
+              💬
+            </span>
+
+            <p id="type-comment">
+
+              コメント
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ========================================
+             最終総評
+        ========================================= -->
+
+        <div class="review-card">
+
+
+          <div class="section-heading">
+
+            <div>
+
+              <span class="section-number">
+                03
+              </span>
+
+              <h3>
+                あなたへの総評
+              </h3>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="final-analysis"
+            class="final-analysis">
+
+            診断結果から総評を表示します。
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ボタン -->
+
+        <div class="result-actions">
+
+          <button
+            id="retry-button"
+            class="primary-button">
+
+            <span>
+              もう一度診断する
+            </span>
+
+            <span>
+              ↻
+            </span>
+
+          </button>
+
+
+          <a
+            href="../../index.html"
+            class="secondary-button">
+
+            トップへ戻る
+
+          </a>
+
+        </div>
+
+
+        <p class="result-note">
+
+          ※ この診断は、日常のモラルについて
+          楽しく考えることを目的としたコンテンツです。
+
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script src="publicSpace.js"></script>
+
+</body>
+
+</html>
