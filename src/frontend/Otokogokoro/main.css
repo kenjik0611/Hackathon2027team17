@@ -48,6 +48,45 @@
   font-size: 1rem;
 }
 
+.profile-body {
+  display: grid;
+  gap: 5px;
+}
+
+.profile-body small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.type-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: #2f3a43;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.type-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 1px 7px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: #dffcf5;
+  color: var(--text);
+  font-size: 0.72rem;
+  line-height: 1;
+  box-shadow: 2px 2px 0 rgba(23, 32, 42, 0.12);
+}
+
+.love-pill {
+  background: #ffd1df;
+}
+
 .scene-icon {
   display: inline-flex;
   align-items: center;
