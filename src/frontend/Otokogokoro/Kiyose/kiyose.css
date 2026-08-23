@@ -1,0 +1,259 @@
+.header-inner.scene-select-header {
+  grid-template-columns: 1fr;
+}
+
+.app-layout.scene-select-layout {
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+.question-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.category-tag,
+.score-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 2px solid var(--line);
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.category-tag {
+  background: #ffd1df;
+}
+
+.score-tag {
+  background: #c9fff3;
+}
+
+.progress-track {
+  height: 14px;
+  overflow: hidden;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: #fffdfa;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff7aa8, #ffcf5a);
+  transition: width 0.2s ease;
+}
+
+.question-text {
+  margin-top: 12px;
+  color: #2f3a43;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.question-line {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border: 2px dashed var(--line);
+  border-radius: 8px;
+  color: #52606b;
+  background: #fff4e8;
+  font-style: italic;
+}
+
+.answer-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.answer-button {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 2px solid var(--line);
+  color: var(--text);
+  background: #fffdfa;
+  text-align: left;
+}
+
+.answer-button:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: #fff4e8;
+}
+
+.answer-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  color: #fff;
+  background: #ff8a3d;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.answer-button.selected {
+  border-width: 3px;
+}
+
+.answer-button.good.selected {
+  border-color: var(--primary);
+  background: #e9fff7;
+}
+
+.answer-button.good.selected .answer-label {
+  background: var(--primary);
+}
+
+.answer-button.bad.selected {
+  border-color: #e85d04;
+  background: #fff0e8;
+}
+
+.answer-button.bad.selected .answer-label {
+  background: #e85d04;
+}
+
+.answer-button.neutral.selected {
+  border-color: #6d7480;
+  background: #f2f3f5;
+}
+
+.answer-button.neutral.selected .answer-label {
+  background: #6d7480;
+}
+
+.feedback {
+  margin-top: 20px;
+  padding: 16px;
+  border: 2px solid var(--line);
+  border-left: 8px solid var(--primary);
+  border-radius: 8px;
+  background: #e9fff7;
+}
+
+.feedback.miss {
+  border-left-color: #e85d04;
+  background: #fff0e8;
+}
+
+.feedback.neutral {
+  border-left-color: #6d7480;
+  background: #f2f3f5;
+}
+
+.feedback strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.result-score {
+  margin-top: 14px;
+  color: var(--accent);
+  font-size: 2.1rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.result-ending {
+  margin-top: 8px;
+  color: var(--text);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.result-message {
+  max-width: 620px;
+  margin-top: 14px;
+  color: #2f3a43;
+}
+
+.review-panel {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 2px dashed #c6d2d7;
+}
+
+.review-panel h3 {
+  font-size: 1.02rem;
+}
+
+.review-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.review-item {
+  padding: 14px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: #fffdfa;
+}
+
+.review-item.good-review {
+  border-left: 5px solid var(--primary);
+}
+
+.review-item.bad-review {
+  border-left: 5px solid #e85d04;
+}
+
+.review-item.neutral-review {
+  border-left: 5px solid #6d7480;
+}
+
+.review-item strong,
+.review-item span {
+  display: block;
+}
+
+.review-item strong {
+  font-size: 0.96rem;
+}
+
+.review-item span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 520px) {
+  .answer-button {
+    grid-template-columns: 30px minmax(0, 1fr);
+    min-height: 72px;
+  }
+
+  .answer-label {
+    width: 30px;
+    height: 30px;
+  }
+
+  .question-meta {
+    flex-wrap: wrap;
+  }
+
+  .panel-actions {
+    justify-content: stretch;
+  }
+
+  .panel-actions .primary-button,
+  .panel-actions .ghost-button {
+    width: 100%;
+  }
+}
