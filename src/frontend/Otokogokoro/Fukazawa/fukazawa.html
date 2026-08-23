@@ -1,2 +1,101 @@
-<meta charset="UTF-8">
-<a href="../../index.html">トップへ戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>深澤理解ゲーム - 男心理解ゲーム</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="fukazawa.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner fukazawa-header">
+      <div class="hero-copy">
+        <p class="kicker">Fukazawa Profile</p>
+        <h1>深澤理解ゲーム</h1>
+        <p class="lead">ESFJとFCPOの深澤が、恋愛や会話の場面でどんな回答を選びそうか予想するゲームです。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout fukazawa-layout">
+    <section class="start-panel intro-panel" id="intro-panel" aria-labelledby="profile-title">
+      <div class="profile-heading">
+        <p class="kicker">Profile</p>
+        <h2 id="profile-title">
+          深澤 陽基
+          <span class="age-badge">2003年生まれ</span>
+        </h2>
+      </div>
+
+      <div class="type-gallery" aria-label="深澤のタイプ">
+        <article class="type-card">
+          <img src="https://www.16personalities.com/static/images/types/headers/consul-mobile.svg" alt="ESFJ 領事タイプのイメージ画像">
+          <div>
+            <span class="type-label">MBTI</span>
+            <strong>ESFJ【領事】</strong>
+          </div>
+        </article>
+
+        <article class="type-card">
+          <img src="https://assets.lovetype16.net/public/images/personalities/FCPO.webp" alt="FCPO 恋愛モンスタータイプのイメージ画像">
+          <div>
+            <span class="type-label love-label">Love Type</span>
+            <strong>FCPO【恋愛モンスター】</strong>
+          </div>
+        </article>
+      </div>
+
+      <div class="profile-summary">
+        <div>
+          <h3>ひとことで</h3>
+          <p>周りの空気を読みながら動くけど、恋愛では意外と感情が表に出やすいタイプ。</p>
+        </div>
+
+        <div>
+          <h3>攻略ヒント</h3>
+          <ul>
+            <li>相手の反応や場の空気をかなり見る</li>
+            <li>駆け引きより、素直な言葉や態度に弱い</li>
+            <li>好きになると分かりやすくテンションが変わる</li>
+            <li>雑に扱われるより、ちゃんと気にかけられる方が刺さる</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>このゲームについて</h3>
+          <p>この先の問題では、一般的な正解ではなく「深澤が実際に選びそうな回答」を予想してください。正解・不正解は一般論ではなく、深澤本人の主観です。</p>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <a class="ghost-button" href="../main.html">担当選択へ</a>
+        <button class="primary-button" id="start-button" type="button">問題に進む</button>
+      </div>
+    </section>
+
+    <section class="start-panel quiz-panel" id="quiz-panel" aria-labelledby="quiz-title" hidden>
+      <p class="kicker">Quiz</p>
+      <h2 id="quiz-title">深澤の回答を予想しよう</h2>
+      <p class="quiz-lead">ここに10問のクイズを入れていきます。まずは自己紹介から問題へ進む流れを確認できます。</p>
+
+      <div class="empty-question">
+        <span>Q</span>
+        <p>問題内容は次の作業で追加します。</p>
+      </div>
+
+      <div class="profile-actions">
+        <button class="ghost-button" id="back-profile-button" type="button">プロフィールへ戻る</button>
+        <a class="ghost-button" href="../main.html">担当選択へ</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="fukazawa.js"></script>
+</body>
+</html>
