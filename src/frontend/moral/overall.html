@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モラル編 - 総合結果</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="shared/moral-results.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner scene-select-header">
+      <div class="hero-copy">
+        <p class="kicker">Moral Result</p>
+        <h1>モラル編の総合結果</h1>
+        <p class="lead">5つのシーンでの回答から、判断の傾向を振り返ります。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout overall-layout">
+    <section class="start-panel" id="incomplete-panel" hidden aria-labelledby="incomplete-title">
+      <p class="kicker">Almost there</p>
+      <h2 id="incomplete-title">総合結果には5パートの完了が必要です</h2>
+      <p class="lead">まだ挑戦していないシーンを完了すると、3つの評価軸とタイプを確認できます。</p>
+      <div class="missing-part-list" id="missing-part-list"></div>
+      <div class="panel-actions">
+        <a class="primary-button" href="main.html">シーン選択へ戻る</a>
+      </div>
+    </section>
+
+    <section class="start-panel" id="overall-panel" hidden aria-labelledby="overall-title">
+      <div class="overall-result-heading">
+        <p class="kicker">Your Moral Style</p>
+        <p class="lead">これは人格や適性の判定ではなく、今回の回答を振り返るための結果です。</p>
+      </div>
+
+      <div class="overall-type-card">
+        <span class="overall-type-icon" id="type-icon" aria-hidden="true">🌟</span>
+        <h2 id="overall-title">3軸バランスマスター</h2>
+        <p id="type-description"></p>
+        <p><strong>強み：</strong><span id="type-strength"></span></p>
+        <p><strong>次に意識する行動：</strong><span id="type-next-action"></span></p>
+      </div>
+
+      <section aria-labelledby="axis-title">
+        <h2 id="axis-title">3つの評価軸</h2>
+        <div class="axis-summary" id="axis-summary"></div>
+      </section>
+
+      <section aria-labelledby="part-score-title">
+        <h2 id="part-score-title">パートごとの結果</h2>
+        <div class="part-score-list" id="part-score-list"></div>
+      </section>
+
+      <p class="moral-save-note" id="reset-status" hidden></p>
+      <div class="panel-actions moral-result-actions">
+        <a class="ghost-button" href="main.html">シーン選択へ</a>
+        <button class="primary-button overall-reset-button" id="clear-results-button" type="button">結果をすべてリセット</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="shared/moral-core.js"></script>
+  <script src="overall.js"></script>
+</body>
+</html>

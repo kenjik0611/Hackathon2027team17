@@ -1,7 +1,7 @@
 const SCORING_CONFIG = {
-  // ミーティング #3後は、まずこの設定を変更すれば仮採点を差し替えられます。
+  // 正誤は共通採点基盤で判定し、ここでは既存の解説ラベルを管理する。
   enabled: true,
-  label: "仮スコア",
+  label: "正解数",
   points: {
     full: 2,
     partial: 1,
@@ -215,6 +215,7 @@ const elements = {
 const state = {
   currentIndex: 0,
   score: 0,
+  correctCount: 0,
   response: null,
   locked: false,
   reviews: []
@@ -223,6 +224,7 @@ const state = {
 function startGame() {
   state.currentIndex = 0;
   state.score = 0;
+  state.correctCount = 0;
   state.response = null;
   state.locked = false;
   state.reviews = [];
@@ -240,7 +242,7 @@ function renderQuestion() {
   elements.progressLabel.textContent = `MISSION ${state.currentIndex + 1} / ${QUESTIONS.length}`;
   elements.progressBar.style.width = `${((state.currentIndex + 1) / QUESTIONS.length) * 100}%`;
   elements.scoreChip.hidden = !SCORING_CONFIG.enabled;
-  elements.scoreChip.textContent = `${SCORING_CONFIG.label} ${state.score}`;
+  elements.scoreChip.textContent = `${SCORING_CONFIG.label} ${state.correctCount} / ${QUESTIONS.length}`;
   elements.questionNumber.textContent = String(state.currentIndex + 1).padStart(2, "0");
   elements.questionTag.textContent = question.tag;
   elements.questionTitle.textContent = question.title;
@@ -502,26 +504,39 @@ function submitAnswer() {
 
   const question = QUESTIONS[state.currentIndex];
   const result = evaluateAnswer(question);
-  const points = SCORING_CONFIG.points[result.rating];
+  const selectedIds = getSelectedIds(question);
+  const scoringResult = window.Team17Moral.scoring.evaluateQuestion("online", question.id, selectedIds);
 
   state.locked = true;
-  if (SCORING_CONFIG.enabled) {
-    state.score += points;
+  if (scoringResult.isCorrect) {
+    state.correctCount += 1;
   }
   state.reviews.push({
     number: state.currentIndex + 1,
     title: question.title,
     rating: result.rating,
-    points
+    isCorrect: scoringResult.isCorrect,
+    questionId: question.id,
+    selectedIds
   });
 
   revealAnswer(question, result);
-  showFeedback(question, result, points);
+  showFeedback(question, result, scoringResult.isCorrect);
 }
 
-function evaluateAnswer(question) {
+function getSelectedIds(question) {
+  if (question.type === "hotspot" || question.type === "multiple") {
+    return [...state.response];
+  }
+  if (question.type === "sequence") {
+    return [...state.response];
+  }
+  return state.response ? [state.response] : [];
+}
+
+function evaluateAnswer(question, response = state.response) {
   if (question.type === "single") {
-    const selected = question.options.find((option) => option.id === state.response);
+    const selected = question.options.find((option) => option.id === response);
     return {
       rating: selected.rating,
       title: getFeedbackTitle(selected.rating),
@@ -530,7 +545,7 @@ function evaluateAnswer(question) {
   }
 
   if (question.type === "hotspot" || question.type === "multiple") {
-    const selectedIds = [...state.response];
+    const selectedIds = [...response];
     const correctCount = selectedIds.filter((id) => question.correctIds.includes(id)).length;
     const wrongCount = selectedIds.length - correctCount;
     const isExact = correctCount === question.correctIds.length && wrongCount === 0;
@@ -550,9 +565,9 @@ function evaluateAnswer(question) {
     return { rating, title: getFeedbackTitle(rating), body };
   }
 
-  const isExact = arraysEqual(state.response, question.idealOrder);
-  const reportBeforeFollow = state.response.indexOf("report") < state.response.indexOf("follow");
-  const isPartial = state.response[0] === "stop" && reportBeforeFollow;
+  const isExact = arraysEqual(response, question.idealOrder);
+  const reportBeforeFollow = response.indexOf("report") < response.indexOf("follow");
+  const isPartial = response[0] === "stop" && reportBeforeFollow;
   const rating = isExact ? "full" : isPartial ? "partial" : "none";
   const body = isExact
     ? "共有停止から報告、事実整理、指示に沿った対応まで、優先順位を押さえられています。"
@@ -612,16 +627,16 @@ function revealAnswer(question, result) {
   elements.feedbackPanel.dataset.rating = result.rating;
 }
 
-function showFeedback(question, result, points) {
+function showFeedback(question, result, isCorrect) {
   elements.feedbackPanel.className = `feedback-panel is-${result.rating}`;
   elements.feedbackBadge.textContent = SCORING_CONFIG.ratingLabels[result.rating];
   elements.feedbackScore.hidden = !SCORING_CONFIG.enabled;
-  elements.feedbackScore.textContent = `${SCORING_CONFIG.label} +${points}`;
+  elements.feedbackScore.textContent = isCorrect ? "正解" : "不正解";
   elements.feedbackTitle.textContent = result.title;
   elements.feedbackBody.textContent = result.body;
   elements.feedbackTakeaway.textContent = question.takeaway;
   elements.feedbackPanel.hidden = false;
-  elements.scoreChip.textContent = `${SCORING_CONFIG.label} ${state.score}`;
+  elements.scoreChip.textContent = `${SCORING_CONFIG.label} ${state.correctCount} / ${QUESTIONS.length}`;
   elements.feedbackPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
@@ -635,30 +650,60 @@ function goToNextQuestion() {
 }
 
 function showResult() {
+  const partResult = window.Team17Moral.scoring.evaluatePart("online", state.reviews);
+  const saved = window.Team17Moral.store.savePart(partResult);
+  renderResult(partResult, saved, false);
+}
+
+function renderResult(partResult, saved, restored) {
+  elements.introScreen.hidden = true;
   elements.quizScreen.hidden = true;
   elements.resultScreen.hidden = false;
 
-  const maxPerQuestion = Math.max(...Object.values(SCORING_CONFIG.points));
-  const maxScore = maxPerQuestion * QUESTIONS.length;
-  const ratio = maxScore === 0 ? 0 : state.score / maxScore;
-  const band = SCORING_CONFIG.resultBands.find((item) => ratio >= item.minRatio);
-
   elements.resultScoreWrap.hidden = !SCORING_CONFIG.enabled;
-  elements.resultScore.textContent = `${state.score} / ${maxScore}`;
-  elements.resultTitle.textContent = SCORING_CONFIG.enabled ? band.title : "5つの場面を振り返りました";
-  elements.resultBody.textContent = SCORING_CONFIG.enabled
-    ? band.body
-    : "採点を表示しない設定です。各ミッションの解説を、次のオンライン業務で活かしてみましょう。";
+  elements.resultScore.textContent = `${partResult.score} / ${partResult.maxScore}`;
+  elements.resultTitle.textContent = `5つのミッション中 ${partResult.correctCount} 問正解`;
+  elements.resultBody.textContent = "部分的に合っていた回答も、解説を通して次のオンライン業務に活かしてみましょう。";
 
   elements.resultReview.innerHTML = state.reviews.map((review) => `
     <div class="review-item">
       <span>${String(review.number).padStart(2, "0")}</span>
       <strong>${review.title}</strong>
-      <span class="review-rating">${SCORING_CONFIG.ratingLabels[review.rating]}</span>
+      <span class="review-rating">${review.isCorrect ? "正解" : SCORING_CONFIG.ratingLabels[review.rating]}</span>
     </div>
   `).join("");
 
+  const saveStatus = document.getElementById("save-status");
+  saveStatus.hidden = false;
+  saveStatus.classList.toggle("is-warning", !saved);
+  saveStatus.textContent = restored
+    ? "保存済みの最新結果を表示しています。"
+    : saved ? "この結果をブラウザに保存しました。" : window.Team17Moral.store.getLastError();
+
   focusCurrentContent();
+}
+
+function restoreSavedResult() {
+  const saved = window.Team17Moral.store.getPart("online");
+  if (!saved) {
+    return;
+  }
+
+  state.reviews = saved.responses.map((response, index) => {
+    const question = QUESTIONS.find((item) => item.id === response.questionId);
+    const evaluation = window.Team17Moral.scoring.evaluateQuestion("online", response.questionId, response.selectedIds);
+    const recordedResponse = question.type === "single" ? response.selectedIds[0] : response.selectedIds;
+    const review = evaluateAnswer(question, recordedResponse);
+    return {
+      number: index + 1,
+      title: question.title,
+      rating: review.rating,
+      isCorrect: evaluation.isCorrect,
+      questionId: response.questionId,
+      selectedIds: response.selectedIds
+    };
+  });
+  renderResult(saved, true, true);
 }
 
 function focusCurrentContent() {
@@ -669,3 +714,5 @@ elements.startGame.addEventListener("click", startGame);
 elements.retryGame.addEventListener("click", startGame);
 elements.submitAnswer.addEventListener("click", submitAnswer);
 elements.nextQuestion.addEventListener("click", goToNextQuestion);
+
+restoreSavedResult();

@@ -218,7 +218,8 @@ const elements = {
   resultScore: document.getElementById("result-score"),
   resultMessage: document.getElementById("result-message"),
   reviewList: document.getElementById("review-list"),
-  restartButton: document.getElementById("restart-button")
+  restartButton: document.getElementById("restart-button"),
+  saveStatus: document.getElementById("save-status")
 };
 
 const pointPerQuestion = 10;
@@ -342,6 +343,8 @@ function selectAnswer(selectedIndex) {
   }
 
   state.answers.push({
+    questionId: `outside-q${state.order[state.current] + 1}`,
+    selectedIds: [`option-${selectedChoice.originalIndex + 1}`],
     question: question.question,
     selected: selectedChoice.text,
     correct: correctChoice.text,
@@ -381,10 +384,16 @@ function goNext() {
 }
 
 function renderResult() {
+  const partResult = window.Team17Moral.scoring.evaluatePart("outside", state.answers);
+  const saved = window.Team17Moral.store.savePart(partResult);
+  renderSavedResult(partResult, saved, false);
+}
+
+function renderSavedResult(partResult, saved, restored) {
   elements.quizPanel.hidden = true;
   elements.resultPanel.hidden = false;
-  elements.resultScore.textContent = String(state.score);
-  elements.resultMessage.textContent = getResultMessage(state.score);
+  elements.resultScore.textContent = String(partResult.score);
+  elements.resultMessage.textContent = getResultMessage(partResult.score);
   elements.reviewList.innerHTML = "";
 
   state.answers.forEach((answer, index) => {
@@ -403,6 +412,12 @@ function renderResult() {
     item.append(badge, body);
     elements.reviewList.appendChild(item);
   });
+
+  elements.saveStatus.hidden = false;
+  elements.saveStatus.classList.toggle("is-warning", !saved);
+  elements.saveStatus.textContent = restored
+    ? "保存済みの最新結果を表示しています。"
+    : saved ? "この結果をブラウザに保存しました。" : window.Team17Moral.store.getLastError();
 }
 
 function getResultMessage(score) {
@@ -421,4 +436,32 @@ function getResultMessage(score) {
 elements.nextButton.addEventListener("click", goNext);
 elements.restartButton.addEventListener("click", startQuiz);
 
-startQuiz();
+function restoreSavedResult() {
+  const saved = window.Team17Moral.store.getPart("outside");
+  if (!saved) {
+    return false;
+  }
+
+  state.answers = saved.responses.map((response) => {
+    const questionIndex = Number(response.questionId.replace("outside-q", "")) - 1;
+    const question = questions[questionIndex];
+    const selectedIndex = Number(response.selectedIds[0].replace("option-", "")) - 1;
+    const selected = question.choices[selectedIndex] || "回答なし";
+    const correct = question.choices[question.answerIndex];
+    const evaluation = window.Team17Moral.scoring.evaluateQuestion("outside", response.questionId, response.selectedIds);
+    return {
+      questionId: response.questionId,
+      selectedIds: response.selectedIds,
+      question: question.question,
+      selected,
+      correct,
+      isCorrect: evaluation.isCorrect
+    };
+  });
+  renderSavedResult(saved, true, true);
+  return true;
+}
+
+if (!restoreSavedResult()) {
+  startQuiz();
+}

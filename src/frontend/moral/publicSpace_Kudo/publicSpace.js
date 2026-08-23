@@ -360,6 +360,8 @@ let scores = {
   judgment: 0
 };
 
+let responseLog = [];
+
 
 /* =========================================================
    3. HTML要素
@@ -517,6 +519,8 @@ function startQuiz() {
     care: 0,
     judgment: 0
   };
+
+  responseLog = [];
 
   moralBar.style.width = "0%";
   careBar.style.width = "0%";
@@ -721,6 +725,13 @@ function selectAnswer(answerIndex) {
 
   scores.judgment +=
     answer.score.judgment;
+
+  responseLog.push({
+    questionId: `public-q${currentQuestionIndex + 1}`,
+    selectedIds: [`option-${answerIndex + 1}`],
+    title: question.title,
+    selectedAnswer: answer.text
+  });
 
 
   /*
@@ -1170,125 +1181,107 @@ function getFinalAnalysis(result) {
 ========================================================= */
 
 function showResult() {
+  const partResult =
+    window.Team17Moral.scoring.evaluatePart(
+      "public",
+      responseLog
+    );
 
-  const result =
-    calculateScores();
+  const saved =
+    window.Team17Moral.store.savePart(partResult);
+
+  renderPartResult(partResult, saved, false);
+}
 
 
-  const overallResult =
-    getOverallResult(result.overall);
-
-
-  const moralType =
-    getMoralType(result);
-
+function renderPartResult(partResult, saved, restored) {
 
   showScreen(resultScreen);
 
-
-  /* 総合点 */
-
   animateNumber(
     overallScoreElement,
-    result.overall,
-    1000
+    partResult.score,
+    600
   );
 
-
   overallRank.textContent =
-    overallResult.rank;
-
+    `${partResult.correctCount} / ${partResult.questionCount} 問正解`;
 
   overallTitle.textContent =
-    overallResult.title;
-
+    "公共の場編の結果";
 
   overallComment.textContent =
-    overallResult.comment;
-
-
-  /* 円グラフ */
+    "正解・不正解だけでなく、解説を通して次の行動を振り返ってみましょう。";
 
   const ring =
     document.querySelector(".score-ring");
 
-
   const degree =
-    result.overall * 3.6;
+    partResult.score * 3.6;
+
+  ring.style.background = `
+    conic-gradient(
+      #ffffff 0deg,
+      #ffffff ${degree}deg,
+      rgba(255,255,255,0.18) ${degree}deg
+    )
+  `;
+
+  finalAnalysis.innerHTML = "";
+
+  responseLog.forEach((response, index) => {
+    const evaluation = window.Team17Moral.scoring.evaluateQuestion(
+      "public",
+      response.questionId,
+      response.selectedIds
+    );
+    const item = document.createElement("p");
+    const status = evaluation.isCorrect ? "正解" : "確認";
+    item.textContent = `Q${index + 1} ${response.title}：${status}（${response.selectedAnswer}）`;
+    finalAnalysis.appendChild(item);
+  });
+
+  const saveStatus =
+    document.getElementById("save-status");
+
+  saveStatus.hidden = false;
+  saveStatus.classList.toggle("is-warning", !saved);
+  saveStatus.textContent = restored
+    ? "保存済みの最新結果を表示しています。"
+    : saved
+      ? "この結果をブラウザに保存しました。"
+      : window.Team17Moral.store.getLastError();
+}
 
 
-  setTimeout(() => {
+function restoreSavedResult() {
 
-    ring.style.background = `
-      conic-gradient(
-        #ffffff 0deg,
-        #ffffff ${degree}deg,
-        rgba(255,255,255,0.18) ${degree}deg
-      )
-    `;
+  const saved =
+    window.Team17Moral.store.getPart("public");
 
-  }, 100);
+  if (!saved) {
+    return;
+  }
 
+  responseLog = saved.responses.map((response) => {
+    const questionIndex =
+      Number(response.questionId.replace("public-q", "")) - 1;
 
-  /* 3軸 */
+    const question =
+      questions[questionIndex];
 
-  animateNumber(
-    moralScoreElement,
-    result.moral,
-    900
-  );
+    const answerIndex =
+      Number(response.selectedIds[0].replace("option-", "")) - 1;
 
+    return {
+      questionId: response.questionId,
+      selectedIds: response.selectedIds,
+      title: question.title,
+      selectedAnswer: question.answers[answerIndex].text
+    };
+  });
 
-  animateNumber(
-    careScoreElement,
-    result.care,
-    900
-  );
-
-
-  animateNumber(
-    judgmentScoreElement,
-    result.judgment,
-    900
-  );
-
-
-  setTimeout(() => {
-
-    moralBar.style.width =
-      `${result.moral}%`;
-
-    careBar.style.width =
-      `${result.care}%`;
-
-    judgmentBar.style.width =
-      `${result.judgment}%`;
-
-  }, 200);
-
-
-  /* タイプ */
-
-  typeIcon.textContent =
-    moralType.icon;
-
-
-  typeName.textContent =
-    moralType.name;
-
-
-  typeDescription.textContent =
-    moralType.description;
-
-
-  typeComment.textContent =
-    `「${moralType.comment}」`;
-
-
-  /* 最後の長めコメント */
-
-  finalAnalysis.textContent =
-    getFinalAnalysis(result);
+  renderPartResult(saved, true, true);
 }
 
 
@@ -1363,6 +1356,8 @@ function retryQuiz() {
     judgment: 0
   };
 
+  responseLog = [];
+
 
   moralBar.style.width =
     "0%";
@@ -1415,3 +1410,5 @@ retryButton.addEventListener(
 
 totalQuestionNumber.textContent =
   questions.length;
+
+restoreSavedResult();

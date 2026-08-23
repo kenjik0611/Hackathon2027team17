@@ -197,8 +197,10 @@ const elements = {
   modelResponseText: document.getElementById("model-response-text"),
   takeawayText: document.getElementById("takeaway-text"),
   resultTitle: document.getElementById("result-title"),
+  resultScore: document.getElementById("result-score"),
   resultMessage: document.getElementById("result-message"),
-  reviewList: document.getElementById("review-list")
+  reviewList: document.getElementById("review-list"),
+  saveStatus: document.getElementById("save-status")
 };
 
 const state = {
@@ -323,7 +325,10 @@ function submitResponse() {
   state.answered = true;
   state.records.push({
     time: mission.time,
-    title: mission.title
+    title: mission.title,
+    questionId: mission.id,
+    selectedIds: [...state.selectedIds],
+    isCorrect: window.Team17Moral.scoring.evaluateQuestion("office", mission.id, state.selectedIds).isCorrect
   });
 
   elements.phraseBank.querySelectorAll(".phrase-button").forEach((button) => {
@@ -357,10 +362,18 @@ function goToNextMission() {
 }
 
 function showResult() {
+  const partResult = window.Team17Moral.scoring.evaluatePart("office", state.records);
+  const saved = window.Team17Moral.store.savePart(partResult);
+  renderResult(partResult, saved, false);
+}
+
+function renderResult(partResult, saved, restored) {
   elements.missionPanel.hidden = true;
+  elements.introPanel.hidden = true;
   elements.resultPanel.hidden = false;
-  elements.resultTitle.textContent = "今日の対応を振り返ろう";
-  elements.resultMessage.textContent = "8つの場面を最後まで確認しました。伝え方の例を参考に、実際の職場でも事実・相手への影響・次の行動を整理してみましょう。";
+  elements.resultTitle.textContent = "職場編の結果";
+  elements.resultScore.textContent = String(partResult.score);
+  elements.resultMessage.textContent = `${partResult.correctCount} / ${partResult.questionCount} 問正解です。伝え方の例を参考に、実際の職場でも事実・相手への影響・次の行動を整理してみましょう。`;
   elements.reviewList.innerHTML = "";
 
   state.records.forEach((record) => {
@@ -375,7 +388,7 @@ function showResult() {
     title.className = "review-title";
     title.textContent = record.title;
     status.className = "review-status";
-    status.textContent = "確認済み";
+    status.textContent = record.isCorrect ? "正解" : "確認";
 
     item.append(time, title, status);
     elements.reviewList.appendChild(item);
@@ -383,6 +396,31 @@ function showResult() {
 
   window.scrollTo({ top: 0, behavior: "smooth" });
   elements.resultTitle.focus({ preventScroll: true });
+  elements.saveStatus.hidden = false;
+  elements.saveStatus.classList.toggle("is-warning", !saved);
+  elements.saveStatus.textContent = restored
+    ? "保存済みの最新結果を表示しています。"
+    : saved ? "この結果をブラウザに保存しました。" : window.Team17Moral.store.getLastError();
+}
+
+function restoreSavedResult() {
+  const saved = window.Team17Moral.store.getPart("office");
+  if (!saved) {
+    return;
+  }
+
+  state.records = saved.responses.map((response) => {
+    const mission = missions.find((item) => item.id === response.questionId);
+    const evaluation = window.Team17Moral.scoring.evaluateQuestion("office", response.questionId, response.selectedIds);
+    return {
+      time: mission.time,
+      title: mission.title,
+      questionId: response.questionId,
+      selectedIds: response.selectedIds,
+      isCorrect: evaluation.isCorrect
+    };
+  });
+  renderResult(saved, true, true);
 }
 
 elements.startButton.addEventListener("click", startDay);
@@ -390,3 +428,5 @@ elements.restartButton.addEventListener("click", startDay);
 elements.clearButton.addEventListener("click", clearSelection);
 elements.submitButton.addEventListener("click", submitResponse);
 elements.nextButton.addEventListener("click", goToNextMission);
+
+restoreSavedResult();

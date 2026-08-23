@@ -6,6 +6,7 @@
   <title>モラルチェック編 - シーン選択</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="shared/moral-results.css">
   <link rel="icon" href="data:,">
 </head>
 <body>
@@ -25,46 +26,58 @@
       <h2 id="scene-select-title">どのシーンで遊びますか？</h2>
 
       <div class="scene-grid">
-        <a class="scene-card" href="house_Kiyose/house.html">
+        <a class="scene-card" href="house_Kiyose/house.html" data-part-id="house">
           <span class="scene-icon" aria-hidden="true">🏠</span>
           <span>
             <strong>家庭</strong>
             <small>家族や同居人との場面</small>
+            <small class="scene-status" data-scene-status>未挑戦</small>
           </span>
         </a>
 
-        <a class="scene-card" href="office_Arita/office.html">
+        <a class="scene-card" href="office_Arita/office.html" data-part-id="office">
           <span class="scene-icon" aria-hidden="true">🏢</span>
           <span>
             <strong>職場</strong>
             <small>同僚や上司との場面</small>
+            <small class="scene-status" data-scene-status>未挑戦</small>
           </span>
         </a>
 
-        <a class="scene-card" href="online_Suzuki/online.html">
+        <a class="scene-card" href="online_Suzuki/online.html" data-part-id="online">
           <span class="scene-icon" aria-hidden="true">💬</span>
           <span>
             <strong>オンライン</strong>
-            <small>SNSやチャットでの場面</small>
+            <small>Web会議や在宅勤務での場面</small>
+            <small class="scene-status" data-scene-status>未挑戦</small>
           </span>
         </a>
 
-        <a class="scene-card" href="outsideCompany_Fukazawa/outsideCompany.html">
+        <a class="scene-card" href="outsideCompany_Fukazawa/outsideCompany.html" data-part-id="outside">
           <span class="scene-icon" aria-hidden="true">🤝</span>
           <span>
             <strong>社外</strong>
             <small>取引先やお客様との場面</small>
+            <small class="scene-status" data-scene-status>未挑戦</small>
           </span>
         </a>
 
-        <a class="scene-card" href="publicSpace_Kudo/publicSpace.html">
+        <a class="scene-card" href="publicSpace_Kudo/publicSpace.html" data-part-id="public">
           <span class="scene-icon" aria-hidden="true">🚉</span>
           <span>
             <strong>公共の場</strong>
             <small>電車や街中などの場面</small>
+            <small class="scene-status" data-scene-status>未挑戦</small>
           </span>
         </a>
       </div>
+
+      <section class="moral-progress-summary" aria-live="polite">
+        <p>モラル編の完了状況：<strong id="completion-count">0 / 5</strong></p>
+        <div class="panel-actions moral-result-actions">
+          <a class="primary-button moral-overall-link" id="overall-result-link" href="overall.html" aria-disabled="true">モラル編の総合結果を見る</a>
+        </div>
+      </section>
 
       <div class="panel-actions">
         <a class="ghost-button" href="../index.html">トップへ戻る</a>
@@ -75,5 +88,7 @@
   <footer>
     <p>Hackathon 2027 Team 17</p>
   </footer>
+  <script src="shared/moral-core.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

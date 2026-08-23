@@ -90,7 +90,8 @@ const elements = {
   finalMaxScore: document.getElementById("final-max-score"),
   resultMessage: document.getElementById("result-message"),
   reviewList: document.getElementById("review-list"),
-  restartButton: document.getElementById("restart-button")
+  restartButton: document.getElementById("restart-button"),
+  saveStatus: document.getElementById("save-status")
 };
 
 const state = {
@@ -110,14 +111,15 @@ function shuffleArray(items) {
   return shuffled;
 }
 
-function prepareQuestion(question) {
+function prepareQuestion(question, questionIndex) {
   const answers = [
-    { text: question.correct, isCorrect: true },
-    ...question.wrong.map((answer) => ({ text: answer, isCorrect: false }))
+    { id: "correct", text: question.correct, isCorrect: true },
+    ...question.wrong.map((answer, answerIndex) => ({ id: `wrong-${answerIndex + 1}`, text: answer, isCorrect: false }))
   ];
   const preparedAnswers = shuffleArray(answers);
   return {
     ...question,
+    questionId: `house-q${questionIndex + 1}`,
     answers: preparedAnswers,
     correctIndex: preparedAnswers.findIndex((answer) => answer.isCorrect)
   };
@@ -186,6 +188,8 @@ function selectAnswer(selectedIndex) {
   }
 
   state.answerLog.push({
+    questionId: question.questionId,
+    selectedIds: [selectedAnswer.id],
     questionTitle: question.title,
     selectedAnswer: selectedAnswer.text,
     correctAnswer: question.correct,
@@ -233,14 +237,26 @@ function goNext() {
 }
 
 function showResult() {
-  const maxScore = state.preparedQuestions.length * pointPerQuestion;
+  const partResult = window.Team17Moral.scoring.evaluatePart("house", state.answerLog);
+  const saved = window.Team17Moral.store.savePart(partResult);
+  renderResult(partResult, saved, false);
+}
+
+function renderResult(partResult, saved, restored) {
   elements.gamePanel.hidden = true;
+  elements.startPanel.hidden = true;
   elements.resultPanel.hidden = false;
 
-  elements.finalScore.textContent = state.totalScore;
-  elements.finalMaxScore.textContent = maxScore;
-  elements.resultMessage.textContent = getResultMessage(state.totalScore, maxScore);
+  elements.finalScore.textContent = partResult.score;
+  elements.finalMaxScore.textContent = partResult.maxScore;
+  elements.resultMessage.textContent = getResultMessage(partResult.score, partResult.maxScore);
   renderReviewList();
+
+  elements.saveStatus.hidden = false;
+  elements.saveStatus.classList.toggle("is-warning", !saved);
+  elements.saveStatus.textContent = restored
+    ? "保存済みの最新結果を表示しています。"
+    : saved ? "この結果をブラウザに保存しました。" : window.Team17Moral.store.getLastError();
 }
 
 function getResultMessage(score, maxScore) {
@@ -280,7 +296,34 @@ function backToStart() {
   elements.resultPanel.hidden = true;
 }
 
+function restoreSavedResult() {
+  const saved = window.Team17Moral.store.getPart("house");
+  if (!saved) {
+    return;
+  }
+
+  state.answerLog = saved.responses.map((response) => {
+    const questionIndex = Number(response.questionId.replace("house-q", "")) - 1;
+    const question = questions[questionIndex];
+    const selectedId = response.selectedIds[0];
+    const selectedAnswer = selectedId === "correct"
+      ? question.correct
+      : question.wrong[Number(selectedId.replace("wrong-", "")) - 1] || "回答なし";
+    return {
+      questionId: response.questionId,
+      selectedIds: response.selectedIds,
+      questionTitle: question.title,
+      selectedAnswer,
+      correctAnswer: question.correct,
+      isCorrect: selectedId === "correct"
+    };
+  });
+  renderResult(saved, true, true);
+}
+
 elements.startButton.addEventListener("click", startGame);
 elements.nextButton.addEventListener("click", goNext);
 elements.restartButton.addEventListener("click", startGame);
 elements.quitButton.addEventListener("click", backToStart);
+
+restoreSavedResult();

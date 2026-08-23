@@ -8,6 +8,7 @@
   <title>公共モラルチェッカー</title>
 
   <link rel="stylesheet" href="publicSpace.css">
+  <link rel="stylesheet" href="../shared/moral-results.css">
 </head>
 
 <body>
@@ -29,8 +30,8 @@
 
       <div class="start-card">
 
-        <a href="../../index.html" class="back-link">
-          ← トップへ戻る
+        <a href="../main.html" class="back-link">
+          ← シーン選択へ戻る
         </a>
 
         <div class="start-icon">
@@ -72,12 +73,12 @@
           <div class="feature">
 
             <div class="feature-icon">
-              ⚖️
+              💯
             </div>
 
             <div>
-              <strong>3つの評価軸</strong>
-              <span>モラル・配慮・状況判断</span>
+              <strong>100点満点</strong>
+              <span>正解数でシンプル採点</span>
             </div>
 
           </div>
@@ -86,12 +87,12 @@
           <div class="feature">
 
             <div class="feature-icon">
-              ✨
+              📝
             </div>
 
             <div>
-              <strong>9タイプ診断</strong>
-              <span>最後にまとめて結果発表</span>
+              <strong>回答振り返り</strong>
+              <span>選んだ行動を最後に確認</span>
             </div>
 
           </div>
@@ -102,7 +103,7 @@
         <button id="start-button" class="primary-button">
 
           <span>
-            診断をはじめる
+            クイズをはじめる
           </span>
 
           <span class="button-arrow">
@@ -134,8 +135,8 @@
 
         <header class="quiz-header">
 
-          <a href="../../index.html" class="mini-back-link">
-            ← トップへ戻る
+          <a href="../main.html" class="mini-back-link">
+            ← シーン選択へ戻る
           </a>
 
 
@@ -371,11 +372,11 @@
           </p>
 
           <h2>
-            診断結果
+            公共の場編の結果
           </h2>
 
           <p>
-            5つの選択から、あなたの公共モラルを分析しました
+            5つの場面での正解数を振り返ります
           </p>
 
         </div>
@@ -392,7 +393,7 @@
             <div class="score-ring-inner">
 
               <span class="score-label">
-                公共モラル度
+                正解スコア
               </span>
 
 
@@ -453,7 +454,7 @@
              3軸
         ========================================= -->
 
-        <div class="analysis-card">
+        <div class="analysis-card" hidden>
 
 
           <div class="section-heading">
@@ -670,7 +671,7 @@
              タイプ診断
         ========================================= -->
 
-        <div class="type-card">
+        <div class="type-card" hidden>
 
 
           <div class="section-heading type-section-heading">
@@ -762,7 +763,7 @@
               </span>
 
               <h3>
-                あなたへの総評
+                今回の振り返り
               </h3>
 
             </div>
@@ -774,7 +775,7 @@
             id="final-analysis"
             class="final-analysis">
 
-            診断結果から総評を表示します。
+            回答した内容がここに表示されます。
 
           </div>
 
@@ -802,14 +803,16 @@
 
 
           <a
-            href="../../index.html"
+            href="../main.html"
             class="secondary-button">
 
-            トップへ戻る
+            シーン選択へ
 
           </a>
 
         </div>
+
+        <p class="moral-save-note" id="save-status" hidden></p>
 
 
         <p class="result-note">
@@ -826,6 +829,7 @@
   </main>
 
 
+  <script src="../shared/moral-core.js"></script>
   <script src="publicSpace.js"></script>
 
 </body>

@@ -6,6 +6,7 @@
   <title>オンライン編 - モラルチェック</title>
   <link rel="stylesheet" href="../../style.css">
   <link rel="stylesheet" href="online.css">
+  <link rel="stylesheet" href="../shared/moral-results.css">
   <link rel="icon" href="data:,">
 </head>
 <body class="online-page">
@@ -38,8 +39,8 @@
         </ol>
 
         <div class="provisional-note">
-          <strong>現在は仮採点です</strong>
-          <p>8月23日のミーティングで採点方法を決めた後、設定だけで変更できる構造にしています。</p>
+          <strong>全5問・100点満点</strong>
+          <p>完全に正しい選択・並び順だけを正解とします。部分的に合っていた回答も、解説で振り返れます。</p>
         </div>
 
         <div class="panel-actions intro-actions">
@@ -51,7 +52,7 @@
       <div id="quiz-screen" hidden>
         <div class="quiz-topbar">
           <strong id="progress-label">MISSION 1 / 5</strong>
-          <span class="score-chip" id="score-chip">仮スコア 0</span>
+          <span class="score-chip" id="score-chip">正解数 0 / 5</span>
         </div>
         <div class="progress-track" aria-hidden="true">
           <span id="progress-bar"></span>
@@ -101,8 +102,8 @@
 
         <div class="result-summary">
           <div class="result-score" id="result-score-wrap">
-            <span id="result-score">0 / 10</span>
-            <small>仮スコア</small>
+            <span id="result-score">0 / 100</span>
+            <small>正解スコア</small>
           </div>
           <div>
             <h3 id="result-title"></h3>
@@ -111,6 +112,7 @@
         </div>
 
         <div class="result-review" id="result-review" aria-label="ミッションごとの振り返り"></div>
+        <p class="moral-save-note" id="save-status" hidden></p>
 
         <div class="panel-actions result-actions">
           <a class="ghost-button link-button" href="../main.html">シーン選択へ戻る</a>
@@ -124,6 +126,7 @@
     <p>Hackathon 2027 Team 17</p>
   </footer>
 
+  <script src="../shared/moral-core.js"></script>
   <script src="online.js"></script>
 </body>
 </html>

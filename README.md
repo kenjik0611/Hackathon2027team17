@@ -81,7 +81,18 @@ git checkout -b your-name/feature-name
 
 `src/`、`docs/` などのファイルを編集・追加する。
 
-### 5. 変更を保存してpush
+### 5. ブラウザで動作を確認する
+
+モラル編の結果はブラウザの `localStorage` に保存されます。HTMLファイルを直接開くのではなく、ローカルHTTPサーバーから確認してください。
+
+```bash
+cd src/frontend
+py -m http.server 8000
+```
+
+ブラウザで [http://localhost:8000/](http://localhost:8000/) を開きます。停止するときは、コマンド画面で `Ctrl + C` を押します。
+
+### 6. 変更を保存してpush
 
 ```bash
 git add .
@@ -89,7 +100,7 @@ git commit -m "変更内容の説明"
 git push origin your-name/feature-name
 ```
 
-### 6. GitHub上でPull Requestを作成
+### 7. GitHub上でPull Requestを作成
 
 1. GitHubのリポジトリページを開く
 2. 「Compare & pull request」をクリック
