@@ -4,8 +4,12 @@
   }
 
   const store = window.MoralResultStore;
+  const config = window.MoralResultConfig || {};
   const aggregate = store.buildAggregate();
   const markdown = store.buildMarkdown(aggregate);
+  const resultType = store.getResultType(aggregate);
+  const commentDetails = store.getCommentDetails(aggregate);
+  const spreadsheetEndpoint = (config.spreadsheetEndpoint || "").trim();
 
   const elements = {
     meta: document.getElementById("summary-meta"),
@@ -13,11 +17,16 @@
     completionBox: document.getElementById("completion-box"),
     axisList: document.getElementById("axis-list"),
     themeList: document.getElementById("theme-list"),
-    comment: document.getElementById("summary-comment"),
-    markdownOutput: document.getElementById("markdown-output"),
+    resultTypeSection: document.getElementById("result-type-section"),
+    resultTypeImage: document.getElementById("result-type-image"),
+    resultTypeName: document.getElementById("result-type-name"),
+    resultTypeDescription: document.getElementById("result-type-description"),
+    commentGood: document.getElementById("comment-good"),
+    commentImprovement: document.getElementById("comment-improvement"),
     saveMessage: document.getElementById("save-message"),
-    copyMarkdown: document.getElementById("copy-markdown"),
     saveRecord: document.getElementById("save-record"),
+    submitSheet: document.getElementById("submit-sheet"),
+    sheetSendStatus: document.getElementById("sheet-send-status"),
     radarChart: document.getElementById("radar-chart")
   };
 
@@ -28,13 +37,19 @@
       ? "5テーマすべて完了しています。集計結果を最新結果として保存できます。"
       : `未完了テーマがあります。現在 ${aggregate.completedCount} / ${aggregate.totalThemes} テーマ完了です。`;
     elements.completionBox.classList.toggle("is-incomplete", !aggregate.complete);
-    elements.comment.textContent = store.getComment(aggregate);
-    elements.markdownOutput.value = markdown;
+    elements.resultTypeSection.className = `summary-section result-type-section ${resultType.themeClass || "type-starter"}`;
+    elements.resultTypeImage.src = resultType.image;
+    elements.resultTypeImage.alt = `${resultType.name}のイラスト`;
+    elements.resultTypeName.textContent = resultType.name;
+    elements.resultTypeDescription.textContent = resultType.description;
+    elements.commentGood.textContent = commentDetails.good;
+    elements.commentImprovement.textContent = commentDetails.improvement;
 
     renderAxisList();
     renderThemeList();
     renderRadarChart();
     renderRecordCount();
+    renderSheetSubmitState();
   }
 
   function renderAxisList() {
@@ -162,23 +177,72 @@
       : "";
   }
 
-  async function copyMarkdown() {
-    try {
-      await navigator.clipboard.writeText(elements.markdownOutput.value);
-      elements.saveMessage.textContent = "Markdownをコピーしました。";
-    } catch (error) {
-      elements.markdownOutput.select();
-      document.execCommand("copy");
-      elements.saveMessage.textContent = "Markdownをコピーしました。";
+  function renderSheetSubmitState() {
+    if (!spreadsheetEndpoint) {
+      elements.submitSheet.disabled = true;
+      elements.sheetSendStatus.textContent = "送信先URLが未設定です。";
+      return;
     }
+
+    if (!aggregate.complete) {
+      elements.submitSheet.disabled = true;
+      elements.sheetSendStatus.textContent = `5テーマ完了後に送信できます。現在 ${aggregate.completedCount} / ${aggregate.totalThemes} テーマ完了です。`;
+      return;
+    }
+
+    elements.submitSheet.disabled = false;
+    elements.sheetSendStatus.textContent = "最新結果をスプレッドシートへ送信できます。";
   }
 
   function saveRecord() {
-    const record = store.saveSubmissionRecord(aggregate, elements.markdownOutput.value);
+    const record = store.saveSubmissionRecord(aggregate, markdown);
     elements.saveMessage.textContent = `最新結果として保存しました。最終保存: ${new Date(record.submittedAt).toLocaleString("ja-JP")} / 前回の保存結果は上書きされます。`;
   }
 
-  elements.copyMarkdown.addEventListener("click", copyMarkdown);
+  async function submitSheet() {
+    if (!spreadsheetEndpoint || !aggregate.complete) {
+      renderSheetSubmitState();
+      return;
+    }
+
+    const submittedAt = new Date().toISOString();
+    const payload = {
+      ...store.buildSheetPayload(aggregate, markdown),
+      submittedAt
+    };
+
+    elements.submitSheet.disabled = true;
+    elements.sheetSendStatus.textContent = "送信中です。";
+
+    try {
+      const request = {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload)
+      };
+
+      if (spreadsheetEndpoint.includes("script.google.com")) {
+        request.mode = "no-cors";
+      }
+
+      const response = await fetch(spreadsheetEndpoint, request);
+      if (request.mode !== "no-cors" && !response.ok) {
+        throw new Error("Spreadsheet request failed");
+      }
+
+      store.saveSubmissionRecord(aggregate, markdown);
+      elements.sheetSendStatus.textContent = `送信リクエストを送信しました。最終送信: ${new Date(submittedAt).toLocaleString("ja-JP")}`;
+      elements.saveMessage.textContent = "最新結果をローカルにも保存しました。";
+    } catch (error) {
+      elements.sheetSendStatus.textContent = "送信できませんでした。送信先URLまたは通信環境を確認してください。";
+    } finally {
+      elements.submitSheet.disabled = !spreadsheetEndpoint || !aggregate.complete;
+    }
+  }
+
   elements.saveRecord.addEventListener("click", saveRecord);
+  elements.submitSheet.addEventListener("click", submitSheet);
   render();
 })();

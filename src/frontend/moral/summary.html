@@ -52,19 +52,40 @@
         <div class="theme-list" id="theme-list"></div>
       </section>
 
-      <section class="summary-section" aria-labelledby="comment-title">
-        <h3 id="comment-title">AI風コメント</h3>
-        <p class="summary-comment" id="summary-comment"></p>
+      <section class="summary-section result-type-section" id="result-type-section" aria-labelledby="result-type-title">
+        <div class="result-type-card">
+          <img class="result-type-image" id="result-type-image" src="assets/result-type-starter.png" alt="診断タイプのイラスト">
+          <div class="result-type-copy">
+            <p class="kicker">Result Type</p>
+            <h3 id="result-type-title">あなたはこういう人です</h3>
+            <strong id="result-type-name"></strong>
+            <p id="result-type-description"></p>
+          </div>
+        </div>
       </section>
 
-      <section class="summary-section" aria-labelledby="markdown-title">
-        <h3 id="markdown-title">Markdown出力</h3>
-        <textarea id="markdown-output" readonly></textarea>
+      <section class="summary-section" aria-labelledby="comment-title">
+        <h3 id="comment-title">AI風コメント</h3>
+        <div class="comment-grid">
+          <div class="comment-block">
+            <span>良い点</span>
+            <p id="comment-good"></p>
+          </div>
+          <div class="comment-block">
+            <span>気をつけたい点</span>
+            <p id="comment-improvement"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="summary-section" aria-labelledby="send-title">
+        <h3 id="send-title">スプレッドシート送信</h3>
+        <p class="sheet-note" id="sheet-send-status" aria-live="polite"></p>
+        <button class="primary-button" id="submit-sheet" type="button">スプレッドシートに送信</button>
         <p class="save-message" id="save-message" aria-live="polite"></p>
       </section>
 
       <div class="panel-actions summary-actions">
-        <button class="ghost-button" id="copy-markdown" type="button">Markdownをコピー</button>
         <button class="primary-button" id="save-record" type="button">最新結果として保存</button>
         <a class="ghost-button link-button" href="main.html">シーン選択へ戻る</a>
       </div>
@@ -75,6 +96,7 @@
     <p>Hackathon 2027 Team 17</p>
   </footer>
 
+  <script src="moralResultConfig.js"></script>
   <script src="moralResultStore.js"></script>
   <script src="summary.js"></script>
 </body>
