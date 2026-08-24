@@ -347,6 +347,39 @@ const questions = [
 
 ];
 
+const PUBLIC_AXIS_SCORES = [
+  [
+    { "常識": 5, "思いやり": 5, "対応力": 3 },
+    { "常識": 5, "思いやり": 4, "対応力": 5 },
+    { "常識": 2, "思いやり": 2, "対応力": 1 },
+    { "常識": 0, "思いやり": 0, "対応力": 1 }
+  ],
+  [
+    { "思いやり": 5, "常識": 5, "対応力": 4 },
+    { "思いやり": 5, "常識": 4, "対応力": 5 },
+    { "思いやり": 2, "常識": 2, "対応力": 3 },
+    { "思いやり": 0, "常識": 1, "対応力": 1 }
+  ],
+  [
+    { "常識": 5, "責任感": 5, "対応力": 5 },
+    { "常識": 5, "責任感": 4, "対応力": 4 },
+    { "常識": 1, "責任感": 1, "対応力": 2 },
+    { "常識": 0, "責任感": 0, "対応力": 0 }
+  ],
+  [
+    { "思いやり": 5, "対応力": 4, "責任感": 4 },
+    { "思いやり": 5, "対応力": 5, "責任感": 4 },
+    { "思いやり": 1, "対応力": 2, "責任感": 1 },
+    { "思いやり": 5, "対応力": 2, "責任感": 3 }
+  ],
+  [
+    { "常識": 5, "対応力": 5, "思いやり": 4 },
+    { "常識": 5, "対応力": 5, "思いやり": 4 },
+    { "常識": 2, "対応力": 1, "思いやり": 2 },
+    { "常識": 1, "対応力": 1, "思いやり": 0 }
+  ]
+];
+
 
 /* =========================================================
    2. 状態管理
@@ -359,6 +392,8 @@ let scores = {
   care: 0,
   judgment: 0
 };
+
+let answerHistory = [];
 
 
 /* =========================================================
@@ -517,6 +552,8 @@ function startQuiz() {
     care: 0,
     judgment: 0
   };
+
+  answerHistory = [];
 
   moralBar.style.width = "0%";
   careBar.style.width = "0%";
@@ -721,6 +758,13 @@ function selectAnswer(answerIndex) {
 
   scores.judgment +=
     answer.score.judgment;
+
+  answerHistory.push({
+    question: question.title,
+    selected: answer.text,
+    axisScores: PUBLIC_AXIS_SCORES[currentQuestionIndex][answerIndex],
+    originalScore: answer.score
+  });
 
 
   /*
@@ -1289,6 +1333,26 @@ function showResult() {
 
   finalAnalysis.textContent =
     getFinalAnalysis(result);
+
+  saveThemeResult(result);
+}
+
+function saveThemeResult(result) {
+  if (!window.MoralResultStore) {
+    return;
+  }
+
+  window.MoralResultStore.saveThemeResult({
+    themeId: "publicSpace",
+    themeName: "公共空間・移動",
+    questionCount: answerHistory.length,
+    score: {
+      earned: result.overall,
+      max: 100
+    },
+    axisTotals: window.MoralResultStore.buildAxisTotals(answerHistory.map((answer) => answer.axisScores)),
+    answers: answerHistory
+  });
 }
 
 
@@ -1362,6 +1426,8 @@ function retryQuiz() {
     care: 0,
     judgment: 0
   };
+
+  answerHistory = [];
 
 
   moralBar.style.width =

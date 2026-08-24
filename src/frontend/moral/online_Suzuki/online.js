@@ -179,6 +179,36 @@ const QUESTIONS = [
   }
 ];
 
+const ONLINE_AXIS_SCORES = {
+  screenShare: {
+    "confidential-tab": { "情報管理": 5, "責任感": 5 },
+    "private-chat": { "情報管理": 5, "責任感": 4 },
+    "meeting-link": { "情報管理": 5, "責任感": 4 }
+  },
+  leaveDesk: {
+    "lock-and-cover": { "情報管理": 5, "責任感": 5, "対応力": 5 },
+    "close-only": { "情報管理": 2, "責任感": 2, "対応力": 2 },
+    "mute-only": { "情報管理": 0, "責任感": 1, "対応力": 1 },
+    "ask-housemate": { "情報管理": 1, "責任感": 1, "対応力": 1 }
+  },
+  phishing: {
+    rush: { "情報管理": 4, "対応力": 5 },
+    domain: { "情報管理": 5, "対応力": 5 },
+    "auth-code": { "情報管理": 5, "責任感": 5 }
+  },
+  fileShare: {
+    "ask-official": { "情報管理": 5, "責任感": 5, "対応力": 5 },
+    "personal-cloud": { "情報管理": 0, "責任感": 1, "対応力": 1 },
+    "personal-mail": { "情報管理": 0, "責任感": 0, "対応力": 1 },
+    "rename-file": { "情報管理": 0, "責任感": 1, "対応力": 1 }
+  },
+  incidentOrder: {
+    full: { "情報管理": 5, "責任感": 5, "対応力": 5 },
+    partial: { "情報管理": 4, "責任感": 4, "対応力": 4 },
+    none: { "情報管理": 1, "責任感": 1, "対応力": 1 }
+  }
+};
+
 const elements = {
   introScreen: document.getElementById("intro-screen"),
   quizScreen: document.getElementById("quiz-screen"),
@@ -503,6 +533,7 @@ function submitAnswer() {
   const question = QUESTIONS[state.currentIndex];
   const result = evaluateAnswer(question);
   const points = SCORING_CONFIG.points[result.rating];
+  const axisScores = getAxisScoreEntries(question, result);
 
   state.locked = true;
   if (SCORING_CONFIG.enabled) {
@@ -512,7 +543,9 @@ function submitAnswer() {
     number: state.currentIndex + 1,
     title: question.title,
     rating: result.rating,
-    points
+    points,
+    axisScores,
+    response: serializeResponse(question)
   });
 
   revealAnswer(question, result);
@@ -572,6 +605,62 @@ function getFeedbackTitle(rating) {
 
 function arraysEqual(first, second) {
   return first.length === second.length && first.every((value, index) => value === second[index]);
+}
+
+function zeroScoresLike(scores) {
+  return Object.keys(scores).reduce((zeros, axis) => {
+    zeros[axis] = 0;
+    return zeros;
+  }, {});
+}
+
+function getSelectedScoresFromCorrectIds(correctIds, selectedIds, scoreMap) {
+  return correctIds.map((id) => {
+    const scores = scoreMap[id];
+    return selectedIds.includes(id) ? scores : zeroScoresLike(scores);
+  });
+}
+
+function getAxisScoreEntries(question, result) {
+  if (question.id === "screen-share") {
+    return getSelectedScoresFromCorrectIds(
+      question.correctIds,
+      [...state.response],
+      ONLINE_AXIS_SCORES.screenShare
+    );
+  }
+
+  if (question.id === "leave-desk") {
+    return [ONLINE_AXIS_SCORES.leaveDesk[state.response]];
+  }
+
+  if (question.id === "phishing-chat") {
+    return getSelectedScoresFromCorrectIds(
+      question.correctIds,
+      [...state.response],
+      ONLINE_AXIS_SCORES.phishing
+    );
+  }
+
+  if (question.id === "file-share") {
+    return [ONLINE_AXIS_SCORES.fileShare[state.response]];
+  }
+
+  if (question.id === "incident-order") {
+    return [ONLINE_AXIS_SCORES.incidentOrder[result.rating]];
+  }
+
+  return [];
+}
+
+function serializeResponse(question) {
+  if (question.type === "hotspot" || question.type === "multiple") {
+    return [...state.response];
+  }
+  if (question.type === "sequence") {
+    return [...state.response];
+  }
+  return state.response;
 }
 
 function revealAnswer(question, result) {
@@ -658,7 +747,26 @@ function showResult() {
     </div>
   `).join("");
 
+  saveThemeResult(maxScore);
   focusCurrentContent();
+}
+
+function saveThemeResult(maxScore) {
+  if (!window.MoralResultStore) {
+    return;
+  }
+
+  window.MoralResultStore.saveThemeResult({
+    themeId: "online",
+    themeName: "オンライン・Web会議",
+    questionCount: QUESTIONS.length,
+    score: {
+      earned: state.score,
+      max: maxScore
+    },
+    axisTotals: window.MoralResultStore.buildAxisTotals(state.reviews.flatMap((review) => review.axisScores)),
+    answers: state.reviews
+  });
 }
 
 function focusCurrentContent() {

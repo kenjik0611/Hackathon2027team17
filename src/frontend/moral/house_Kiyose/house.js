@@ -6,6 +6,8 @@ const questions = [
     situation: "自分の担当の家事を忘れていて、既に他の家族がやってくれていた。",
     correct: "気づいた時点で謝り、次から代わりに別の家事を引き受ける",
     wrong: ["気づかれなかったので何も言わない", "忙しかったから仕方ないで終わらせる"],
+    correctAxisScores: { "責任感": 5, "思いやり": 4 },
+    wrongAxisScores: [{ "責任感": 0, "思いやり": 0 }, { "責任感": 1, "思いやり": 1 }],
     explanation: "家事は見えない負担が偏りやすいので、気づいた時点でのフォローが信頼につながります。"
   },
   {
@@ -13,6 +15,8 @@ const questions = [
     situation: "家族の誰かの名前が書かれた食べ物を、自分が食べたくなった。",
     correct: "本人に一言確認してから食べる",
     wrong: ["少しだけならバレないので食べる", "後で謝ればいい前提で先に食べる"],
+    correctAxisScores: { "常識": 5, "思いやり": 5 },
+    wrongAxisScores: [{ "常識": 0, "思いやり": 0 }, { "常識": 1, "思いやり": 1 }],
     explanation: "共有スペースでも「個人のもの」への配慮は必要です。"
   },
   {
@@ -20,6 +24,8 @@ const questions = [
     situation: "自分が長風呂で、次に入りたい家族を待たせている。",
     correct: "時間を意識し、必要なら一声かけて交代する",
     wrong: ["自分の家なので気にせず長く使う", "待たれていることに気づかないふりをする"],
+    correctAxisScores: { "常識": 5, "思いやり": 5, "対応力": 4 },
+    wrongAxisScores: [{ "常識": 1, "思いやり": 0, "対応力": 0 }, { "常識": 0, "思いやり": 0, "対応力": 0 }],
     explanation: "共用設備は自分の権利だけでなく相手の時間への配慮も必要です。"
   },
   {
@@ -27,6 +33,8 @@ const questions = [
     situation: "自分が観たいテレビ番組と、家族が観たい番組が重なった。",
     correct: "話し合って譲り合うか、別の方法(録画・後で視聴)を提案する",
     wrong: ["先にリモコンを取った者勝ちだと考える", "自分の部屋がないことを理由に強く主張する"],
+    correctAxisScores: { "対応力": 5, "思いやり": 5 },
+    wrongAxisScores: [{ "対応力": 1, "思いやり": 0 }, { "対応力": 2, "思いやり": 1 }],
     explanation: "共有空間では一方的な独占より、調整する姿勢が関係を保ちます。"
   },
   {
@@ -34,6 +42,8 @@ const questions = [
     situation: "兄弟の私物(服やゲームなど)を、本人に聞かず使いたい。",
     correct: "使う前に一言確認する",
     wrong: ["家族だから確認は不要だと考える", "黙って使い、聞かれたら答える"],
+    correctAxisScores: { "常識": 5, "思いやり": 5 },
+    wrongAxisScores: [{ "常識": 1, "思いやり": 1 }, { "常識": 0, "思いやり": 0 }],
     explanation: "家族間でも所有物への許可は必要です。"
   },
   {
@@ -41,6 +51,8 @@ const questions = [
     situation: "帰りが大きく遅くなりそうだが、連絡するのが面倒に感じる。",
     correct: "分かった時点で早めに連絡する",
     wrong: ["着いてから理由を説明すればよいと考える", "心配されても仕方ないと放置する"],
+    correctAxisScores: { "責任感": 5, "思いやり": 4 },
+    wrongAxisScores: [{ "責任感": 2, "思いやり": 1 }, { "責任感": 0, "思いやり": 0 }],
     explanation: "家族間の信頼は、些細な連絡の積み重ねで保たれます。"
   },
   {
@@ -48,6 +60,8 @@ const questions = [
     situation: "家族の友人が家に来ていて、自分は今関わりたくない気分。",
     correct: "短くても挨拶だけはして、自分の空間に戻る",
     wrong: ["完全に無視して部屋に閉じこもる", "不機嫌な態度を見せつける"],
+    correctAxisScores: { "常識": 5, "思いやり": 4 },
+    wrongAxisScores: [{ "常識": 1, "思いやり": 0 }, { "常識": 0, "思いやり": 0 }],
     explanation: "気分が乗らなくても、最低限の礼儀は家族の顔を立てることにもなります。"
   },
   {
@@ -55,6 +69,8 @@ const questions = [
     situation: "自分の当番の日にペットの世話を忘れかけている。",
     correct: "気づいた時点ですぐに対応し、忘れがちなことを家族に共有する",
     wrong: ["誰かがやってくれるだろうと放置する", "気づかなかったことにする"],
+    correctAxisScores: { "責任感": 5, "思いやり": 4 },
+    wrongAxisScores: [{ "責任感": 1, "思いやり": 1 }, { "責任感": 0, "思いやり": 0 }],
     explanation: "ペットの世話は待ってくれないため、気づいた瞬間の行動が重要です。"
   },
   {
@@ -62,6 +78,8 @@ const questions = [
     situation: "家族共有のパソコンで、自分の使いたいアプリを長時間使いたい。",
     correct: "他の人が使う予定がないか確認してから使う",
     wrong: ["先に使った者勝ちだと考える", "使用時間を独り占めする"],
+    correctAxisScores: { "常識": 5, "思いやり": 5, "対応力": 4 },
+    wrongAxisScores: [{ "常識": 1, "思いやり": 0, "対応力": 0 }, { "常識": 0, "思いやり": 0, "対応力": 0 }],
     explanation: "共有機器も「暗黙の順番」への配慮が必要です。"
   },
   {
@@ -69,6 +87,8 @@ const questions = [
     situation: "面倒でゴミ出しの日をうっかり延ばしそうになっている。",
     correct: "多少面倒でも決められた日に出す",
     wrong: ["次の回でまとめて出せばいいと考える", "気づかれなければ良いと放置する"],
+    correctAxisScores: { "責任感": 5, "常識": 5 },
+    wrongAxisScores: [{ "責任感": 2, "常識": 2 }, { "責任感": 0, "常識": 0 }],
     explanation: "家庭内のルールも、見えにくいところで守ることが信頼につながります。"
   }
 ];
@@ -112,8 +132,12 @@ function shuffleArray(items) {
 
 function prepareQuestion(question) {
   const answers = [
-    { text: question.correct, isCorrect: true },
-    ...question.wrong.map((answer) => ({ text: answer, isCorrect: false }))
+    { text: question.correct, isCorrect: true, axisScores: question.correctAxisScores },
+    ...question.wrong.map((answer, index) => ({
+      text: answer,
+      isCorrect: false,
+      axisScores: question.wrongAxisScores[index]
+    }))
   ];
   const preparedAnswers = shuffleArray(answers);
   return {
@@ -189,7 +213,8 @@ function selectAnswer(selectedIndex) {
     questionTitle: question.title,
     selectedAnswer: selectedAnswer.text,
     correctAnswer: question.correct,
-    isCorrect
+    isCorrect,
+    axisScores: selectedAnswer.axisScores
   });
 
   markAnswers(selectedIndex, question.correctIndex);
@@ -241,6 +266,26 @@ function showResult() {
   elements.finalMaxScore.textContent = maxScore;
   elements.resultMessage.textContent = getResultMessage(state.totalScore, maxScore);
   renderReviewList();
+  saveThemeResult();
+}
+
+function saveThemeResult() {
+  if (!window.MoralResultStore) {
+    return;
+  }
+
+  const correctCount = state.answerLog.filter((log) => log.isCorrect).length;
+  window.MoralResultStore.saveThemeResult({
+    themeId: "house",
+    themeName: "家庭・近隣",
+    questionCount: state.answerLog.length,
+    score: {
+      earned: correctCount,
+      max: state.answerLog.length
+    },
+    axisTotals: window.MoralResultStore.buildAxisTotals(state.answerLog.map((log) => log.axisScores)),
+    answers: state.answerLog
+  });
 }
 
 function getResultMessage(score, maxScore) {
