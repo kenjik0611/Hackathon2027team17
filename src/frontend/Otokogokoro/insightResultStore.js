@@ -1,0 +1,278 @@
+(function () {
+  const STORAGE_KEY = "team17:otokogokoro:results:v1";
+
+  const MEMBERS = [
+    {
+      id: "arita",
+      name: "有田",
+      path: "Arita/arita.html",
+      mbti: "INTJ",
+      mbtiLabel: "建築家",
+      loveType: "LCRO",
+      loveTypeLabel: "ボス猫"
+    },
+    {
+      id: "kiyose",
+      name: "清瀬",
+      path: "Kiyose/kiyose.html",
+      mbti: "ENFP",
+      mbtiLabel: "運動家",
+      loveType: "FCRO",
+      loveTypeLabel: "恋愛マジシャン"
+    },
+    {
+      id: "suzuki",
+      name: "鈴木",
+      path: "Suzuki/suzuki.html",
+      mbti: "ISTP",
+      mbtiLabel: "巨匠",
+      loveType: "FCRE",
+      loveTypeLabel: "賢いウサギ"
+    },
+    {
+      id: "kudo",
+      name: "工藤",
+      path: "Kudo/kudo.html",
+      mbti: "ENTJ",
+      mbtiLabel: "指揮官",
+      loveType: "LAPE",
+      loveTypeLabel: "キャプテンライオン"
+    },
+    {
+      id: "fukazawa",
+      name: "深澤",
+      path: "Fukazawa/fukazawa.html",
+      mbti: "ESFJ",
+      mbtiLabel: "領事",
+      loveType: "FCPO",
+      loveTypeLabel: "恋愛モンスター"
+    }
+  ];
+
+  const MBTI_AXES = [
+    { left: "E", leftLabel: "外向", right: "I", rightLabel: "内向" },
+    { left: "S", leftLabel: "現実", right: "N", rightLabel: "直感" },
+    { left: "T", leftLabel: "論理", right: "F", rightLabel: "感情" },
+    { left: "J", leftLabel: "計画", right: "P", rightLabel: "柔軟" }
+  ];
+
+  const LOVE_TYPE_AXES = [
+    { left: "L", leftLabel: "主導", right: "F", rightLabel: "相手に合わせる" },
+    { left: "C", leftLabel: "甘えたい", right: "A", rightLabel: "受け止めたい" },
+    { left: "R", leftLabel: "現実的", right: "P", rightLabel: "情熱的" },
+    { left: "O", leftLabel: "自由寄り", right: "E", rightLabel: "一途寄り" }
+  ];
+
+  const LOVE_TYPE_NAMES = {
+    LCRO: "ボス猫",
+    LCRE: "隠れた宝物",
+    LCPO: "リーダー",
+    LCPE: "ツンデレ不良",
+    LARO: "憧れの先輩",
+    LARE: "カリスマバランサー",
+    LAPO: "完璧なカメレオン",
+    LAPE: "キャプテンライオン",
+    FCRO: "恋愛マジシャン",
+    FCRE: "賢いウサギ",
+    FCPO: "恋愛モンスター",
+    FCPE: "忠犬ハチ公",
+    FARO: "不思議生命体",
+    FARE: "有能マネージャー",
+    FAPO: "天使と悪魔",
+    FAPE: "最後の恋人"
+  };
+
+  function readState() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      return {
+        results: parsed.results && typeof parsed.results === "object" ? parsed.results : {},
+        updatedAt: parsed.updatedAt || ""
+      };
+    } catch (error) {
+      return { results: {}, updatedAt: "" };
+    }
+  }
+
+  function writeState(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function clampPercent(value) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) {
+      return null;
+    }
+    return Math.max(0, Math.min(100, Math.round(number)));
+  }
+
+  function toNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : 0;
+  }
+
+  function getMember(memberId) {
+    return MEMBERS.find((member) => member.id === memberId) || null;
+  }
+
+  function normalizeResult(memberId, rawResult) {
+    const result = rawResult && typeof rawResult === "object" ? rawResult : {};
+    const questionCount = Math.max(0, Math.round(toNumber(result.questionCount)));
+    const answeredCount = Math.max(0, Math.round(toNumber(result.answeredCount)));
+    const maxMatchScore = Math.max(0, toNumber(result.maxMatchScore));
+    const matchScore = Math.max(0, toNumber(result.matchScore));
+    const calculatedPercent = maxMatchScore > 0 ? (matchScore / maxMatchScore) * 100 : null;
+    const matchPercent = clampPercent(result.matchPercent ?? result.percent ?? calculatedPercent);
+    const isComplete = Boolean(result.isComplete || result.completed || (questionCount > 0 && answeredCount >= questionCount));
+
+    return {
+      memberId,
+      questionCount,
+      answeredCount,
+      matchScore,
+      maxMatchScore,
+      matchPercent,
+      mbtiScores: result.mbtiScores && typeof result.mbtiScores === "object" ? result.mbtiScores : {},
+      loveTypeScores: result.loveTypeScores && typeof result.loveTypeScores === "object" ? result.loveTypeScores : {},
+      isComplete,
+      completedAt: result.completedAt || (isComplete ? new Date().toISOString() : ""),
+      updatedAt: new Date().toISOString()
+    };
+  }
+
+  function saveMemberResult(memberId, result) {
+    if (!getMember(memberId)) {
+      return null;
+    }
+
+    const state = readState();
+    const normalized = normalizeResult(memberId, result);
+    state.results[memberId] = normalized;
+    state.updatedAt = normalized.updatedAt;
+    writeState(state);
+    return normalized;
+  }
+
+  function resetMemberResult(memberId) {
+    const state = readState();
+    delete state.results[memberId];
+    state.updatedAt = new Date().toISOString();
+    writeState(state);
+  }
+
+  function resetAllResults() {
+    writeState({ results: {}, updatedAt: new Date().toISOString() });
+  }
+
+  function getMemberResult(memberId) {
+    const state = readState();
+    const result = state.results[memberId];
+    return result ? normalizeResult(memberId, result) : null;
+  }
+
+  function addScores(target, source) {
+    Object.keys(source || {}).forEach((key) => {
+      target[key] = toNumber(target[key]) + toNumber(source[key]);
+    });
+  }
+
+  function buildAxisPairs(axes, scores) {
+    return axes.map((axis) => {
+      const leftScore = toNumber(scores[axis.left]);
+      const rightScore = toNumber(scores[axis.right]);
+      const total = leftScore + rightScore;
+
+      if (total <= 0) {
+        return {
+          ...axis,
+          leftPercent: 50,
+          rightPercent: 50,
+          preferred: "",
+          hasScore: false
+        };
+      }
+
+      const leftPercent = Math.round((leftScore / total) * 100);
+
+      return {
+        ...axis,
+        leftPercent,
+        rightPercent: 100 - leftPercent,
+        preferred: leftPercent >= 50 ? axis.left : axis.right,
+        hasScore: true
+      };
+    });
+  }
+
+  function createCodeFromPairs(pairs) {
+    if (!pairs.some((pair) => pair.hasScore)) {
+      return "";
+    }
+    return pairs.map((pair) => pair.preferred || "-").join("");
+  }
+
+  function getAggregate() {
+    const state = readState();
+    const memberResults = {};
+    const mbtiScores = {};
+    const loveTypeScores = {};
+    const completedResults = [];
+
+    MEMBERS.forEach((member) => {
+      const result = state.results[member.id] ? normalizeResult(member.id, state.results[member.id]) : null;
+      memberResults[member.id] = result;
+
+      if (result && result.isComplete) {
+        completedResults.push(result);
+        addScores(mbtiScores, result.mbtiScores);
+        addScores(loveTypeScores, result.loveTypeScores);
+      }
+    });
+
+    const completedCount = completedResults.length;
+    const bestMatchResult = completedResults.reduce((best, result) => {
+      if (!best || toNumber(result.matchPercent) > toNumber(best.matchPercent)) {
+        return result;
+      }
+      return best;
+    }, null);
+    const bestMatchMember = bestMatchResult ? getMember(bestMatchResult.memberId) : null;
+    const matchTotal = completedResults.reduce((sum, result) => sum + toNumber(result.matchPercent), 0);
+    const overallMatchPercent = completedCount > 0 ? Math.round(matchTotal / completedCount) : null;
+    const mbtiPairs = buildAxisPairs(MBTI_AXES, mbtiScores);
+    const loveTypePairs = buildAxisPairs(LOVE_TYPE_AXES, loveTypeScores);
+    const suggestedMbti = createCodeFromPairs(mbtiPairs);
+    const suggestedLoveType = createCodeFromPairs(loveTypePairs);
+
+    return {
+      members: MEMBERS,
+      memberResults,
+      totalMembers: MEMBERS.length,
+      completedCount,
+      incompleteMembers: MEMBERS.filter((member) => !memberResults[member.id] || !memberResults[member.id].isComplete),
+      bestMatchResult,
+      bestMatchMember,
+      overallMatchPercent,
+      mbtiPairs,
+      loveTypePairs,
+      suggestedMbti: suggestedMbti || "未測定",
+      suggestedLoveType: suggestedLoveType || "未測定",
+      suggestedLoveTypeName: LOVE_TYPE_NAMES[suggestedLoveType] || "",
+      updatedAt: state.updatedAt
+    };
+  }
+
+  window.OtokogokoroResultStore = {
+    members: MEMBERS,
+    mbtiAxes: MBTI_AXES,
+    loveTypeAxes: LOVE_TYPE_AXES,
+    loveTypeNames: LOVE_TYPE_NAMES,
+    readState,
+    saveMemberResult,
+    resetMemberResult,
+    resetAllResults,
+    getMember,
+    getMemberResult,
+    getAggregate
+  };
+})();
