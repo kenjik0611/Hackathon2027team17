@@ -285,10 +285,97 @@
   font-weight: 800;
 }
 
-.sheet-note {
+.share-note {
   margin-bottom: 10px;
   color: #52606b;
   font-weight: 800;
+}
+
+.share-type-card {
+  --type-bg: #fffdfa;
+  --type-chip: #ffcf5a;
+  --type-chip-shadow: rgba(23, 32, 42, 0.14);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 18px;
+  border: 3px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--type-bg), #ffffff 72%);
+  text-align: center;
+  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.1);
+}
+
+.share-type-card.type-starter {
+  --type-bg: #edf8ff;
+  --type-chip: #9bd7ff;
+}
+
+.share-type-card.type-monster {
+  --type-bg: #fff5c2;
+  --type-chip: #ffcf5a;
+  --type-chip-shadow: rgba(179, 99, 0, 0.22);
+}
+
+.share-type-card.type-wildcard {
+  --type-bg: #f1f5f9;
+  --type-chip: #ff9f6e;
+  --type-chip-shadow: rgba(110, 37, 0, 0.18);
+}
+
+.share-type-card.type-guardian {
+  --type-bg: #e6fff7;
+  --type-chip: #66dec7;
+}
+
+.share-type-card.type-navigator {
+  --type-bg: #eaf3ff;
+  --type-chip: #83c5ff;
+}
+
+.share-type-card.type-tuner {
+  --type-bg: #fff0f6;
+  --type-chip: #ff9ac5;
+}
+
+.share-type-card.type-keeper {
+  --type-bg: #eef2ff;
+  --type-chip: #9fb6ff;
+}
+
+.share-type-card.type-captain {
+  --type-bg: #e9fbff;
+  --type-chip: #8ee8f0;
+}
+
+.share-type-image {
+  width: min(100%, 250px);
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(6px 8px 0 rgba(23, 32, 42, 0.14));
+}
+
+.share-type-name {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  padding: 6px 14px;
+  border: 3px solid var(--line);
+  border-radius: 999px;
+  background: var(--type-chip);
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1.35;
+  box-shadow: 4px 4px 0 var(--type-chip-shadow);
+}
+
+.share-type-description {
+  max-width: 620px;
+  color: #26323d;
+  font-weight: 800;
+  line-height: 1.75;
 }
 
 .save-message {

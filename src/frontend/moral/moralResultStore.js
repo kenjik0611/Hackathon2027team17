@@ -343,36 +343,6 @@
     return lines.join("\n");
   }
 
-  function buildSheetPayload(aggregate, markdown) {
-    const resultType = getResultType(aggregate);
-    const commentDetails = getCommentDetails(aggregate);
-    return {
-      version: "1.0",
-      anonymousId: aggregate.anonymousId,
-      generatedAt: aggregate.generatedAt,
-      completedCount: aggregate.completedCount,
-      totalThemes: aggregate.totalThemes,
-      complete: aggregate.complete,
-      totalScore: aggregate.totalScore,
-      scoreEarned: aggregate.scoreEarned,
-      scoreMax: aggregate.scoreMax,
-      axisScores: aggregate.axisScores,
-      resultType,
-      themeScores: aggregate.themeSummaries.map((theme) => ({
-        id: theme.id,
-        name: theme.name,
-        completed: theme.completed,
-        scorePercent: theme.scorePercent,
-        completedAt: theme.completedAt || null,
-        questionCount: theme.questionCount || null
-      })),
-      comment: getComment(aggregate),
-      commentGood: commentDetails.good,
-      commentImprovement: commentDetails.improvement,
-      markdown
-    };
-  }
-
   window.MoralResultStore = {
     AXES,
     THEMES,
@@ -385,7 +355,6 @@
     saveThemeResult,
     buildAggregate,
     buildMarkdown,
-    buildSheetPayload,
     getComment,
     getCommentDetails,
     getResultType,

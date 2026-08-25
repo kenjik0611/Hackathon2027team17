@@ -78,10 +78,15 @@
         </div>
       </section>
 
-      <section class="summary-section" aria-labelledby="send-title">
-        <h3 id="send-title">スプレッドシート送信</h3>
-        <p class="sheet-note" id="sheet-send-status" aria-live="polite"></p>
-        <button class="primary-button" id="submit-sheet" type="button">スプレッドシートに送信</button>
+      <section class="summary-section share-section" aria-labelledby="share-title">
+        <h3 id="share-title">結果を共有</h3>
+        <p class="share-note" id="share-status" aria-live="polite">診断タイプ画像付きの結果を共有できます。</p>
+        <div class="share-type-card" id="share-type-card">
+          <img class="share-type-image" id="share-type-image" src="assets/result-type-starter.png" alt="診断タイプのイラスト">
+          <strong class="share-type-name" id="share-type-name"></strong>
+          <p class="share-type-description" id="share-type-description"></p>
+        </div>
+        <button class="primary-button" id="share-result" type="button">結果を共有</button>
         <p class="save-message" id="save-message" aria-live="polite"></p>
       </section>
 
@@ -96,7 +101,7 @@
     <p>Hackathon 2027 Team 17</p>
   </footer>
 
-  <script src="moralResultConfig.js"></script>
+  <script src="resultTypeImageData.js"></script>
   <script src="moralResultStore.js"></script>
   <script src="summary.js"></script>
 </body>
