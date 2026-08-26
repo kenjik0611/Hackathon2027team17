@@ -9,6 +9,12 @@ const questions = [
       "「じゃあ若手全員で何かやりますか」と、個人ではなく複数人で対応する流れに変える",
       "「すみません、そういう場で急に振られるのは苦手です」と率直に伝えて断る"
     ],
+    choiceAxisScores: [
+      { "対応力": 5, "思いやり": 4 },
+      { "対応力": 3, "思いやり": 4 },
+      { "対応力": 3, "思いやり": 2 },
+      { "対応力": 3, "思いやり": 3 }
+    ],
     answerIndex: 0,
     explanation: [
       "Aは最も適切です。懇親会でも、本人が望まない一発芸や目立つ行動を無理に求めるのは望ましくありません。",
@@ -27,6 +33,12 @@ const questions = [
       "上司を否定せず、「たしかに大変そうでしたね。でもその後ちゃんと対応していましたよね」とフォローを入れながら、悪口になりすぎないようにする",
       "その場では空気を壊さないように深入りせず、飲み会後に上司へ個別に「本人がいない場での失敗談は少し気になりました」と伝える",
       "笑いには乗らず聞き役に回り、話が長引きそうになったタイミングで自然に別の話題を振る"
+    ],
+    choiceAxisScores: [
+      { "思いやり": 5, "対応力": 5, "常識": 5 },
+      { "思いやり": 4, "対応力": 3, "常識": 4 },
+      { "思いやり": 4, "対応力": 2, "常識": 4 },
+      { "思いやり": 3, "対応力": 3, "常識": 3 }
     ],
     answerIndex: 0,
     explanation: [
@@ -47,6 +59,12 @@ const questions = [
       "「ここでは具体的な話は避けますね。必要であれば、後日担当者を通して確認してもらえますか」と伝える",
       "「まだ私も確かなことは言えないので、今日は一般的な話にしておきましょう」と伝え、業界全体の話題に切り替える"
     ],
+    choiceAxisScores: [
+      { "情報管理": 4, "対応力": 4, "責任感": 4 },
+      { "情報管理": 3, "対応力": 4, "責任感": 3 },
+      { "情報管理": 5, "対応力": 5, "責任感": 5 },
+      { "情報管理": 3, "対応力": 3, "責任感": 3 }
+    ],
     answerIndex: 2,
     explanation: [
       "Cは最も適切です。懇親会のような非公式な場では、相手が取引先であっても未公開情報をその場で判断して話すべきではありません。",
@@ -65,6 +83,12 @@ const questions = [
       "写りたくなさそうな人に小声で「無理に入らなくても大丈夫です」と確認し、そのうえで全体には「写れる人だけで撮りましょう」と声をかける",
       "いったん全員で撮影し、共有前に「載せてよいか」を確認して、NGがあれば削除やトリミングで対応する",
       "その人を端の方に案内し、SNSなどには投稿しない前提で、社内記録用としてだけ撮影する"
+    ],
+    choiceAxisScores: [
+      { "思いやり": 4, "情報管理": 4, "常識": 4 },
+      { "思いやり": 5, "情報管理": 5, "常識": 5 },
+      { "思いやり": 3, "情報管理": 3, "常識": 3 },
+      { "思いやり": 2, "情報管理": 2, "常識": 2 }
     ],
     answerIndex: 1,
     explanation: [
@@ -85,6 +109,12 @@ const questions = [
       "「恋愛の話は人によって受け取り方が違いますよね」と一般論として触れ、場の空気を見ながら話題を変える",
       "その場では笑いに乗らず、あとで本人に「さっきの話、嫌じゃなかった？」と個別に確認する"
     ],
+    choiceAxisScores: [
+      { "思いやり": 5, "対応力": 5, "常識": 5 },
+      { "思いやり": 3, "対応力": 2, "常識": 3 },
+      { "思いやり": 4, "対応力": 4, "常識": 4 },
+      { "思いやり": 4, "対応力": 2, "常識": 3 }
+    ],
     answerIndex: 0,
     explanation: [
       "Aは最も適切です。恋愛事情はプライベート性が高く、本人が笑っていても本当に平気とは限りません。上下関係がある場では、本人が場の空気を壊さないために笑っているだけの場合もあります。",
@@ -103,6 +133,12 @@ const questions = [
       "「正直、現場では少しやりづらさを感じることもあります」と本音の温度感だけ伝え、詳しい話は業務時間内に改めて相談する",
       "「飲み会の場なので深い話は避けますが、若手側で感じていることは一度整理してお伝えしたいです」と伝える",
       "「せっかくなので言うと、今のやり方だと若手が動きづらい場面があります」と率直に伝え、具体例は相手の反応を見て出す"
+    ],
+    choiceAxisScores: [
+      { "対応力": 5, "常識": 5, "責任感": 5 },
+      { "対応力": 3, "常識": 4, "責任感": 3 },
+      { "対応力": 3, "常識": 4, "責任感": 3 },
+      { "対応力": 3, "常識": 3, "責任感": 3 }
     ],
     answerIndex: 0,
     explanation: [
@@ -123,6 +159,12 @@ const questions = [
       "周囲の流れに合わせて少なめに支払い、会計後に上司へ個別にお礼を伝える",
       "「では今回はお言葉に甘えます」と受け入れ、次の飲み会で後輩ができたときに同じように還元する意識を持つ"
     ],
+    choiceAxisScores: [
+      { "常識": 5, "思いやり": 5, "責任感": 5 },
+      { "常識": 4, "思いやり": 3, "責任感": 4 },
+      { "常識": 4, "思いやり": 4, "責任感": 3 },
+      { "常識": 4, "思いやり": 4, "責任感": 3 }
+    ],
     answerIndex: 0,
     explanation: [
       "Aは最も適切です。年次の高い人が多めに払ってくれる流れ自体は珍しくありませんが、それを当然と思う態度は避けるべきです。",
@@ -141,6 +183,12 @@ const questions = [
       "本人に小声で「大丈夫？」と確認し、嫌そうであれば周囲に「無理に勧めない方がよさそうですね」と伝える",
       "「最近は飲まない人も多いですよね」と一般論として触れ、ノンアルメニューの話題に切り替える",
       "その場で強く止めると本人が目立ってしまうため、いったん見守り、あとで本人に「大丈夫だった？」と声をかける"
+    ],
+    choiceAxisScores: [
+      { "思いやり": 5, "対応力": 5, "常識": 5 },
+      { "思いやり": 4, "対応力": 4, "常識": 4 },
+      { "思いやり": 4, "対応力": 3, "常識": 4 },
+      { "思いやり": 3, "対応力": 1, "常識": 3 }
     ],
     answerIndex: 0,
     explanation: [
@@ -161,6 +209,12 @@ const questions = [
       "「そのあたりはまだ試行錯誤中ですね」と受け止めつつ、「でも今日はいろいろ情報交換できてありがたいです」と前向きな話題へ移す",
       "「部署によって進め方はいろいろありますよね」と一般化し、取引先の会社ではどうしているかを聞いて話題を広げる"
     ],
+    choiceAxisScores: [
+      { "責任感": 5, "常識": 5, "対応力": 5 },
+      { "責任感": 4, "常識": 3, "対応力": 4 },
+      { "責任感": 4, "常識": 4, "対応力": 4 },
+      { "責任感": 3, "常識": 3, "対応力": 3 }
+    ],
     answerIndex: 0,
     explanation: [
       "Aは最も適切です。取引先がいる場で会社や上司への不満を冗談として話すと、自社への信頼やチームの印象に影響する可能性があります。",
@@ -179,6 +233,12 @@ const questions = [
       "「二次会に行く人と帰る人で一度分かれましょうか」と声をかけ、後輩が自分で帰る側を選べる流れを作る",
       "先輩に「後輩も迷っているみたいなので、少しだけ参加して途中で帰る形にしませんか」と折衷案を出す",
       "「明日もありますし、今日は無理せず帰る人がいてもいいですよね」と全体に声をかけ、帰りやすい雰囲気を作る"
+    ],
+    choiceAxisScores: [
+      { "思いやり": 5, "対応力": 5, "責任感": 5 },
+      { "思いやり": 4, "対応力": 4, "責任感": 4 },
+      { "思いやり": 2, "対応力": 2, "責任感": 2 },
+      { "思いやり": 4, "対応力": 3, "責任感": 4 }
     ],
     answerIndex: 0,
     explanation: [
@@ -235,7 +295,11 @@ function shuffleChoices(question) {
   return question.choices
     .map((text, originalIndex) => ({ text, originalIndex, random: Math.random() }))
     .sort((a, b) => a.random - b.random)
-    .map(({ text, originalIndex }) => ({ text, originalIndex }));
+    .map(({ text, originalIndex }) => ({
+      text,
+      originalIndex,
+      axisScores: question.choiceAxisScores[originalIndex]
+    }));
 }
 
 function getExplanationParts(question) {
@@ -345,7 +409,8 @@ function selectAnswer(selectedIndex) {
     question: question.question,
     selected: selectedChoice.text,
     correct: correctChoice.text,
-    isCorrect
+    isCorrect,
+    axisScores: selectedChoice.axisScores
   });
 
   [...elements.choiceList.children].forEach((button, index) => {
@@ -402,6 +467,26 @@ function renderResult() {
     body.append(question, correct);
     item.append(badge, body);
     elements.reviewList.appendChild(item);
+  });
+
+  saveThemeResult();
+}
+
+function saveThemeResult() {
+  if (!window.MoralResultStore) {
+    return;
+  }
+
+  window.MoralResultStore.saveThemeResult({
+    themeId: "outsideCompany",
+    themeName: "社外交流",
+    questionCount: state.answers.length,
+    score: {
+      earned: state.answers.filter((answer) => answer.isCorrect).length,
+      max: state.answers.length
+    },
+    axisTotals: window.MoralResultStore.buildAxisTotals(state.answers.map((answer) => answer.axisScores)),
+    answers: state.answers
   });
 }
 
