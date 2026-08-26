@@ -6,6 +6,8 @@
   }
 
   const aggregate = store.getAggregate();
+  const mbtiNames = store.mbtiNames || {};
+  const loveTypeNames = store.loveTypeNames || {};
   const MBTI_IMAGE_URLS = {
     INTJ: "https://www.16personalities.com/static/images/types/headers/architect-mobile.svg",
     INTP: "https://www.16personalities.com/static/images/types/headers/logician-mobile.svg",
@@ -50,12 +52,41 @@
 
     pairs.forEach((pair) => {
       const row = document.createElement("div");
-      row.className = "axis-row";
-      const scoreText = pair.hasScore ? `${pair.leftPercent}% / ${pair.rightPercent}%` : "未測定";
+      const leftPercent = pair.hasScore ? pair.leftPercent : 0;
+      const rightPercent = pair.hasScore ? pair.rightPercent : 0;
+      const scoreText = pair.hasScore ? `${leftPercent}% : ${rightPercent}%` : "未測定";
+      row.className = `axis-row${pair.hasScore ? "" : " is-empty"}`;
+      row.style.setProperty("--left-value", leftPercent);
+      row.style.setProperty("--right-value", rightPercent);
       row.innerHTML = `
-        <strong>${pair.left}/${pair.right}</strong>
-        <span>${pair.leftLabel} / ${pair.rightLabel}</span>
-        <small>${scoreText}</small>
+        <div class="axis-row-head">
+          <strong>
+            <span class="axis-code axis-code-left">${pair.left}</span>
+            <span class="axis-slash">/</span>
+            <span class="axis-code axis-code-right">${pair.right}</span>
+          </strong>
+          <span>${pair.leftLabel} vs ${pair.rightLabel}</span>
+          <small>${scoreText}</small>
+        </div>
+        <div class="axis-balance" aria-label="${pair.leftLabel}と${pair.rightLabel}の相性傾向">
+          <span class="axis-end axis-end-left">
+            <b class="axis-code-left">${pair.left}</b>
+            <small>${pair.leftLabel}</small>
+          </span>
+          <div class="axis-meter">
+            <span class="axis-meter-side axis-meter-left">
+              <span class="axis-fill"></span>
+            </span>
+            <span class="axis-center-line" aria-hidden="true"></span>
+            <span class="axis-meter-side axis-meter-right">
+              <span class="axis-fill"></span>
+            </span>
+          </div>
+          <span class="axis-end axis-end-right">
+            <b class="axis-code-right">${pair.right}</b>
+            <small>${pair.rightLabel}</small>
+          </span>
+        </div>
       `;
       container.appendChild(row);
     });
@@ -69,11 +100,20 @@
     const suggestedMbti = isMeasuredCode(aggregate.suggestedMbti) ? aggregate.suggestedMbti : "";
     const suggestedLoveType = isMeasuredCode(aggregate.suggestedLoveType) ? aggregate.suggestedLoveType : "";
     const member = aggregate.bestMatchMember;
+    const mbtiName = aggregate.suggestedMbtiName
+      || mbtiNames[suggestedMbti]
+      || (member && member.mbtiLabel)
+      || "";
+    const loveTypeName = aggregate.suggestedLoveTypeName
+      || loveTypeNames[suggestedLoveType]
+      || (member && member.loveTypeLabel)
+      || "";
 
     return {
       mbti: suggestedMbti || (member && member.mbti) || "",
       loveType: suggestedLoveType || (member && member.loveType) || "",
-      loveTypeName: aggregate.suggestedLoveTypeName || (member && member.loveTypeLabel) || ""
+      mbtiName,
+      loveTypeName
     };
   }
 
@@ -267,28 +307,441 @@
     return `${member.name} ${formatPercent(result.matchPercent)}`;
   }
 
+  function formatTypeName(code, name) {
+    if (!isMeasuredCode(code)) {
+      return "未測定";
+    }
+
+    return name ? `${code} ${name}` : code;
+  }
+
+  function formatTypeForSentence(code, name) {
+    if (!isMeasuredCode(code)) {
+      return "未測定";
+    }
+
+    return name ? `${code}（${name}）` : code;
+  }
+
   function getSummaryComment() {
+    const codes = getVisualCodes();
+    const mbtiText = formatTypeForSentence(aggregate.suggestedMbti, codes.mbtiName);
+    const loveTypeText = formatTypeForSentence(aggregate.suggestedLoveType, codes.loveTypeName);
+
     if (aggregate.completedCount === 0) {
       return "まだ男心編の結果がないため、相性傾向は仮表示です。まずは1人分だけでも遊ぶと、MBTIとLove Typeの方向性が見えるようになります。";
     }
 
     if (aggregate.completedCount < aggregate.totalMembers) {
-      return `現在は${aggregate.completedCount}人分の途中集計です。今のところ一番一致度が高いのは${getBestMatchMemberText()}です。MBTIでは${aggregate.suggestedMbti}、Love Typeでは${aggregate.suggestedLoveType}寄りの相手とテンポが合いやすそうです。ただし未プレイのメンバーがいるため、全員分を終えると結果が変わる可能性があります。`;
+      return `現在は${aggregate.completedCount}人分の途中集計です。今のところ一番一致度が高いのは${getBestMatchMemberText()}です。MBTIでは${mbtiText}、Love Typeでは${loveTypeText}寄りの相手とテンポが合いやすそうです。ただし未プレイのメンバーがいるため、全員分を終えると結果が変わる可能性があります。`;
     }
 
-    return `5人分すべての回答を見ると、一番一致度が高いのは${getBestMatchMemberText()}です。MBTIでは${aggregate.suggestedMbti}、Love Typeでは${aggregate.suggestedLoveType}寄りの相手と価値観のテンポが合いやすそうです。一方で、これは相手を決めつける診断ではなく、会話のきっかけとして見るのがちょうど良いです。`;
+    return `5人分すべての回答を見ると、一番一致度が高いのは${getBestMatchMemberText()}です。MBTIでは${mbtiText}、Love Typeでは${loveTypeText}寄りの相手と価値観のテンポが合いやすそうです。一方で、これは相手を決めつける診断ではなく、会話のきっかけとして見るのがちょうど良いです。`;
   }
 
+  function getPageUrl() {
+    if (location.protocol === "http:" || location.protocol === "https:") {
+      return location.href;
+    }
+
+    return "";
+  }
+
+  function canUseShareMenu() {
+    return Boolean(navigator.share && location.protocol !== "file:");
+  }
+
+  function getShareTitleText() {
+    const codes = getVisualCodes();
+    const mbtiText = formatTypeName(codes.mbti, codes.mbtiName);
+    const loveTypeText = formatTypeName(codes.loveType, codes.loveTypeName);
+
+    if (mbtiText === "未測定" && loveTypeText === "未測定") {
+      return "相性傾向はまだ未測定";
+    }
+
+    return `${mbtiText} × ${loveTypeText}`;
+  }
+
+  function getShareOneLiner() {
+    const codes = getVisualCodes();
+    const mbtiText = formatTypeForSentence(codes.mbti, codes.mbtiName);
+    const loveTypeText = formatTypeForSentence(codes.loveType, codes.loveTypeName);
+
+    if (aggregate.completedCount === 0) {
+      return "まずは1人分遊ぶと、相性の方向性が見えてきます。";
+    }
+
+    if (aggregate.bestMatchMember && aggregate.bestMatchResult) {
+      return `今のところ一番テンポが合いそうなのは${aggregate.bestMatchMember.name}さん。${mbtiText}と${loveTypeText}寄りの相手と相性がよさそうです。`;
+    }
+
+    return `${mbtiText}と${loveTypeText}寄りの相手と相性がよさそうです。`;
+  }
+
+  function renderSharePreview() {
+    const codes = getVisualCodes();
+    const mbtiImage = document.getElementById("share-mbti-art");
+    const loveTypeImage = document.getElementById("share-love-art");
+
+    if (mbtiImage) {
+      mbtiImage.src = buildMbtiImageSrc(codes.mbti);
+      mbtiImage.alt = `${codes.mbti || "未測定"}の共有用MBTI画像`;
+    }
+
+    if (loveTypeImage) {
+      loveTypeImage.src = buildLoveTypeImageSrc(codes.loveType, codes.loveTypeName);
+      loveTypeImage.alt = `${codes.loveType || "未測定"}の共有用Love Type画像`;
+    }
+
+    setText("share-title-text", getShareTitleText());
+    setText("share-one-liner", getShareOneLiner());
+  }
+
+  function buildShareText() {
+    const lines = [
+      "【Team17 男心理解ゲーム結果】",
+      `相性候補: ${getShareTitleText()}`,
+      `ひとこと: ${getShareOneLiner()}`,
+      `相性トップ: ${getBestMatchMemberText()}`,
+      `完了人数: ${aggregate.completedCount}/${aggregate.totalMembers}人`
+    ];
+    const pageUrl = getPageUrl();
+
+    if (pageUrl) {
+      lines.push(pageUrl);
+    }
+
+    return lines.join("\n");
+  }
+
+  function fallbackCopyText(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      const copied = document.execCommand("copy");
+      if (!copied) {
+        throw new Error("copy failed");
+      }
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  }
+
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext && location.protocol !== "file:") {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    fallbackCopyText(text);
+  }
+
+  function drawRoundRect(context, x, y, width, height, radius) {
+    context.beginPath();
+    context.moveTo(x + radius, y);
+    context.lineTo(x + width - radius, y);
+    context.quadraticCurveTo(x + width, y, x + width, y + radius);
+    context.lineTo(x + width, y + height - radius);
+    context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    context.lineTo(x + radius, y + height);
+    context.quadraticCurveTo(x, y + height, x, y + height - radius);
+    context.lineTo(x, y + radius);
+    context.quadraticCurveTo(x, y, x + radius, y);
+    context.closePath();
+  }
+
+  function fillRoundRect(context, x, y, width, height, radius, fillStyle) {
+    drawRoundRect(context, x, y, width, height, radius);
+    context.fillStyle = fillStyle;
+    context.fill();
+  }
+
+  function strokeRoundRect(context, x, y, width, height, radius, strokeStyle, lineWidth) {
+    drawRoundRect(context, x, y, width, height, radius);
+    context.strokeStyle = strokeStyle;
+    context.lineWidth = lineWidth;
+    context.stroke();
+  }
+
+  function wrapText(context, text, maxWidth) {
+    const lines = [];
+    let currentLine = "";
+
+    Array.from(text).forEach((char) => {
+      const testLine = currentLine + char;
+      if (context.measureText(testLine).width > maxWidth && currentLine) {
+        lines.push(currentLine);
+        currentLine = char;
+        return;
+      }
+      currentLine = testLine;
+    });
+
+    if (currentLine) {
+      lines.push(currentLine);
+    }
+
+    return lines;
+  }
+
+  function drawWrappedText(context, text, x, y, maxWidth, lineHeight, maxLines) {
+    const lines = wrapText(context, text, maxWidth).slice(0, maxLines);
+    lines.forEach((line, index) => {
+      context.fillText(line, x, y + lineHeight * index);
+    });
+    return y + lineHeight * lines.length;
+  }
+
+  function canvasToBlob(canvas) {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          reject(new Error("image create failed"));
+          return;
+        }
+        resolve(blob);
+      }, "image/png");
+    });
+  }
+
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  function drawShareArtwork(context, x, y, size, options) {
+    const code = options.code || "--";
+    const name = options.name || "未測定";
+    const visual = options.visual;
+
+    fillRoundRect(context, x, y, size, size, 28, visual.soft);
+    strokeRoundRect(context, x, y, size, size, 28, "#17202a", 7);
+
+    context.save();
+    context.beginPath();
+    drawRoundRect(context, x, y, size, size, 28);
+    context.clip();
+
+    context.fillStyle = visual.secondary;
+    context.globalAlpha = 0.32;
+    context.beginPath();
+    context.moveTo(x, y + size * 0.23);
+    context.bezierCurveTo(x + size * 0.2, y, x + size * 0.42, y + size * 0.1, x + size * 0.62, y + size * 0.04);
+    context.bezierCurveTo(x + size * 0.82, y - size * 0.02, x + size, y + size * 0.14, x + size, y + size * 0.1);
+    context.lineTo(x + size, y + size);
+    context.lineTo(x, y + size);
+    context.closePath();
+    context.fill();
+
+    context.fillStyle = visual.primary;
+    context.globalAlpha = 0.25;
+    context.beginPath();
+    context.moveTo(x, y + size * 0.8);
+    context.bezierCurveTo(x + size * 0.18, y + size * 0.58, x + size * 0.34, y + size * 0.72, x + size * 0.52, y + size * 0.68);
+    context.bezierCurveTo(x + size * 0.72, y + size * 0.64, x + size * 0.82, y + size * 0.48, x + size, y + size * 0.62);
+    context.lineTo(x + size, y + size);
+    context.lineTo(x, y + size);
+    context.closePath();
+    context.fill();
+    context.restore();
+
+    context.globalAlpha = 1;
+    fillRoundRect(context, x + size * 0.22, y + size * 0.2, size * 0.56, size * 0.46, 26, "#ffffff");
+    strokeRoundRect(context, x + size * 0.22, y + size * 0.2, size * 0.56, size * 0.46, 26, "#17202a", 7);
+
+    context.fillStyle = visual.primary;
+    context.beginPath();
+    context.arc(x + size * 0.5, y + size * 0.43, size * 0.17, 0, Math.PI * 2);
+    context.fill();
+    context.strokeStyle = "#17202a";
+    context.lineWidth = 7;
+    context.stroke();
+
+    context.fillStyle = "#ffffff";
+    context.font = "900 30px sans-serif";
+    context.textAlign = "center";
+    context.fillText(visual.symbol, x + size * 0.5, y + size * 0.45);
+
+    context.fillStyle = "#17202a";
+    context.font = "900 42px sans-serif";
+    context.fillText(code, x + size * 0.5, y + size * 0.82);
+    context.font = "900 24px sans-serif";
+    drawWrappedText(context, name, x + size * 0.5, y + size * 0.92, size * 0.82, 30, 1);
+  }
+
+  async function createShareImageBlob() {
+    const codes = getVisualCodes();
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    const width = 1080;
+    const height = 1080;
+    const margin = 72;
+    const title = getShareTitleText();
+    const oneLiner = getShareOneLiner();
+    const mbtiVisual = getMbtiVisual(codes.mbti);
+    const loveMood = getLoveTypeMood(codes.loveType);
+    const loveVisual = {
+      symbol: loveMood.symbol,
+      primary: "#ff6b9a",
+      secondary: loveMood.color,
+      soft: "#fff1df"
+    };
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const gradient = context.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, "#fff1df");
+    gradient.addColorStop(0.62, "#ffffff");
+    gradient.addColorStop(1, "#dffcf5");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, width, height);
+
+    fillRoundRect(context, margin, margin, width - margin * 2, height - margin * 2, 34, "#fffdfa");
+    strokeRoundRect(context, margin, margin, width - margin * 2, height - margin * 2, 34, "#17202a", 8);
+
+    context.textAlign = "center";
+    context.fillStyle = "#17202a";
+    context.font = "900 34px sans-serif";
+    context.fillText("Team17 男心理解ゲーム", width / 2, 144);
+
+    const imageSize = 320;
+    const mbtiX = 160;
+    const loveX = width - 160 - imageSize;
+    const imageY = 204;
+    drawShareArtwork(context, mbtiX, imageY, imageSize, {
+      code: codes.mbti || "MBTI",
+      name: codes.mbtiName || "未測定",
+      visual: {
+        symbol: mbtiVisual.symbol,
+        primary: mbtiVisual.primary,
+        secondary: mbtiVisual.secondary,
+        soft: mbtiVisual.soft
+      }
+    });
+    drawShareArtwork(context, loveX, imageY, imageSize, {
+      code: codes.loveType || "LOVE",
+      name: codes.loveTypeName || "未測定",
+      visual: loveVisual
+    });
+
+    context.font = "900 74px sans-serif";
+    context.fillText("×", width / 2, imageY + 190);
+
+    context.font = "900 48px sans-serif";
+    const chipWidth = Math.min(880, context.measureText(title).width + 120);
+    const chipX = (width - chipWidth) / 2;
+    fillRoundRect(context, chipX, 590, chipWidth, 88, 44, "#dffcf5");
+    strokeRoundRect(context, chipX, 590, chipWidth, 88, 44, "#17202a", 6);
+    context.fillStyle = "#17202a";
+    context.fillText(title, width / 2, 648);
+
+    context.font = "900 34px sans-serif";
+    drawWrappedText(context, oneLiner, width / 2, 760, 800, 52, 3);
+
+    context.font = "900 28px sans-serif";
+    context.fillStyle = "#52606b";
+    context.fillText(`相性トップ: ${getBestMatchMemberText()} / 完了人数: ${aggregate.completedCount}/${aggregate.totalMembers}人`, width / 2, 956);
+
+    return canvasToBlob(canvas);
+  }
+
+  async function shareTextOnly(text, pageUrl) {
+    if (canUseShareMenu()) {
+      await navigator.share({
+        title: "Team17 男心理解ゲーム結果",
+        text,
+        url: pageUrl || undefined
+      });
+      return "shared";
+    }
+
+    await copyText(text);
+    return "copied";
+  }
+
+  async function shareResult() {
+    const button = document.getElementById("share-result");
+    const status = document.getElementById("share-status");
+    const text = buildShareText();
+    const pageUrl = getPageUrl();
+
+    if (!button || !status) {
+      return;
+    }
+
+    button.disabled = true;
+    status.textContent = "共有画像を作成しています。";
+
+    try {
+      const blob = await createShareImageBlob();
+      const file = new File([blob], "team17-otokogokoro-result.png", { type: "image/png" });
+
+      if (canUseShareMenu() && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: "Team17 男心理解ゲーム結果",
+          text,
+          files: [file]
+        });
+        downloadBlob(blob, "team17-otokogokoro-result.png");
+        status.textContent = "画像付き共有を実行し、念のため結果画像も保存しました。共有先に画像が出ない場合は保存されたPNGを添付してください。";
+        return;
+      }
+
+      downloadBlob(blob, "team17-otokogokoro-result.png");
+      const result = await shareTextOnly(text, pageUrl);
+      status.textContent = result === "shared"
+        ? "画像を保存し、共有メニューを開きました。画像も一緒に添付してください。"
+        : "結果画像を保存し、共有用テキストをコピーしました。";
+    } catch (error) {
+      if (error.name === "AbortError") {
+        status.textContent = "共有をキャンセルしました。";
+        return;
+      }
+
+      try {
+        const result = await shareTextOnly(text, pageUrl);
+        status.textContent = result === "shared"
+          ? "共有メニューを開きました。画像作成はこの環境では使えませんでした。"
+          : "共有用テキストをコピーしました。画像作成はこの環境では使えませんでした。";
+      } catch (copyError) {
+        status.textContent = "共有できませんでした。結果画面をスクショして共有してください。";
+      }
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  const visualCodes = getVisualCodes();
   setText("completed-count", `${aggregate.completedCount} / ${aggregate.totalMembers}人`);
   setText("best-match-member", getBestMatchMemberText());
-  setText("suggested-mbti", aggregate.suggestedMbti);
-  setText("suggested-love-type", aggregate.suggestedLoveTypeName
-    ? `${aggregate.suggestedLoveType} ${aggregate.suggestedLoveTypeName}`
-    : aggregate.suggestedLoveType);
+  setText("suggested-mbti", formatTypeName(aggregate.suggestedMbti, visualCodes.mbtiName));
+  setText("suggested-love-type", formatTypeName(aggregate.suggestedLoveType, visualCodes.loveTypeName));
+  setText("best-match-mbti-name", visualCodes.mbtiName || "未測定");
+  setText("best-match-love-name", visualCodes.loveTypeName || "未測定");
   setText("summary-comment", getSummaryComment());
 
   renderBestMatchImages();
+  renderSharePreview();
   renderAxisList("mbti-axis-list", aggregate.mbtiPairs);
   renderAxisList("love-type-axis-list", aggregate.loveTypePairs);
   renderMemberList();
+
+  const shareButton = document.getElementById("share-result");
+  if (shareButton) {
+    shareButton.addEventListener("click", shareResult);
+  }
 })();

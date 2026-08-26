@@ -18,7 +18,7 @@
       mbti: "ENFP",
       mbtiLabel: "運動家",
       loveType: "FCRO",
-      loveTypeLabel: "恋愛マジシャン"
+      loveTypeLabel: "ロマンスマジシャン"
     },
     {
       id: "suzuki",
@@ -27,7 +27,7 @@
       mbti: "ISTP",
       mbtiLabel: "巨匠",
       loveType: "FCRE",
-      loveTypeLabel: "賢いウサギ"
+      loveTypeLabel: "ちゃっかりうさぎ"
     },
     {
       id: "kudo",
@@ -56,6 +56,25 @@
     { left: "J", leftLabel: "計画", right: "P", rightLabel: "柔軟" }
   ];
 
+  const MBTI_NAMES = {
+    INTJ: "建築家",
+    INTP: "論理学者",
+    ENTJ: "指揮官",
+    ENTP: "討論者",
+    INFJ: "提唱者",
+    INFP: "仲介者",
+    ENFJ: "主人公",
+    ENFP: "運動家",
+    ISTJ: "ロジスティシャン",
+    ISFJ: "擁護者",
+    ESTJ: "幹部",
+    ESFJ: "領事",
+    ISTP: "巨匠",
+    ISFP: "冒険家",
+    ESTP: "起業家",
+    ESFP: "エンターテイナー"
+  };
+
   const LOVE_TYPE_AXES = [
     { left: "L", leftLabel: "主導", right: "F", rightLabel: "相手に合わせる" },
     { left: "C", leftLabel: "甘えたい", right: "A", rightLabel: "受け止めたい" },
@@ -65,20 +84,20 @@
 
   const LOVE_TYPE_NAMES = {
     LCRO: "ボス猫",
-    LCRE: "隠れた宝物",
-    LCPO: "リーダー",
-    LCPE: "ツンデレ不良",
+    LCRE: "隠れベイビー",
+    LCPO: "主役体質",
+    LCPE: "ツンデレヤンキー",
     LARO: "憧れの先輩",
     LARE: "カリスマバランサー",
-    LAPO: "完璧なカメレオン",
+    LAPO: "パーフェクトカメレオン",
     LAPE: "キャプテンライオン",
-    FCRO: "恋愛マジシャン",
-    FCRE: "賢いウサギ",
+    FCRO: "ロマンスマジシャン",
+    FCRE: "ちゃっかりうさぎ",
     FCPO: "恋愛モンスター",
     FCPE: "忠犬ハチ公",
     FARO: "不思議生命体",
-    FARE: "有能マネージャー",
-    FAPO: "天使と悪魔",
+    FARE: "敏腕マネージャー",
+    FAPO: "デビル天使",
     FAPE: "最後の恋人"
   };
 
@@ -256,6 +275,7 @@
       mbtiPairs,
       loveTypePairs,
       suggestedMbti: suggestedMbti || "未測定",
+      suggestedMbtiName: MBTI_NAMES[suggestedMbti] || "",
       suggestedLoveType: suggestedLoveType || "未測定",
       suggestedLoveTypeName: LOVE_TYPE_NAMES[suggestedLoveType] || "",
       updatedAt: state.updatedAt
@@ -265,6 +285,7 @@
   window.OtokogokoroResultStore = {
     members: MEMBERS,
     mbtiAxes: MBTI_AXES,
+    mbtiNames: MBTI_NAMES,
     loveTypeAxes: LOVE_TYPE_AXES,
     loveTypeNames: LOVE_TYPE_NAMES,
     readState,
