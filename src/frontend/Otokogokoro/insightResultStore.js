@@ -106,10 +106,11 @@
       const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
       return {
         results: parsed.results && typeof parsed.results === "object" ? parsed.results : {},
+        progress: parsed.progress && typeof parsed.progress === "object" ? parsed.progress : {},
         updatedAt: parsed.updatedAt || ""
       };
     } catch (error) {
-      return { results: {}, updatedAt: "" };
+      return { results: {}, progress: {}, updatedAt: "" };
     }
   }
 
@@ -159,6 +160,31 @@
     };
   }
 
+  function normalizeProgress(memberId, rawProgress) {
+    const progress = rawProgress && typeof rawProgress === "object" ? rawProgress : {};
+    const questionIds = Array.isArray(progress.questionIds)
+      ? progress.questionIds.filter((questionId) => typeof questionId === "string")
+      : [];
+    const questionCount = Math.max(0, Math.round(toNumber(progress.questionCount || questionIds.length)));
+    const answeredCount = Math.max(0, Math.min(questionCount || Number.MAX_SAFE_INTEGER, Math.round(toNumber(progress.answeredCount))));
+    const currentIndex = Math.max(0, Math.min(Math.max(questionCount - 1, 0), Math.round(toNumber(progress.currentIndex))));
+
+    return {
+      memberId,
+      questionIds,
+      questionCount,
+      answeredCount,
+      currentIndex,
+      matchScore: Math.max(0, toNumber(progress.matchScore)),
+      maxMatchScore: Math.max(0, toNumber(progress.maxMatchScore)),
+      mbtiScores: progress.mbtiScores && typeof progress.mbtiScores === "object" ? progress.mbtiScores : {},
+      loveTypeScores: progress.loveTypeScores && typeof progress.loveTypeScores === "object" ? progress.loveTypeScores : {},
+      isComplete: false,
+      startedAt: progress.startedAt || "",
+      updatedAt: progress.updatedAt || new Date().toISOString()
+    };
+  }
+
   function saveMemberResult(memberId, result) {
     if (!getMember(memberId)) {
       return null;
@@ -167,6 +193,22 @@
     const state = readState();
     const normalized = normalizeResult(memberId, result);
     state.results[memberId] = normalized;
+    if (normalized.isComplete) {
+      delete state.progress[memberId];
+    }
+    state.updatedAt = normalized.updatedAt;
+    writeState(state);
+    return normalized;
+  }
+
+  function saveMemberProgress(memberId, progress) {
+    if (!getMember(memberId)) {
+      return null;
+    }
+
+    const state = readState();
+    const normalized = normalizeProgress(memberId, progress);
+    state.progress[memberId] = normalized;
     state.updatedAt = normalized.updatedAt;
     writeState(state);
     return normalized;
@@ -175,18 +217,32 @@
   function resetMemberResult(memberId) {
     const state = readState();
     delete state.results[memberId];
+    delete state.progress[memberId];
     state.updatedAt = new Date().toISOString();
     writeState(state);
   }
 
   function resetAllResults() {
-    writeState({ results: {}, updatedAt: new Date().toISOString() });
+    writeState({ results: {}, progress: {}, updatedAt: new Date().toISOString() });
   }
 
   function getMemberResult(memberId) {
     const state = readState();
     const result = state.results[memberId];
     return result ? normalizeResult(memberId, result) : null;
+  }
+
+  function getMemberProgress(memberId) {
+    const state = readState();
+    const progress = state.progress[memberId];
+    return progress ? normalizeProgress(memberId, progress) : null;
+  }
+
+  function clearMemberProgress(memberId) {
+    const state = readState();
+    delete state.progress[memberId];
+    state.updatedAt = new Date().toISOString();
+    writeState(state);
   }
 
   function addScores(target, source) {
@@ -233,13 +289,16 @@
   function getAggregate() {
     const state = readState();
     const memberResults = {};
+    const memberProgress = {};
     const mbtiScores = {};
     const loveTypeScores = {};
     const completedResults = [];
 
     MEMBERS.forEach((member) => {
       const result = state.results[member.id] ? normalizeResult(member.id, state.results[member.id]) : null;
+      const progress = state.progress[member.id] ? normalizeProgress(member.id, state.progress[member.id]) : null;
       memberResults[member.id] = result;
+      memberProgress[member.id] = progress;
 
       if (result && result.isComplete) {
         completedResults.push(result);
@@ -266,6 +325,7 @@
     return {
       members: MEMBERS,
       memberResults,
+      memberProgress,
       totalMembers: MEMBERS.length,
       completedCount,
       incompleteMembers: MEMBERS.filter((member) => !memberResults[member.id] || !memberResults[member.id].isComplete),
@@ -290,10 +350,13 @@
     loveTypeNames: LOVE_TYPE_NAMES,
     readState,
     saveMemberResult,
+    saveMemberProgress,
     resetMemberResult,
     resetAllResults,
+    clearMemberProgress,
     getMember,
     getMemberResult,
+    getMemberProgress,
     getAggregate
   };
 })();

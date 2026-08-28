@@ -102,9 +102,10 @@
   }
 
   const result = store.getMemberResult("fukazawa");
+  const progress = typeof store.getMemberProgress === "function" ? store.getMemberProgress("fukazawa") : null;
 
   if (!result || !result.isComplete) {
-    renderEmptyState(result);
+    renderEmptyState(progress);
     return;
   }
 

@@ -23,10 +23,14 @@
     const memberId = card.dataset.memberId;
     const statusElement = card.querySelector(`[data-member-status="${memberId}"]`);
     const result = aggregate.memberResults[memberId];
+    const progress = aggregate.memberProgress ? aggregate.memberProgress[memberId] : null;
 
     if (!statusElement) {
       return;
     }
+
+    card.classList.remove("is-complete", "is-progress");
+    statusElement.classList.remove("is-complete", "is-progress");
 
     if (result && result.isComplete) {
       card.classList.add("is-complete");
@@ -37,11 +41,12 @@
       return;
     }
 
-    if (result && result.answeredCount > 0) {
+    if (progress && progress.answeredCount > 0) {
+      card.classList.add("is-progress");
       statusElement.classList.add("is-progress");
       statusElement.textContent = "途中";
-      statusElement.title = `${result.answeredCount} / ${result.questionCount || "?"}問 回答済み`;
-      statusElement.setAttribute("aria-label", `途中。${result.answeredCount} / ${result.questionCount || "?"}問 回答済み`);
+      statusElement.title = `${progress.answeredCount} / ${progress.questionCount || "?"}問 回答済み`;
+      statusElement.setAttribute("aria-label", `途中。${progress.answeredCount} / ${progress.questionCount || "?"}問 回答済み`);
       return;
     }
 

@@ -1,6 +1,12 @@
 const introPanel = document.getElementById("intro-panel");
 const quizPanel = document.getElementById("quiz-panel");
 const startButton = document.getElementById("start-button");
+const playStatus = document.getElementById("play-status");
+const playStatusLabel = document.getElementById("play-status-label");
+const playStatusTitle = document.getElementById("play-status-title");
+const playStatusDetail = document.getElementById("play-status-detail");
+const savedResultLink = document.getElementById("saved-result-link");
+const resetButton = document.getElementById("reset-button");
 const backProfileButton = document.getElementById("back-profile-button");
 const questionImage = document.getElementById("question-image");
 const questionCount = document.getElementById("question-count");
@@ -12,6 +18,7 @@ const resultMessage = document.getElementById("result-message");
 const nextQuestionButton = document.getElementById("next-question-button");
 const summaryLink = document.getElementById("summary-link");
 
+const MEMBER_ID = "fukazawa";
 const TOTAL_QUESTION_COUNT = 10;
 
 const questionBank = [
@@ -427,6 +434,110 @@ const state = {
   loveTypeScores: {}
 };
 
+function getStore() {
+  return window.OtokogokoroResultStore || null;
+}
+
+function getQuestionById(questionId) {
+  return questionBank.find((question) => question.id === questionId) || null;
+}
+
+function resetState(questions) {
+  state.questions = questions || [];
+  state.currentIndex = 0;
+  state.answeredCount = 0;
+  state.matchScore = 0;
+  state.maxMatchScore = state.questions.length * 10;
+  state.mbtiScores = {};
+  state.loveTypeScores = {};
+}
+
+function applyProgress(progress) {
+  const savedQuestions = Array.isArray(progress.questionIds)
+    ? progress.questionIds.map(getQuestionById).filter(Boolean)
+    : [];
+  const questions = savedQuestions.length > 0
+    ? savedQuestions
+    : shuffleArray(questionBank).slice(0, TOTAL_QUESTION_COUNT);
+  const currentIndex = Number(progress.currentIndex) || 0;
+
+  state.questions = questions;
+  state.currentIndex = Math.max(0, Math.min(currentIndex, Math.max(questions.length - 1, 0)));
+  state.answeredCount = Math.max(0, Math.min(Number(progress.answeredCount) || 0, questions.length));
+  state.matchScore = Number(progress.matchScore) || 0;
+  state.maxMatchScore = Number(progress.maxMatchScore) || questions.length * 10;
+  state.mbtiScores = { ...(progress.mbtiScores || {}) };
+  state.loveTypeScores = { ...(progress.loveTypeScores || {}) };
+}
+
+function getSavedResult() {
+  const store = getStore();
+  return store && typeof store.getMemberResult === "function" ? store.getMemberResult(MEMBER_ID) : null;
+}
+
+function getSavedProgress() {
+  const store = getStore();
+  return store && typeof store.getMemberProgress === "function" ? store.getMemberProgress(MEMBER_ID) : null;
+}
+
+function getDisplayPercent(result) {
+  if (!result) {
+    return 0;
+  }
+
+  if (Number.isFinite(Number(result.matchPercent))) {
+    return Number(result.matchPercent);
+  }
+
+  return result.maxMatchScore > 0 ? Math.round((result.matchScore / result.maxMatchScore) * 100) : 0;
+}
+
+function setIntroStatus(statusName, title, detail) {
+  if (!playStatus || !playStatusLabel || !playStatusTitle || !playStatusDetail) {
+    return;
+  }
+
+  playStatus.classList.remove("is-progress", "is-complete");
+  if (statusName === "途中") {
+    playStatus.classList.add("is-progress");
+  }
+  if (statusName === "完了") {
+    playStatus.classList.add("is-complete");
+  }
+
+  playStatusLabel.textContent = statusName;
+  playStatusTitle.textContent = title;
+  playStatusDetail.textContent = detail;
+}
+
+function updateIntroStatus() {
+  const result = getSavedResult();
+  const progress = getSavedProgress();
+
+  if (savedResultLink) {
+    savedResultLink.hidden = !(result && result.isComplete);
+  }
+  if (resetButton) {
+    resetButton.hidden = !((result && result.isComplete) || (progress && progress.answeredCount > 0));
+  }
+
+  if (result && result.isComplete) {
+    const percent = getDisplayPercent(result);
+    setIntroStatus("完了", "前回の結果があります", `10問回答済みです。前回の一致度は ${percent} / 100 です。`);
+    startButton.textContent = "もう一度やる";
+    return;
+  }
+
+  if (progress && progress.answeredCount > 0) {
+    setIntroStatus("途中", "途中から再開できます", `${progress.answeredCount} / ${progress.questionCount || TOTAL_QUESTION_COUNT}問まで回答済みです。続きから始められます。`);
+    startButton.textContent = "続きから再開";
+    return;
+  }
+
+  setIntroStatus("未完了", "まだ始めていません", "問題に進むと、深澤編の途中経過がこのブラウザに保存されます。");
+  startButton.textContent = "問題に進む";
+}
+
 function shuffleArray(items) {
   const shuffled = [...items];
 
@@ -478,23 +589,42 @@ function renderQuestion() {
   });
 }
 
-function saveProgress(isComplete) {
-  const store = window.OtokogokoroResultStore;
+function saveProgress(isComplete, nextIndex) {
+  const store = getStore();
 
   if (!store) {
     return false;
   }
 
-  store.saveMemberResult("fukazawa", {
+  const resultData = {
+    questionIds: state.questions.map((question) => question.id),
     questionCount: state.questions.length,
     answeredCount: state.answeredCount,
+    currentIndex: Math.max(0, Math.min(nextIndex, Math.max(state.questions.length - 1, 0))),
     matchScore: state.matchScore,
     maxMatchScore: state.maxMatchScore,
     mbtiScores: state.mbtiScores,
     loveTypeScores: state.loveTypeScores,
     isComplete,
-    completedAt: isComplete ? new Date().toISOString() : ""
-  });
+    completedAt: isComplete ? new Date().toISOString() : "",
+    updatedAt: new Date().toISOString()
+  };
+
+  if (isComplete) {
+    store.saveMemberResult(MEMBER_ID, resultData);
+    if (typeof store.clearMemberProgress === "function") {
+      store.clearMemberProgress(MEMBER_ID);
+    }
+    return true;
+  }
+
+  if (typeof store.saveMemberProgress === "function") {
+    const existingProgress = getSavedProgress();
+    store.saveMemberProgress(MEMBER_ID, {
+      ...resultData,
+      startedAt: existingProgress ? existingProgress.startedAt : resultData.updatedAt
+    });
+  }
 
   return true;
 }
@@ -572,7 +702,7 @@ function selectOption(option, selectedButton) {
   addScores(state.mbtiScores, option.mbtiScores);
   addScores(state.loveTypeScores, option.loveTypeScores);
 
-  saveProgress(isLastQuestion);
+  saveProgress(isLastQuestion, isLastQuestion ? state.currentIndex : state.currentIndex + 1);
   matchResult.textContent = `${option.matchScore} / 10`;
   resultMessage.textContent = buildResultMessage(option);
 
@@ -582,18 +712,64 @@ function selectOption(option, selectedButton) {
   resultPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
-function startGame() {
-  state.questions = shuffleArray(questionBank).slice(0, TOTAL_QUESTION_COUNT);
-  state.currentIndex = 0;
-  state.answeredCount = 0;
-  state.matchScore = 0;
-  state.maxMatchScore = state.questions.length * 10;
-  state.mbtiScores = {};
-  state.loveTypeScores = {};
-
-  saveProgress(false);
+function startNewGame() {
+  resetState(shuffleArray(questionBank).slice(0, TOTAL_QUESTION_COUNT));
+  saveProgress(false, 0);
   renderQuestion();
   showQuiz();
+}
+
+function resumeGame(progress) {
+  applyProgress(progress);
+  renderQuestion();
+  showQuiz();
+}
+
+function handleStart() {
+  const result = getSavedResult();
+  const progress = getSavedProgress();
+
+  if (result && result.isComplete) {
+    const shouldRestart = window.confirm("前回の深澤編の結果をリセットして、もう一度最初から始めますか？");
+
+    if (!shouldRestart) {
+      return;
+    }
+
+    const store = getStore();
+    if (store && typeof store.resetMemberResult === "function") {
+      store.resetMemberResult(MEMBER_ID);
+    }
+    startNewGame();
+    return;
+  }
+
+  if (progress && progress.answeredCount > 0) {
+    resumeGame(progress);
+    return;
+  }
+
+  startNewGame();
+}
+
+function handleReset() {
+  const shouldReset = window.confirm("深澤編の途中経過と結果をリセットしますか？");
+
+  if (!shouldReset) {
+    return;
+  }
+
+  const store = getStore();
+  if (store && typeof store.resetMemberResult === "function") {
+    store.resetMemberResult(MEMBER_ID);
+  }
+
+  resetState([]);
+  resultPanel.hidden = true;
+  nextQuestionButton.hidden = true;
+  summaryLink.hidden = true;
+  showProfile();
+  updateIntroStatus();
 }
 
 function showQuiz() {
@@ -605,6 +781,7 @@ function showQuiz() {
 function showProfile() {
   quizPanel.hidden = true;
   introPanel.hidden = false;
+  updateIntroStatus();
   introPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -614,7 +791,10 @@ function goToNextQuestion() {
   quizPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-renderQuestion();
-startButton.addEventListener("click", startGame);
+updateIntroStatus();
+startButton.addEventListener("click", handleStart);
 nextQuestionButton.addEventListener("click", goToNextQuestion);
 backProfileButton.addEventListener("click", showProfile);
+if (resetButton) {
+  resetButton.addEventListener("click", handleReset);
+}

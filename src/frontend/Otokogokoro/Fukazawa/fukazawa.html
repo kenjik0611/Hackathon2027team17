@@ -69,9 +69,17 @@
         </div>
       </div>
 
+      <div class="play-status" id="play-status" aria-live="polite">
+        <span class="play-status-label" id="play-status-label">未完了</span>
+        <strong id="play-status-title">まだ始めていません</strong>
+        <p id="play-status-detail">問題に進むと、深澤編の途中経過がこのブラウザに保存されます。</p>
+      </div>
+
       <div class="profile-actions">
         <a class="ghost-button" href="../main.html">担当選択へ</a>
+        <a class="ghost-button" id="saved-result-link" href="result.html" hidden>結果を見る</a>
         <button class="primary-button" id="start-button" type="button">問題に進む</button>
+        <button class="ghost-button reset-button" id="reset-button" type="button" hidden>リセット</button>
       </div>
     </section>
 
