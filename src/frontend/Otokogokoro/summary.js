@@ -55,7 +55,14 @@
       const leftPercent = pair.hasScore ? pair.leftPercent : 0;
       const rightPercent = pair.hasScore ? pair.rightPercent : 0;
       const scoreText = pair.hasScore ? `${leftPercent}% : ${rightPercent}%` : "未測定";
-      row.className = `axis-row${pair.hasScore ? "" : " is-empty"}`;
+      const balanceClass = !pair.hasScore
+        ? "is-empty"
+        : leftPercent === rightPercent
+          ? "is-balanced"
+          : leftPercent > rightPercent
+            ? "is-left-leading"
+            : "is-right-leading";
+      row.className = `axis-row ${balanceClass}`;
       row.style.setProperty("--left-value", leftPercent);
       row.style.setProperty("--right-value", rightPercent);
       row.innerHTML = `
@@ -277,23 +284,35 @@
       return;
     }
 
+    const sources = getVisualImageSources();
+    applyImageSource(mbtiImage, sources.mbti);
+    applyImageSource(loveTypeImage, sources.loveType);
+  }
+
+  function getVisualImageSources() {
     const codes = getVisualCodes();
-    const fallbackMbtiSrc = buildMbtiImageSrc(codes.mbti);
-    const fallbackLoveTypeSrc = buildLoveTypeImageSrc(codes.loveType, codes.loveTypeName);
 
-    mbtiImage.onerror = function () {
-      mbtiImage.onerror = null;
-      mbtiImage.src = fallbackMbtiSrc;
+    return {
+      mbti: {
+        primary: getMbtiImageUrl(codes.mbti),
+        fallback: buildMbtiImageSrc(codes.mbti),
+        alt: `${codes.mbti || "未測定"}のMBTI相性イメージ`
+      },
+      loveType: {
+        primary: getLoveTypeImageUrl(codes.loveType),
+        fallback: buildLoveTypeImageSrc(codes.loveType, codes.loveTypeName),
+        alt: `${codes.loveType || "未測定"}のLove Type相性イメージ`
+      }
     };
-    loveTypeImage.onerror = function () {
-      loveTypeImage.onerror = null;
-      loveTypeImage.src = fallbackLoveTypeSrc;
-    };
+  }
 
-    mbtiImage.src = getMbtiImageUrl(codes.mbti) || fallbackMbtiSrc;
-    mbtiImage.alt = `${codes.mbti || "未測定"}のMBTI相性イメージ`;
-    loveTypeImage.src = getLoveTypeImageUrl(codes.loveType) || fallbackLoveTypeSrc;
-    loveTypeImage.alt = `${codes.loveType || "未測定"}のLove Type相性イメージ`;
+  function applyImageSource(image, source) {
+    image.onerror = function () {
+      image.onerror = null;
+      image.src = source.fallback;
+    };
+    image.src = source.primary || source.fallback;
+    image.alt = source.alt;
   }
 
   function getBestMatchMemberText() {
@@ -380,18 +399,16 @@
   }
 
   function renderSharePreview() {
-    const codes = getVisualCodes();
     const mbtiImage = document.getElementById("share-mbti-art");
     const loveTypeImage = document.getElementById("share-love-art");
+    const sources = getVisualImageSources();
 
     if (mbtiImage) {
-      mbtiImage.src = buildMbtiImageSrc(codes.mbti);
-      mbtiImage.alt = `${codes.mbti || "未測定"}の共有用MBTI画像`;
+      applyImageSource(mbtiImage, sources.mbti);
     }
 
     if (loveTypeImage) {
-      loveTypeImage.src = buildLoveTypeImageSrc(codes.loveType, codes.loveTypeName);
-      loveTypeImage.alt = `${codes.loveType || "未測定"}の共有用Love Type画像`;
+      applyImageSource(loveTypeImage, sources.loveType);
     }
 
     setText("share-title-text", getShareTitleText());
@@ -470,6 +487,58 @@
     context.stroke();
   }
 
+  function loadDrawableImage(source) {
+    return new Promise((resolve) => {
+      const primarySrc = source.primary || source.fallback;
+      const fallbackSrc = source.fallback;
+      const image = new Image();
+      let didFallback = false;
+      let isResolved = false;
+
+      function resolveImage() {
+        if (isResolved) {
+          return;
+        }
+        isResolved = true;
+        resolve(image);
+      }
+
+      function useFallback() {
+        if (isResolved) {
+          return;
+        }
+        if (didFallback || primarySrc === fallbackSrc) {
+          resolveImage();
+          return;
+        }
+        didFallback = true;
+        image.removeAttribute("crossorigin");
+        image.src = fallbackSrc;
+      }
+
+      image.onload = resolveImage;
+      image.onerror = useFallback;
+      image.crossOrigin = "anonymous";
+      image.src = primarySrc;
+      window.setTimeout(useFallback, 3500);
+    });
+  }
+
+  function drawContainedImage(context, image, x, y, size) {
+    fillRoundRect(context, x, y, size, size, 28, "#ffffff");
+    strokeRoundRect(context, x, y, size, size, 28, "#17202a", 7);
+
+    const naturalWidth = image.naturalWidth || image.width || size;
+    const naturalHeight = image.naturalHeight || image.height || size;
+    const scale = Math.min((size - 24) / naturalWidth, (size - 24) / naturalHeight);
+    const drawWidth = naturalWidth * scale;
+    const drawHeight = naturalHeight * scale;
+    const drawX = x + (size - drawWidth) / 2;
+    const drawY = y + (size - drawHeight) / 2;
+
+    context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+  }
+
   function wrapText(context, text, maxWidth) {
     const lines = [];
     let currentLine = "";
@@ -501,13 +570,17 @@
 
   function canvasToBlob(canvas) {
     return new Promise((resolve, reject) => {
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          reject(new Error("image create failed"));
-          return;
-        }
-        resolve(blob);
-      }, "image/png");
+      try {
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error("image create failed"));
+            return;
+          }
+          resolve(blob);
+        }, "image/png");
+      } catch (error) {
+        reject(error);
+      }
     });
   }
 
@@ -584,6 +657,7 @@
 
   async function createShareImageBlob() {
     const codes = getVisualCodes();
+    const imageSources = getVisualImageSources();
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
     const width = 1080;
@@ -591,14 +665,8 @@
     const margin = 72;
     const title = getShareTitleText();
     const oneLiner = getShareOneLiner();
-    const mbtiVisual = getMbtiVisual(codes.mbti);
-    const loveMood = getLoveTypeMood(codes.loveType);
-    const loveVisual = {
-      symbol: loveMood.symbol,
-      primary: "#ff6b9a",
-      secondary: loveMood.color,
-      soft: "#fff1df"
-    };
+    const mbtiImage = await loadDrawableImage(imageSources.mbti);
+    const loveTypeImage = await loadDrawableImage(imageSources.loveType);
 
     canvas.width = width;
     canvas.height = height;
@@ -622,21 +690,8 @@
     const mbtiX = 160;
     const loveX = width - 160 - imageSize;
     const imageY = 204;
-    drawShareArtwork(context, mbtiX, imageY, imageSize, {
-      code: codes.mbti || "MBTI",
-      name: codes.mbtiName || "未測定",
-      visual: {
-        symbol: mbtiVisual.symbol,
-        primary: mbtiVisual.primary,
-        secondary: mbtiVisual.secondary,
-        soft: mbtiVisual.soft
-      }
-    });
-    drawShareArtwork(context, loveX, imageY, imageSize, {
-      code: codes.loveType || "LOVE",
-      name: codes.loveTypeName || "未測定",
-      visual: loveVisual
-    });
+    drawContainedImage(context, mbtiImage, mbtiX, imageY, imageSize);
+    drawContainedImage(context, loveTypeImage, loveX, imageY, imageSize);
 
     context.font = "900 74px sans-serif";
     context.fillText("×", width / 2, imageY + 190);

@@ -183,17 +183,27 @@
   --axis-right-color: #ff8a3d;
   --axis-left-soft: #dffcf5;
   --axis-right-soft: #fff1df;
+  --axis-neutral-soft: #f3f4f6;
   display: grid;
   gap: 12px;
   padding: 14px;
   border: 2px solid var(--line);
   border-radius: 8px;
-  background: #eefcf8;
+  background: var(--axis-neutral-soft);
   box-shadow: 3px 3px 0 rgba(23, 32, 42, 0.1);
 }
 
-.axis-row:nth-child(even) {
-  background: #fff1df;
+.axis-row.is-left-leading {
+  background: var(--axis-left-soft);
+}
+
+.axis-row.is-right-leading {
+  background: var(--axis-right-soft);
+}
+
+.axis-row.is-balanced,
+.axis-row.is-empty {
+  background: var(--axis-neutral-soft);
 }
 
 .axis-row-head {
