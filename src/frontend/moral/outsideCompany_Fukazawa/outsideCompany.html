@@ -36,7 +36,31 @@
   </header>
 
   <main class="app-layout outside-layout">
-    <section class="start-panel outside-panel" id="quiz-panel" aria-labelledby="question-title">
+    <section class="start-panel outside-panel outside-intro-panel" id="intro-panel" aria-labelledby="outside-intro-title">
+      <p class="kicker">Start</p>
+      <h2 id="outside-intro-title">社外交流編</h2>
+      <figure class="intro-visual">
+        <img src="assets/outside-company-intro.png" alt="社外交流の懇親会で、社外の人と丁寧に会話している場面">
+      </figure>
+      <p class="intro-lead">取引先・お客様・社外の人がいる場で、どこまで踏み込むか、どう場を整えるかを10問で確認します。</p>
+
+      <div class="intro-summary" aria-label="出題内容">
+        <span>全10問</span>
+        <span>1問ごとに保存</span>
+        <span>途中再開できます</span>
+      </div>
+
+      <p class="play-status" id="play-status" aria-live="polite">未完了です。最初の問題から始められます。</p>
+
+      <div class="panel-actions outside-actions">
+        <a class="ghost-button" href="../main.html">シーン選択へ</a>
+        <button class="ghost-button" id="saved-result-button" type="button" hidden>結果を見る</button>
+        <button class="primary-button" id="start-button" type="button">社外編を始める</button>
+        <button class="ghost-button reset-button" id="reset-button" type="button" hidden>リセット</button>
+      </div>
+    </section>
+
+    <section class="start-panel outside-panel" id="quiz-panel" aria-labelledby="question-title" hidden>
       <div class="quiz-top">
         <p class="kicker">Question</p>
         <div class="score-strip" aria-label="現在のスコア">

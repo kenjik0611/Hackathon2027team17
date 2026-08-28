@@ -3,6 +3,7 @@
   const STORAGE_KEYS = {
     anonymousId: "team17:moral:anonymousId",
     themeResults: "team17:moral:themeResults",
+    themeProgress: "team17:moral:themeProgress",
     submissions: "team17:moral:submissionRecords"
   };
 
@@ -89,6 +90,31 @@
     return readJson(STORAGE_KEYS.themeResults, {});
   }
 
+  function getThemeProgress(themeId) {
+    const progress = readJson(STORAGE_KEYS.themeProgress, {});
+    if (themeId) {
+      return progress[themeId] || null;
+    }
+    return progress;
+  }
+
+  function saveThemeProgress(themeId, progress) {
+    const allProgress = getThemeProgress();
+    allProgress[themeId] = {
+      ...progress,
+      themeId,
+      anonymousId: getAnonymousId(),
+      updatedAt: new Date().toISOString()
+    };
+    writeJson(STORAGE_KEYS.themeProgress, allProgress);
+  }
+
+  function clearThemeProgress(themeId) {
+    const progress = getThemeProgress();
+    delete progress[themeId];
+    writeJson(STORAGE_KEYS.themeProgress, progress);
+  }
+
   function saveThemeResult(result) {
     const results = getThemeResults();
     results[result.themeId] = {
@@ -97,6 +123,14 @@
       completedAt: new Date().toISOString()
     };
     writeJson(STORAGE_KEYS.themeResults, results);
+    clearThemeProgress(result.themeId);
+  }
+
+  function resetThemeResult(themeId) {
+    const results = getThemeResults();
+    delete results[themeId];
+    writeJson(STORAGE_KEYS.themeResults, results);
+    clearThemeProgress(themeId);
   }
 
   function getSubmissionRecords() {
@@ -352,7 +386,11 @@
     buildAxisTotals,
     normalizeAxisTotals,
     getThemeResults,
+    getThemeProgress,
+    saveThemeProgress,
+    clearThemeProgress,
     saveThemeResult,
+    resetThemeResult,
     buildAggregate,
     buildMarkdown,
     getComment,

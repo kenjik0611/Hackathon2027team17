@@ -14,6 +14,74 @@
   min-height: 560px;
 }
 
+.outside-intro-panel {
+  display: grid;
+  align-content: start;
+}
+
+.intro-lead {
+  max-width: 660px;
+  margin-top: 14px;
+  color: #2f3a43;
+  font-weight: 800;
+}
+
+.intro-visual {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 3px solid var(--line);
+  border-radius: 8px;
+  background: #fffdfa;
+  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.13);
+}
+
+.intro-visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #fffdfa;
+}
+
+.intro-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.intro-summary span,
+.play-status {
+  border: 3px solid var(--line);
+  border-radius: 8px;
+  background: #fffdfa;
+  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.12);
+  font-weight: 900;
+}
+
+.intro-summary span {
+  min-height: 42px;
+  padding: 6px 12px;
+}
+
+.play-status {
+  margin-top: 24px;
+  padding: 16px;
+  background: #f2fff9;
+}
+
+.play-status.is-progress {
+  background: #fff8e7;
+}
+
+.play-status.is-complete {
+  background: #dffcf5;
+}
+
+.reset-button {
+  background: #fff1df;
+}
+
 .quiz-top {
   display: flex;
   align-items: flex-start;
