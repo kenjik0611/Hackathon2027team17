@@ -250,6 +250,15 @@ button:disabled {
   padding: 0 18px;
 }
 
+a.primary-button,
+a.ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  text-decoration: none;
+}
+
 .primary-button {
   color: #fff;
   border-color: var(--line);

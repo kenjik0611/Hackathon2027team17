@@ -23,45 +23,57 @@
     <section class="start-panel" aria-labelledby="scene-select-title">
       <p class="kicker">Scene Select</p>
       <h2 id="scene-select-title">どのシーンで遊びますか？</h2>
+      <div class="moral-progress" aria-live="polite">
+        <div>
+          <strong id="progress-summary">0 / 5 テーマ完了</strong>
+          <span id="anonymous-label">匿名で記録します</span>
+        </div>
+        <a class="primary-button summary-button" href="summary.html">集計結果を見る</a>
+      </div>
 
       <div class="scene-grid">
-        <a class="scene-card" href="house_Kiyose/house.html">
+        <a class="scene-card" href="house_Kiyose/house.html" data-theme-id="house">
           <span class="scene-icon" aria-hidden="true">🏠</span>
           <span>
             <strong>家庭</strong>
             <small>家族や同居人との場面</small>
+            <small class="theme-status" data-theme-status="house">未完了</small>
           </span>
         </a>
 
-        <a class="scene-card" href="office_Arita/office.html">
+        <a class="scene-card" href="office_Arita/office.html" data-theme-id="office">
           <span class="scene-icon" aria-hidden="true">🏢</span>
           <span>
             <strong>職場</strong>
             <small>同僚や上司との場面</small>
+            <small class="theme-status" data-theme-status="office">未完了</small>
           </span>
         </a>
 
-        <a class="scene-card" href="online_Suzuki/online.html">
+        <a class="scene-card" href="online_Suzuki/online.html" data-theme-id="online">
           <span class="scene-icon" aria-hidden="true">💬</span>
           <span>
             <strong>オンライン</strong>
             <small>SNSやチャットでの場面</small>
+            <small class="theme-status" data-theme-status="online">未完了</small>
           </span>
         </a>
 
-        <a class="scene-card" href="outsideCompany_Fukazawa/outsideCompany.html">
+        <a class="scene-card" href="outsideCompany_Fukazawa/outsideCompany.html" data-theme-id="outsideCompany">
           <span class="scene-icon" aria-hidden="true">🤝</span>
           <span>
             <strong>社外</strong>
             <small>取引先やお客様との場面</small>
+            <small class="theme-status" data-theme-status="outsideCompany">未完了</small>
           </span>
         </a>
 
-        <a class="scene-card" href="publicSpace_Kudo/publicSpace.html">
+        <a class="scene-card" href="publicSpace_Kudo/publicSpace.html" data-theme-id="publicSpace">
           <span class="scene-icon" aria-hidden="true">🚉</span>
           <span>
             <strong>公共の場</strong>
             <small>電車や街中などの場面</small>
+            <small class="theme-status" data-theme-status="publicSpace">未完了</small>
           </span>
         </a>
       </div>
@@ -75,5 +87,7 @@
   <footer>
     <p>Hackathon 2027 Team 17</p>
   </footer>
+  <script src="moralResultStore.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

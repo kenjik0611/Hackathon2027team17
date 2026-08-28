@@ -14,6 +14,42 @@
   margin-top: 22px;
 }
 
+.moral-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 14px;
+  border: 3px solid var(--line);
+  border-radius: 8px;
+  background: #f2fff9;
+  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.12);
+}
+
+.moral-progress strong,
+.moral-progress span {
+  display: block;
+}
+
+.moral-progress span {
+  color: #52606b;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.summary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  min-width: 150px;
+  padding: 0 16px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
 .scene-card {
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr);
@@ -56,6 +92,25 @@
   margin-top: 2px;
   color: #52606b;
   font-size: 0.82rem;
+}
+
+.theme-status {
+  width: fit-content;
+  margin-top: 8px;
+  padding: 2px 8px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: #fff1df;
+  color: var(--text) !important;
+  font-weight: 800;
+}
+
+.scene-card.is-complete {
+  background: #f2fff9;
+}
+
+.scene-card.is-complete .theme-status {
+  background: #a7f3d0;
 }
 
 .scene-icon {

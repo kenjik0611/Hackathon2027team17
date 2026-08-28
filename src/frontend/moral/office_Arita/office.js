@@ -169,6 +169,73 @@ const missions = [
   }
 ];
 
+const PHRASE_AXIS_SCORES = {
+  "delay-report": {
+    wait: { "責任感": 1, "対応力": 1 },
+    cause: { "責任感": 5, "対応力": 4 },
+    guess: { "責任感": 1, "対応力": 1 },
+    impact: { "責任感": 5, "対応力": 5 },
+    update: { "責任感": 5, "対応力": 5 },
+    relay: { "責任感": 2, "対応力": 1 }
+  },
+  "priority-consultation": {
+    accept: { "対応力": 1, "責任感": 2 },
+    current: { "対応力": 5, "責任感": 4 },
+    overtime: { "対応力": 1, "責任感": 2 },
+    impact: { "対応力": 5, "責任感": 5 },
+    priority: { "対応力": 5, "責任感": 5 },
+    silent: { "対応力": 0, "責任感": 1 }
+  },
+  "visitor-entry": {
+    exception: { "情報管理": 0, "常識": 1, "対応力": 1 },
+    procedure: { "情報管理": 5, "常識": 5, "対応力": 4 },
+    lend: { "情報管理": 0, "常識": 0, "対応力": 1 },
+    contact: { "情報管理": 4, "常識": 4, "対応力": 5 },
+    wait: { "情報管理": 5, "常識": 5, "対応力": 4 },
+    name: { "情報管理": 1, "常識": 1, "対応力": 2 }
+  },
+  "unknown-specification": {
+    promise: { "情報管理": 1, "責任感": 1, "対応力": 2 },
+    hold: { "情報管理": 5, "責任感": 5, "対応力": 5 },
+    scope: { "情報管理": 4, "責任感": 4, "対応力": 5 },
+    other: { "情報管理": 3, "責任感": 1, "対応力": 1 },
+    deadline: { "情報管理": 4, "責任感": 5, "対応力": 5 },
+    manual: { "情報管理": 1, "責任感": 1, "対応力": 2 }
+  },
+  "meeting-followup": {
+    later: { "責任感": 2, "対応力": 2 },
+    decision: { "責任感": 5, "対応力": 5 },
+    owner: { "責任感": 5, "対応力": 5 },
+    memory: { "責任感": 1, "対応力": 1 },
+    confirm: { "責任感": 5, "対応力": 5 },
+    personal: { "責任感": 2, "対応力": 2, "情報管理": 0 }
+  },
+  "dinner-precheck": {
+    "at-venue": { "思いやり": 2, "対応力": 2, "常識": 2 },
+    allergy: { "思いやり": 5, "対応力": 5, "常識": 5 },
+    toast: { "思いやり": 0, "対応力": 0, "常識": 1 },
+    nonalcohol: { "思いやり": 5, "対応力": 5, "常識": 4 },
+    schedule: { "思いやり": 4, "対応力": 5, "常識": 4 },
+    preference: { "思いやり": 2, "対応力": 2, "常識": 3 }
+  },
+  "unwell-participant": {
+    alone: { "思いやり": 1, "責任感": 0, "対応力": 1 },
+    stop: { "思いやり": 5, "責任感": 5, "対応力": 5 },
+    wait: { "思いやり": 1, "責任感": 1, "対応力": 1 },
+    stay: { "思いやり": 5, "責任感": 5, "対応力": 4 },
+    help: { "思いやり": 5, "責任感": 5, "対応力": 5 },
+    continue: { "思いやり": 0, "責任感": 0, "対応力": 0 }
+  },
+  "safe-ride-home": {
+    coffee: { "常識": 0, "責任感": 0, "対応力": 1 },
+    "no-drive": { "常識": 5, "責任感": 5, "対応力": 5 },
+    short: { "常識": 0, "責任感": 0, "対応力": 0 },
+    alternative: { "常識": 5, "責任感": 5, "対応力": 5 },
+    later: { "常識": 5, "責任感": 5, "対応力": 5 },
+    "one-hour": { "常識": 0, "責任感": 0, "対応力": 1 }
+  }
+};
+
 const elements = {
   introPanel: document.getElementById("intro-panel"),
   missionPanel: document.getElementById("mission-panel"),
@@ -322,8 +389,11 @@ function submitResponse() {
 
   state.answered = true;
   state.records.push({
+    id: mission.id,
     time: mission.time,
-    title: mission.title
+    title: mission.title,
+    selectedIds: [...state.selectedIds],
+    usefulCount: state.selectedIds.filter((phraseId) => mission.idealIds.includes(phraseId)).length
   });
 
   elements.phraseBank.querySelectorAll(".phrase-button").forEach((button) => {
@@ -381,8 +451,33 @@ function showResult() {
     elements.reviewList.appendChild(item);
   });
 
+  saveThemeResult();
   window.scrollTo({ top: 0, behavior: "smooth" });
   elements.resultTitle.focus({ preventScroll: true });
+}
+
+function saveThemeResult() {
+  if (!window.MoralResultStore) {
+    return;
+  }
+
+  const selectedScores = state.records.flatMap((record) => {
+    const scoreMap = PHRASE_AXIS_SCORES[record.id] || {};
+    return record.selectedIds.map((phraseId) => scoreMap[phraseId] || {});
+  });
+  const earned = state.records.reduce((sum, record) => sum + record.usefulCount, 0);
+
+  window.MoralResultStore.saveThemeResult({
+    themeId: "office",
+    themeName: "オフィス・取引先",
+    questionCount: state.records.length,
+    score: {
+      earned,
+      max: missions.length * 3
+    },
+    axisTotals: window.MoralResultStore.buildAxisTotals(selectedScores),
+    answers: state.records
+  });
 }
 
 elements.startButton.addEventListener("click", startDay);

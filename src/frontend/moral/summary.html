@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モラルチェック集計結果 - Team 17</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="summary.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner summary-header">
+      <div class="hero-copy">
+        <p class="kicker">Moral Summary</p>
+        <h1>モラルチェック集計結果</h1>
+        <p class="lead">5テーマの回答状況と、総合スコア・5軸の判断傾向を匿名でまとめます。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout summary-layout">
+    <section class="start-panel summary-panel" aria-labelledby="summary-title">
+      <div class="summary-top">
+        <div>
+          <p class="kicker">Anonymous</p>
+          <h2 id="summary-title">現在の集計</h2>
+          <p id="summary-meta" class="summary-meta"></p>
+        </div>
+        <div class="total-score">
+          <strong id="total-score">0</strong>
+          <span>/ 100</span>
+        </div>
+      </div>
+
+      <div class="completion-box" id="completion-box"></div>
+
+      <div class="summary-grid">
+        <section class="summary-section" aria-labelledby="radar-title">
+          <h3 id="radar-title">5軸バランス</h3>
+          <svg class="radar-chart" id="radar-chart" viewBox="0 0 220 220" role="img" aria-label="5軸スコアのレーダーチャート"></svg>
+        </section>
+
+        <section class="summary-section" aria-labelledby="axis-title">
+          <h3 id="axis-title">評価軸スコア</h3>
+          <div class="axis-list" id="axis-list"></div>
+        </section>
+      </div>
+
+      <section class="summary-section" aria-labelledby="theme-title">
+        <h3 id="theme-title">テーマ別の完了状況</h3>
+        <div class="theme-list" id="theme-list"></div>
+      </section>
+
+      <section class="summary-section result-type-section" id="result-type-section" aria-labelledby="result-type-title">
+        <div class="result-type-card">
+          <img class="result-type-image" id="result-type-image" src="assets/result-type-starter.png" alt="診断タイプのイラスト">
+          <div class="result-type-copy">
+            <p class="kicker">Result Type</p>
+            <h3 id="result-type-title">あなたはこういう人です</h3>
+            <strong id="result-type-name"></strong>
+            <p id="result-type-description"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="summary-section" aria-labelledby="comment-title">
+        <h3 id="comment-title">AI風コメント</h3>
+        <div class="comment-grid">
+          <div class="comment-block">
+            <span>良い点</span>
+            <p id="comment-good"></p>
+          </div>
+          <div class="comment-block">
+            <span>気をつけたい点</span>
+            <p id="comment-improvement"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="summary-section share-section" aria-labelledby="share-title">
+        <h3 id="share-title">結果を共有</h3>
+        <p class="share-note" id="share-status" aria-live="polite">診断タイプ画像付きの結果を共有できます。</p>
+        <div class="share-type-card" id="share-type-card">
+          <img class="share-type-image" id="share-type-image" src="assets/result-type-starter.png" alt="診断タイプのイラスト">
+          <strong class="share-type-name" id="share-type-name"></strong>
+          <p class="share-type-description" id="share-type-description"></p>
+        </div>
+        <button class="primary-button" id="share-result" type="button">結果を共有</button>
+        <p class="save-message" id="save-message" aria-live="polite"></p>
+      </section>
+
+      <div class="panel-actions summary-actions">
+        <button class="primary-button" id="save-record" type="button">最新結果として保存</button>
+        <a class="ghost-button link-button" href="main.html">シーン選択へ戻る</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="resultTypeImageData.js"></script>
+  <script src="moralResultStore.js"></script>
+  <script src="summary.js"></script>
+</body>
+</html>
