@@ -61,6 +61,23 @@
   margin-top: 26px;
 }
 
+.question-visual {
+  margin: 0 0 18px;
+  overflow: hidden;
+  border: 3px solid var(--line);
+  border-radius: 8px;
+  background: #fffdfa;
+  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.13);
+}
+
+.question-visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: #fffdfa;
+}
+
 .category-label {
   display: inline-flex;
   align-items: center;

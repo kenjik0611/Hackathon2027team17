@@ -1,6 +1,8 @@
 const questions = [
   {
     category: "一発芸",
+    image: "assets/q1-party-trick.png",
+    imageAlt: "懇親会で一発芸を求められた若手が、別の役割を提案している場面",
     situation: "会社の懇親会で、先輩から「若手なんだから一発芸やってよ」と言われた。",
     question: "場を壊さず、かつ自分も無理しすぎない対応として最も適切なのは？",
     choices: [
@@ -26,6 +28,8 @@ const questions = [
   },
   {
     category: "失敗談",
+    image: "assets/q2-absent-story.png",
+    imageAlt: "本人がいない場で同僚の失敗談が話題になり、別の同僚が流れを変えている場面",
     situation: "飲み会で、参加していない同僚の失敗談を上司が面白おかしく話し始めた。周囲も少し笑っているが、その同僚本人はその場にいない。",
     question: "その場にいる後輩として、どう振る舞うのが最も適切か？",
     choices: [
@@ -51,6 +55,8 @@ const questions = [
   },
   {
     category: "未公開情報",
+    image: "assets/q3-unreleased-info.png",
+    imageAlt: "社外の懇親会で取引先から未公開情報を聞かれ、丁寧に線引きしている場面",
     situation: "懇親会で取引先の担当者から、「例の新しいプロジェクトって、もう社内では動き出しているんですか？」と軽い口調で聞かれた。その話題は、まだ正式には社外に出していない情報である。",
     question: "場の空気を悪くせず、情報管理の観点でも最も適切な対応はどれか？",
     choices: [
@@ -76,6 +82,8 @@ const questions = [
   },
   {
     category: "写真撮影",
+    image: "assets/q4-photo-consent.png",
+    imageAlt: "懇親会の集合写真で、写りたくなさそうな人に配慮している場面",
     situation: "懇親会の終わりに、集合写真を撮ろうという流れになった。周囲は盛り上がっているが、明らかに写りたくなさそうな人が一人いる。あなたは撮影を頼まれている。",
     question: "最も配慮ある対応はどれか？",
     choices: [
@@ -101,6 +109,8 @@ const questions = [
   },
   {
     category: "恋愛いじり",
+    image: "assets/q5-romance-teasing.png",
+    imageAlt: "飲み会で恋愛事情をいじられて困っている人を、同僚が自然に助けている場面",
     situation: "懇親会で、上司が特定の社員の恋愛事情を何度もいじっている。周囲は笑っているが、本人は笑顔ではあるものの少し困っているように見える。",
     question: "その場にいる同僚として、どう振る舞うのが最も適切か？",
     choices: [
@@ -126,6 +136,8 @@ const questions = [
   },
   {
     category: "無礼講",
+    image: "assets/q6-frank-feedback.png",
+    imageAlt: "飲み会で本音を求められ、若手が具体的な改善提案として丁寧に伝えている場面",
     situation: "飲み会で上司から「今日は無礼講だから、若手目線で本音を言ってよ」と言われた。周囲も「せっかくだから言いなよ」という雰囲気になっている。あなたは普段からチームの進め方に少し課題を感じている。",
     question: "最も適切な対応はどれか？",
     choices: [
@@ -151,6 +163,8 @@ const questions = [
   },
   {
     category: "会計",
+    image: "assets/q7-payment-thanks.png",
+    imageAlt: "懇親会の会計で若手が感謝し、次回準備で貢献する姿勢を見せている場面",
     situation: "懇親会の会計で、上司や年次の高い社員が多めに払う流れになった。あなたは若手で、周囲から「若手は少なめでいいよ」と言われている。",
     question: "支払いへの態度として最も適切なのはどれか？",
     choices: [
@@ -176,6 +190,8 @@ const questions = [
   },
   {
     category: "飲酒配慮",
+    image: "assets/q8-nonalcohol-support.png",
+    imageAlt: "お酒を飲めない人に対して、同僚がノンアルコールの選択肢を自然に用意している場面",
     situation: "飲み会で、体質的にお酒が飲めない人に対して、周囲が「少しだけなら大丈夫でしょ」「乾杯だけでも」と勧めている。本人は笑って断っているが、少し困っているようにも見える。",
     question: "近くにいた場合、どう振る舞うのが最も適切か？",
     choices: [
@@ -201,6 +217,8 @@ const questions = [
   },
   {
     category: "社内不満",
+    image: "assets/q9-client-complaint.png",
+    imageAlt: "取引先がいる懇親会で社内不満の話題を、同僚が前向きな話に切り替えている場面",
     situation: "取引先も参加している懇親会で、同僚が「うちの部署、最近ほんとに段取り悪いんですよ」と冗談混じりに会社や上司への不満を話し始めた。取引先の人も笑って聞いている。",
     question: "同じ会社の社員として、どう対応するのが最も適切か？",
     choices: [
@@ -226,6 +244,8 @@ const questions = [
   },
   {
     category: "二次会",
+    image: "assets/q10-second-party-pressure.png",
+    imageAlt: "飲み会後に二次会参加を迫られている後輩を、同僚が駅へ向かう流れで助けている場面",
     situation: "飲み会後、酔った先輩が後輩に「二次会も来るよね？」「若手なんだから付き合いも大事だよ」としつこく参加を迫っている。後輩は笑っているが、少し困っているように見える。自分はその後輩の直接の上司ではない。",
     question: "どう対応するのが最も適切か？",
     choices: [
@@ -269,6 +289,7 @@ const elements = {
   scoreCount: document.getElementById("score-count"),
   correctCount: document.getElementById("correct-count"),
   progressBar: document.getElementById("progress-bar"),
+  questionImage: document.getElementById("question-image"),
   categoryLabel: document.getElementById("category-label"),
   situationText: document.getElementById("situation-text"),
   questionTitle: document.getElementById("question-title"),
@@ -365,6 +386,8 @@ function renderQuestion() {
   elements.correctCount.textContent = String(state.correct);
   elements.progressBar.style.width = `${(state.current / questions.length) * 100}%`;
   elements.categoryLabel.textContent = question.category;
+  elements.questionImage.src = question.image;
+  elements.questionImage.alt = question.imageAlt;
   elements.situationText.textContent = question.situation;
   elements.questionTitle.textContent = question.question;
   elements.feedback.className = "feedback";
