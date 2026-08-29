@@ -97,6 +97,13 @@ button:disabled {
   letter-spacing: 0;
 }
 
+.app-logo {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+}
+
 .lead {
   max-width: 680px;
   margin-top: 14px;
@@ -297,7 +304,7 @@ footer {
   }
 
   .header-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-visual {
