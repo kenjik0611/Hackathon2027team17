@@ -132,6 +132,7 @@
     const axisTotals = createAxisTotals();
     let scoreEarned = 0;
     let scoreMax = 0;
+    const completedThemePercents = [];
 
     const themeSummaries = THEMES.map((theme) => {
       const result = results[theme.id] || null;
@@ -157,10 +158,15 @@
       scoreEarned += earned;
       scoreMax += max;
 
+      const scorePercent = max === 0 ? null : Math.round((earned / max) * 100);
+      if (scorePercent !== null) {
+        completedThemePercents.push(scorePercent);
+      }
+
       return {
         ...theme,
         completed: true,
-        scorePercent: max === 0 ? null : Math.round((earned / max) * 100),
+        scorePercent,
         completedAt: result.completedAt,
         questionCount: result.questionCount,
         result
@@ -168,6 +174,16 @@
     });
 
     const completedCount = themeSummaries.filter((theme) => theme.completed).length;
+
+    // テーマごとに満点(max)の尺度が異なる(例: 10点満点のテーマと100点満点のテーマが混在)ため、
+    // 素点を単純合算すると満点が大きいテーマに総合スコアが引っ張られてしまう。
+    // そのため各テーマを0〜100に正規化した scorePercent を先に求め、その平均を総合スコアとする。
+    // 未完了のテーマ(scorePercentがnull)は平均の対象から除外し、完了済みテーマ間の重みを揃える。
+    const totalScore = completedThemePercents.length === 0
+      ? 0
+      : Math.round(
+          completedThemePercents.reduce((sum, percent) => sum + percent, 0) / completedThemePercents.length
+        );
 
     return {
       anonymousId: getAnonymousId(),
@@ -177,7 +193,7 @@
       complete: completedCount === THEMES.length,
       scoreEarned,
       scoreMax,
-      totalScore: scoreMax === 0 ? 0 : Math.round((scoreEarned / scoreMax) * 100),
+      totalScore,
       axisScores: normalizeAxisTotals(axisTotals),
       themeSummaries
     };
