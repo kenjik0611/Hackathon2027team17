@@ -1,9 +1,11 @@
 const modes = {
   moral: {
-    description: "日常の迷いやすい場面で、相手や周囲に配慮した選択を選びます。"
+    description: "日常の迷いやすい場面で、相手や周囲に配慮した選択を選びます。",
+    startLabel: "モラル編を始める"
   },
   insight: {
-    description: "恋愛・友人関係・会話で起きやすい受け取り方を、決めつけずに読む練習をします。"
+    description: "恋愛・友人関係・会話で起きやすい受け取り方を、決めつけずに読む練習をします。",
+    startLabel: "男心編を始める"
   }
 };
 
@@ -24,6 +26,7 @@ const state = {
 
 function updateModeUI() {
   const mode = modes[state.selectedMode];
+  document.body.dataset.selectedMode = state.selectedMode;
   elements.modeButtons.forEach((button) => {
     const isActive = button.dataset.mode === state.selectedMode;
     button.classList.toggle("active", isActive);
@@ -32,6 +35,7 @@ function updateModeUI() {
 
   elements.modeDescription.textContent = mode.description;
   elements.modeDescription.classList.toggle("insight", state.selectedMode === "insight");
+  elements.startButton.textContent = mode.startLabel;
 }
 
 elements.modeButtons.forEach((button) => {

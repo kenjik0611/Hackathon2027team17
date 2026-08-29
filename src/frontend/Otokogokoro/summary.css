@@ -1,8 +1,10 @@
 .insight-summary-layout {
-  max-width: 900px;
+  max-width: 1040px;
 }
 
 .summary-panel {
+  position: relative;
+  overflow: hidden;
   min-height: 0;
 }
 
@@ -14,25 +16,65 @@
 }
 
 .summary-card {
+  position: relative;
+  overflow: hidden;
   display: grid;
   gap: 6px;
   padding: 16px;
   border: 3px solid var(--line);
   border-radius: 8px;
-  background: #fffdfa;
-  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.14);
+  background: linear-gradient(135deg, #ffffff, var(--surface-sky) 90%);
+  box-shadow: var(--shadow-soft);
+}
+
+.summary-card::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  content: "";
+  background: linear-gradient(90deg, var(--primary), var(--sun), var(--accent));
+}
+
+.summary-card:nth-child(2) {
+  animation-delay: 0.04s;
+}
+
+.summary-card:nth-child(3) {
+  animation-delay: 0.08s;
+}
+
+.summary-card:nth-child(4) {
+  animation-delay: 0.12s;
 }
 
 .best-match-hero {
+  position: relative;
+  overflow: hidden;
   margin-top: 22px;
-  padding: 18px;
+  padding: 20px;
   border: 3px solid var(--line);
   border-radius: 8px;
-  background: #fff1df;
-  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.14);
+  background:
+    linear-gradient(135deg, var(--surface-soft), #ffffff 45%, var(--surface-mint) 100%);
+  box-shadow: 6px 6px 0 rgba(23, 32, 42, 0.14);
+}
+
+.best-match-hero::after {
+  position: absolute;
+  right: -36px;
+  bottom: -38px;
+  width: 180px;
+  height: 100px;
+  content: "";
+  background: repeating-linear-gradient(135deg, rgba(255, 122, 168, 0.22) 0 9px, transparent 9px 18px);
+  transform: rotate(-9deg);
 }
 
 .best-match-label {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   width: fit-content;
@@ -49,8 +91,10 @@
 }
 
 .best-match-visual {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 230px) 48px minmax(0, 230px);
+  grid-template-columns: minmax(0, 250px) 52px minmax(0, 250px);
   justify-content: center;
   align-items: center;
   gap: 12px;
@@ -65,8 +109,14 @@
   padding: 10px;
   border: 3px solid var(--line);
   border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.match-type-card:hover {
+  transform: translateY(-3px) rotate(-1deg);
+  box-shadow: 6px 6px 0 rgba(23, 32, 42, 0.16);
 }
 
 .match-type-card img {
@@ -105,15 +155,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border: 3px solid var(--line);
   border-radius: 999px;
   background: var(--sun);
   font-size: 1.8rem;
   font-weight: 900;
   line-height: 1;
-  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.14);
+  box-shadow: var(--shadow-soft);
+  animation: panel-in 0.46s var(--ease-pop) 0.16s both;
 }
 
 .summary-card span,
@@ -191,6 +242,12 @@
   border-radius: 8px;
   background: var(--axis-neutral-soft);
   box-shadow: 3px 3px 0 rgba(23, 32, 42, 0.1);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.axis-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.12);
 }
 
 .axis-row.is-left-leading {
@@ -284,7 +341,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-width: 0;
-  height: 26px;
+  height: 28px;
   overflow: hidden;
   border: 3px solid var(--line);
   border-radius: 999px;
@@ -309,8 +366,10 @@
   top: 0;
   bottom: 0;
   display: block;
-  width: calc(var(--left-value) * 1%);
+  width: 0;
   background: var(--axis-left-color);
+  animation: none;
+  transition: width 0.72s var(--ease-pop);
 }
 
 .axis-meter-left .axis-fill {
@@ -320,9 +379,16 @@
 
 .axis-meter-right .axis-fill {
   left: 0;
-  width: calc(var(--right-value) * 1%);
   border-radius: 0 999px 999px 0;
   background: var(--axis-right-color);
+}
+
+.axis-row.is-axis-visible .axis-meter-left .axis-fill {
+  width: calc(var(--left-value) * 1%);
+}
+
+.axis-row.is-axis-visible .axis-meter-right .axis-fill {
+  width: calc(var(--right-value) * 1%);
 }
 
 .axis-center-line {
@@ -340,6 +406,12 @@
   width: 0;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .axis-fill {
+    transition: none;
+  }
+}
+
 .member-list {
   display: grid;
   gap: 12px;
@@ -354,8 +426,8 @@
   padding: 14px;
   border: 3px solid var(--line);
   border-radius: 8px;
-  background: #fffdfa;
-  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.12);
+  background: linear-gradient(135deg, #ffffff, #fffaf2 88%);
+  box-shadow: var(--shadow-soft);
 }
 
 .member-result-card strong {
@@ -392,9 +464,10 @@
   border: 3px solid var(--line);
   border-left: 8px solid var(--accent);
   border-radius: 8px;
-  background: #fff1df;
+  background: linear-gradient(135deg, var(--surface-soft), #ffffff 86%);
   color: #2f3a43;
   font-weight: 800;
+  box-shadow: var(--shadow-soft);
 }
 
 .summary-disclaimer {
@@ -421,9 +494,9 @@
   padding: 18px;
   border: 3px solid var(--line);
   border-radius: 8px;
-  background: linear-gradient(135deg, #fff1df, #ffffff 72%);
+  background: linear-gradient(135deg, var(--surface-soft), #ffffff 56%, var(--surface-mint) 100%);
   text-align: center;
-  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.1);
+  box-shadow: var(--shadow-soft);
 }
 
 .share-preview-label {

@@ -7,6 +7,8 @@
 }
 
 .score-hero {
+  position: relative;
+  overflow: hidden;
   display: grid;
   justify-items: center;
   gap: 6px;
@@ -14,18 +16,32 @@
   padding: 16px 18px;
   border: 3px solid var(--line);
   border-radius: 8px;
-  background: #dffcf5;
-  box-shadow: 6px 6px 0 rgba(23, 32, 42, 0.14);
+  background: linear-gradient(135deg, var(--surface-mint), #ffffff 78%);
+  box-shadow: 6px 6px 0 rgba(0, 168, 150, 0.24);
   text-align: center;
 }
 
+.score-hero::after {
+  position: absolute;
+  inset: auto -34px -36px auto;
+  width: 164px;
+  height: 82px;
+  content: "";
+  background: repeating-linear-gradient(135deg, rgba(0, 168, 150, 0.18) 0 9px, transparent 9px 18px);
+  transform: rotate(-9deg);
+}
+
 .score-hero span {
+  position: relative;
+  z-index: 1;
   color: var(--muted);
   font-size: 0.9rem;
   font-weight: 900;
 }
 
 .score-hero strong {
+  position: relative;
+  z-index: 1;
   color: var(--text);
   font-size: clamp(2.1rem, 7vw, 3.8rem);
   font-weight: 900;
@@ -33,6 +49,8 @@
 }
 
 .result-type-hero {
+  position: relative;
+  overflow: hidden;
   display: grid;
   justify-items: center;
   gap: 14px;
@@ -40,9 +58,19 @@
   padding: 22px 20px;
   border: 3px solid var(--line);
   border-radius: 8px;
-  background: #fffdfa;
-  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.13);
+  background: linear-gradient(135deg, #ffffff, var(--surface-soft) 72%);
+  box-shadow: var(--shadow-soft);
   text-align: center;
+}
+
+.result-type-hero::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 8px;
+  content: "";
+  background: linear-gradient(90deg, var(--pink), var(--sun), var(--primary));
 }
 
 .result-type-hero img {
@@ -51,11 +79,14 @@
   aspect-ratio: 1 / 1;
   border: 3px solid var(--line);
   border-radius: 8px;
-  background: #fff1df;
+  background: #ffffff;
   object-fit: cover;
+  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.12);
 }
 
 .result-type-hero > div {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
   max-width: 640px;
@@ -87,13 +118,13 @@
   border: 3px solid var(--line);
   border-left: 8px solid var(--primary);
   border-radius: 8px;
-  background: #eefcf8;
-  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.12);
+  background: linear-gradient(135deg, var(--surface-mint), #ffffff 86%);
+  box-shadow: var(--shadow-soft);
 }
 
 .result-comment-grid article:nth-child(2) {
   border-left-color: var(--accent);
-  background: #fff1df;
+  background: linear-gradient(135deg, var(--surface-soft), #ffffff 86%);
 }
 
 .result-comment-grid h3 {
@@ -113,7 +144,7 @@
   padding: 12px 14px;
   border: 2px solid var(--line);
   border-radius: 8px;
-  background: #fff9e6;
+  background: #fffaf2;
   color: #2f3a43;
   font-size: 0.9rem;
   font-weight: 800;

@@ -79,7 +79,7 @@
       return;
     }
 
-    card.classList.remove("is-complete", "is-progress");
+    card.classList.remove("is-complete", "is-progress", "is-incomplete");
     statusElement.classList.remove("is-complete", "is-progress");
 
     if (result && result.isComplete) {
@@ -100,6 +100,7 @@
       return;
     }
 
+    card.classList.add("is-incomplete");
     statusElement.textContent = "未完了";
     statusElement.title = "まだ回答していません";
     statusElement.setAttribute("aria-label", "未完了。まだ回答していません");
