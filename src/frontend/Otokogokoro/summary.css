@@ -366,8 +366,10 @@
   top: 0;
   bottom: 0;
   display: block;
-  width: calc(var(--left-value) * 1%);
+  width: 0;
   background: var(--axis-left-color);
+  animation: none;
+  transition: width 0.72s var(--ease-pop);
 }
 
 .axis-meter-left .axis-fill {
@@ -377,9 +379,16 @@
 
 .axis-meter-right .axis-fill {
   left: 0;
-  width: calc(var(--right-value) * 1%);
   border-radius: 0 999px 999px 0;
   background: var(--axis-right-color);
+}
+
+.axis-row.is-axis-visible .axis-meter-left .axis-fill {
+  width: calc(var(--left-value) * 1%);
+}
+
+.axis-row.is-axis-visible .axis-meter-right .axis-fill {
+  width: calc(var(--right-value) * 1%);
 }
 
 .axis-center-line {
@@ -395,6 +404,12 @@
 
 .axis-row.is-empty .axis-fill {
   width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axis-fill {
+    transition: none;
+  }
 }
 
 .member-list {

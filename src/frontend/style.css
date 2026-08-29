@@ -219,11 +219,12 @@ a:focus-visible {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   margin-top: 22px;
+  margin-bottom: 58px;
 }
 
 .mode-tab {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr);
   align-items: center;
@@ -235,6 +236,11 @@ a:focus-visible {
   background: #fffdfa;
   text-align: left;
   animation: card-in 0.48s var(--ease-pop) both;
+}
+
+.mode-tab:hover,
+.mode-tab:focus-visible {
+  z-index: 2;
 }
 
 .mode-tab:nth-child(2) {
@@ -258,6 +264,46 @@ a:focus-visible {
 .mode-tab.active::after {
   opacity: 1;
   transform: translateX(0) skewX(-18deg);
+}
+
+.mode-hint {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 8px;
+  right: 8px;
+  z-index: 3;
+  padding: 10px 12px;
+  border: 3px solid var(--line);
+  border-radius: 8px;
+  color: #2f3a43;
+  background: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.55;
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px) scale(0.98);
+  transition: opacity 0.18s ease, transform 0.18s var(--ease-pop);
+}
+
+.mode-hint::before {
+  position: absolute;
+  top: -9px;
+  left: 24px;
+  width: 14px;
+  height: 14px;
+  content: "";
+  border-top: 3px solid var(--line);
+  border-left: 3px solid var(--line);
+  background: #ffffff;
+  transform: rotate(45deg);
+}
+
+.mode-tab:hover .mode-hint,
+.mode-tab:focus-visible .mode-hint {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .mode-tab strong,
@@ -608,6 +654,36 @@ footer {
 
   .mode-tabs {
     grid-template-columns: 1fr;
+    margin-bottom: 0;
+  }
+
+  .mode-tab {
+    overflow: hidden;
+  }
+
+  .mode-hint {
+    position: static;
+    grid-column: 1 / -1;
+    max-height: 0;
+    margin-top: 0;
+    padding: 0 10px;
+    border-width: 0;
+    opacity: 0;
+    transform: none;
+    transition: max-height 0.2s ease, margin-top 0.2s ease, padding 0.2s ease, opacity 0.16s ease;
+  }
+
+  .mode-hint::before {
+    display: none;
+  }
+
+  .mode-tab:hover .mode-hint,
+  .mode-tab:focus-visible .mode-hint {
+    max-height: 72px;
+    margin-top: 2px;
+    padding: 8px 10px;
+    border-width: 2px;
+    opacity: 1;
   }
 
   .panel-actions {
