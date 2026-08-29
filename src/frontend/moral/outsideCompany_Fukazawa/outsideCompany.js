@@ -1,6 +1,8 @@
 const questions = [
   {
     category: "一発芸",
+    image: "assets/q1-party-trick.png",
+    imageAlt: "懇親会で一発芸を求められた若手が、別の役割を提案している場面",
     situation: "会社の懇親会で、先輩から「若手なんだから一発芸やってよ」と言われた。",
     question: "場を壊さず、かつ自分も無理しすぎない対応として最も適切なのは？",
     choices: [
@@ -26,6 +28,8 @@ const questions = [
   },
   {
     category: "失敗談",
+    image: "assets/q2-absent-story.png",
+    imageAlt: "本人がいない場で同僚の失敗談が話題になり、別の同僚が流れを変えている場面",
     situation: "飲み会で、参加していない同僚の失敗談を上司が面白おかしく話し始めた。周囲も少し笑っているが、その同僚本人はその場にいない。",
     question: "その場にいる後輩として、どう振る舞うのが最も適切か？",
     choices: [
@@ -51,6 +55,8 @@ const questions = [
   },
   {
     category: "未公開情報",
+    image: "assets/q3-unreleased-info.png",
+    imageAlt: "社外の懇親会で取引先から未公開情報を聞かれ、丁寧に線引きしている場面",
     situation: "懇親会で取引先の担当者から、「例の新しいプロジェクトって、もう社内では動き出しているんですか？」と軽い口調で聞かれた。その話題は、まだ正式には社外に出していない情報である。",
     question: "場の空気を悪くせず、情報管理の観点でも最も適切な対応はどれか？",
     choices: [
@@ -76,6 +82,8 @@ const questions = [
   },
   {
     category: "写真撮影",
+    image: "assets/q4-photo-consent.png",
+    imageAlt: "懇親会の集合写真で、写りたくなさそうな人に配慮している場面",
     situation: "懇親会の終わりに、集合写真を撮ろうという流れになった。周囲は盛り上がっているが、明らかに写りたくなさそうな人が一人いる。あなたは撮影を頼まれている。",
     question: "最も配慮ある対応はどれか？",
     choices: [
@@ -101,6 +109,8 @@ const questions = [
   },
   {
     category: "恋愛いじり",
+    image: "assets/q5-romance-teasing.png",
+    imageAlt: "飲み会で恋愛事情をいじられて困っている人を、同僚が自然に助けている場面",
     situation: "懇親会で、上司が特定の社員の恋愛事情を何度もいじっている。周囲は笑っているが、本人は笑顔ではあるものの少し困っているように見える。",
     question: "その場にいる同僚として、どう振る舞うのが最も適切か？",
     choices: [
@@ -126,6 +136,8 @@ const questions = [
   },
   {
     category: "無礼講",
+    image: "assets/q6-frank-feedback.png",
+    imageAlt: "飲み会で本音を求められ、若手が具体的な改善提案として丁寧に伝えている場面",
     situation: "飲み会で上司から「今日は無礼講だから、若手目線で本音を言ってよ」と言われた。周囲も「せっかくだから言いなよ」という雰囲気になっている。あなたは普段からチームの進め方に少し課題を感じている。",
     question: "最も適切な対応はどれか？",
     choices: [
@@ -151,6 +163,8 @@ const questions = [
   },
   {
     category: "会計",
+    image: "assets/q7-payment-thanks.png",
+    imageAlt: "懇親会の会計で若手が感謝し、次回準備で貢献する姿勢を見せている場面",
     situation: "懇親会の会計で、上司や年次の高い社員が多めに払う流れになった。あなたは若手で、周囲から「若手は少なめでいいよ」と言われている。",
     question: "支払いへの態度として最も適切なのはどれか？",
     choices: [
@@ -176,6 +190,8 @@ const questions = [
   },
   {
     category: "飲酒配慮",
+    image: "assets/q8-nonalcohol-support.png",
+    imageAlt: "お酒を飲めない人に対して、同僚がノンアルコールの選択肢を自然に用意している場面",
     situation: "飲み会で、体質的にお酒が飲めない人に対して、周囲が「少しだけなら大丈夫でしょ」「乾杯だけでも」と勧めている。本人は笑って断っているが、少し困っているようにも見える。",
     question: "近くにいた場合、どう振る舞うのが最も適切か？",
     choices: [
@@ -201,6 +217,8 @@ const questions = [
   },
   {
     category: "社内不満",
+    image: "assets/q9-client-complaint.png",
+    imageAlt: "取引先がいる懇親会で社内不満の話題を、同僚が前向きな話に切り替えている場面",
     situation: "取引先も参加している懇親会で、同僚が「うちの部署、最近ほんとに段取り悪いんですよ」と冗談混じりに会社や上司への不満を話し始めた。取引先の人も笑って聞いている。",
     question: "同じ会社の社員として、どう対応するのが最も適切か？",
     choices: [
@@ -226,6 +244,8 @@ const questions = [
   },
   {
     category: "二次会",
+    image: "assets/q10-second-party-pressure.png",
+    imageAlt: "飲み会後に二次会参加を迫られている後輩を、同僚が駅へ向かう流れで助けている場面",
     situation: "飲み会後、酔った先輩が後輩に「二次会も来るよね？」「若手なんだから付き合いも大事だよ」としつこく参加を迫っている。後輩は笑っているが、少し困っているように見える。自分はその後輩の直接の上司ではない。",
     question: "どう対応するのが最も適切か？",
     choices: [
@@ -251,6 +271,11 @@ const questions = [
   }
 ];
 
+const themeId = "outsideCompany";
+const themeName = "社外交流";
+const pointPerQuestion = 10;
+const choiceLabels = ["A", "B", "C", "D"];
+
 const state = {
   order: [],
   current: 0,
@@ -258,17 +283,24 @@ const state = {
   correct: 0,
   answered: false,
   currentChoices: [],
-  answers: []
+  answers: [],
+  startedAt: ""
 };
 
 const elements = {
+  introPanel: document.getElementById("intro-panel"),
   quizPanel: document.getElementById("quiz-panel"),
   resultPanel: document.getElementById("result-panel"),
+  playStatus: document.getElementById("play-status"),
+  startButton: document.getElementById("start-button"),
+  savedResultButton: document.getElementById("saved-result-button"),
+  resetButton: document.getElementById("reset-button"),
   questionCount: document.getElementById("question-count"),
   totalCount: document.getElementById("total-count"),
   scoreCount: document.getElementById("score-count"),
   correctCount: document.getElementById("correct-count"),
   progressBar: document.getElementById("progress-bar"),
+  questionImage: document.getElementById("question-image"),
   categoryLabel: document.getElementById("category-label"),
   situationText: document.getElementById("situation-text"),
   questionTitle: document.getElementById("question-title"),
@@ -280,9 +312,6 @@ const elements = {
   reviewList: document.getElementById("review-list"),
   restartButton: document.getElementById("restart-button")
 };
-
-const pointPerQuestion = 10;
-const choiceLabels = ["A", "B", "C", "D"];
 
 function shuffleQuestions() {
   return questions
@@ -300,6 +329,166 @@ function shuffleChoices(question) {
       originalIndex,
       axisScores: question.choiceAxisScores[originalIndex]
     }));
+}
+
+function buildChoicesFromOriginalIndices(question, originalIndices) {
+  if (!Array.isArray(originalIndices) || originalIndices.length !== question.choices.length) {
+    return shuffleChoices(question);
+  }
+
+  const choices = originalIndices
+    .filter((originalIndex) => Number.isInteger(originalIndex) && question.choices[originalIndex])
+    .map((originalIndex) => ({
+      text: question.choices[originalIndex],
+      originalIndex,
+      axisScores: question.choiceAxisScores[originalIndex]
+    }));
+
+  return choices.length === question.choices.length ? choices : shuffleChoices(question);
+}
+
+function normalizeOrder(order) {
+  if (!Array.isArray(order) || order.length !== questions.length) {
+    return null;
+  }
+
+  const uniqueOrder = new Set(order);
+  const isValid = uniqueOrder.size === questions.length
+    && order.every((index) => Number.isInteger(index) && index >= 0 && index < questions.length);
+
+  return isValid ? order.slice() : null;
+}
+
+function getStoredResult() {
+  if (!window.MoralResultStore) {
+    return null;
+  }
+
+  return window.MoralResultStore.getThemeResults()[themeId] || null;
+}
+
+function getStoredProgress() {
+  if (!window.MoralResultStore || !window.MoralResultStore.getThemeProgress) {
+    return null;
+  }
+
+  const progress = window.MoralResultStore.getThemeProgress(themeId);
+  const order = normalizeOrder(progress && progress.order);
+
+  if (!progress || !order) {
+    return null;
+  }
+
+  return {
+    ...progress,
+    order,
+    current: Math.max(0, Math.min(questions.length - 1, Number(progress.current) || 0)),
+    answers: Array.isArray(progress.answers) ? progress.answers.slice(0, questions.length) : []
+  };
+}
+
+function getResultScore(result) {
+  if (!result || !result.score || !result.score.max) {
+    return 0;
+  }
+
+  return Math.round((result.score.earned / result.score.max) * 100);
+}
+
+function saveProgress() {
+  if (!window.MoralResultStore || !window.MoralResultStore.saveThemeProgress || state.order.length !== questions.length) {
+    return;
+  }
+
+  window.MoralResultStore.saveThemeProgress(themeId, {
+    order: state.order.slice(),
+    current: state.current,
+    score: state.score,
+    correct: state.correct,
+    answered: state.answered,
+    currentChoices: state.currentChoices.map((choice) => choice.originalIndex),
+    answers: state.answers,
+    questionCount: questions.length,
+    answeredCount: state.answers.length,
+    startedAt: state.startedAt || new Date().toISOString()
+  });
+}
+
+function resetStoredTheme() {
+  if (window.MoralResultStore && window.MoralResultStore.resetThemeResult) {
+    window.MoralResultStore.resetThemeResult(themeId);
+  }
+}
+
+function restoreProgress(progress) {
+  const nextProgress = progress || getStoredProgress();
+
+  if (!nextProgress) {
+    return false;
+  }
+
+  const currentQuestion = questions[nextProgress.order[nextProgress.current]];
+  state.order = nextProgress.order.slice();
+  state.current = nextProgress.current;
+  state.answers = nextProgress.answers;
+  state.score = typeof nextProgress.score === "number"
+    ? nextProgress.score
+    : state.answers.filter((answer) => answer.isCorrect).length * pointPerQuestion;
+  state.correct = typeof nextProgress.correct === "number"
+    ? nextProgress.correct
+    : state.answers.filter((answer) => answer.isCorrect).length;
+  state.answered = Boolean(nextProgress.answered);
+  state.currentChoices = buildChoicesFromOriginalIndices(currentQuestion, nextProgress.currentChoices);
+  state.startedAt = nextProgress.startedAt || new Date().toISOString();
+  return true;
+}
+
+function updateIntroStatus() {
+  const storedResult = getStoredResult();
+  const progress = getStoredProgress();
+
+  elements.playStatus.className = "play-status";
+  elements.savedResultButton.hidden = true;
+  elements.resetButton.hidden = true;
+
+  if (storedResult) {
+    elements.playStatus.classList.add("is-complete");
+    elements.playStatus.textContent = `完了済みです。前回の結果は${getResultScore(storedResult)}点です。`;
+    elements.startButton.textContent = "もう一度やる";
+    elements.savedResultButton.hidden = false;
+    return;
+  }
+
+  if (progress) {
+    const answeredCount = progress.answers.length;
+    elements.playStatus.classList.add("is-progress");
+    elements.playStatus.textContent = `途中です。${answeredCount} / ${questions.length}問まで進んでいます。`;
+    elements.startButton.textContent = "続きから再開";
+    elements.resetButton.hidden = false;
+    return;
+  }
+
+  elements.playStatus.textContent = "未完了です。最初の問題から始められます。";
+  elements.startButton.textContent = "社外編を始める";
+}
+
+function showIntro() {
+  elements.quizPanel.hidden = true;
+  elements.resultPanel.hidden = true;
+  elements.introPanel.hidden = false;
+  updateIntroStatus();
+}
+
+function showQuizPanel() {
+  elements.introPanel.hidden = true;
+  elements.resultPanel.hidden = true;
+  elements.quizPanel.hidden = false;
+}
+
+function showResultPanel() {
+  elements.introPanel.hidden = true;
+  elements.quizPanel.hidden = true;
+  elements.resultPanel.hidden = false;
 }
 
 function getExplanationParts(question) {
@@ -345,9 +534,9 @@ function startQuiz() {
   state.answered = false;
   state.currentChoices = [];
   state.answers = [];
+  state.startedAt = new Date().toISOString();
   elements.totalCount.textContent = String(questions.length);
-  elements.resultPanel.hidden = true;
-  elements.quizPanel.hidden = false;
+  showQuizPanel();
   renderQuestion();
 }
 
@@ -355,21 +544,31 @@ function getCurrentQuestion() {
   return questions[state.order[state.current]];
 }
 
-function renderQuestion() {
+function renderQuestion(options = {}) {
   const question = getCurrentQuestion();
-  state.answered = false;
-  state.currentChoices = shuffleChoices(question);
+  const keepAnswer = Boolean(options.keepAnswer);
+  const keepChoices = Boolean(options.keepChoices);
+
+  if (!keepAnswer) {
+    state.answered = false;
+  }
+
+  if (!keepChoices || state.currentChoices.length === 0) {
+    state.currentChoices = shuffleChoices(question);
+  }
 
   elements.questionCount.textContent = String(state.current + 1);
   elements.scoreCount.textContent = String(state.score);
   elements.correctCount.textContent = String(state.correct);
   elements.progressBar.style.width = `${(state.current / questions.length) * 100}%`;
   elements.categoryLabel.textContent = question.category;
+  elements.questionImage.src = question.image;
+  elements.questionImage.alt = question.imageAlt;
   elements.situationText.textContent = question.situation;
   elements.questionTitle.textContent = question.question;
   elements.feedback.className = "feedback";
   elements.feedback.textContent = "";
-  elements.nextButton.disabled = true;
+  elements.nextButton.disabled = !state.answered;
   elements.nextButton.textContent = state.current === questions.length - 1 ? "結果を見る" : "次へ";
 
   elements.choiceList.innerHTML = "";
@@ -387,6 +586,50 @@ function renderQuestion() {
     button.addEventListener("click", () => selectAnswer(index));
     elements.choiceList.appendChild(button);
   });
+
+  if (state.answered) {
+    showAnsweredQuestion();
+  }
+
+  saveProgress();
+}
+
+function getSelectedChoiceIndex(answer) {
+  if (!answer) {
+    return -1;
+  }
+
+  if (Number.isInteger(answer.selectedOriginalIndex)) {
+    return state.currentChoices.findIndex((choice) => choice.originalIndex === answer.selectedOriginalIndex);
+  }
+
+  return state.currentChoices.findIndex((choice) => choice.text === answer.selected);
+}
+
+function showAnsweredQuestion() {
+  const question = getCurrentQuestion();
+  const answer = state.answers[state.current];
+  const selectedIndex = getSelectedChoiceIndex(answer);
+
+  if (!answer) {
+    state.answered = false;
+    elements.nextButton.disabled = true;
+    return;
+  }
+
+  [...elements.choiceList.children].forEach((button, index) => {
+    button.disabled = true;
+    if (state.currentChoices[index].originalIndex === question.answerIndex) {
+      button.classList.add(answer.isCorrect ? "is-correct" : "show-correct");
+    }
+    if (index === selectedIndex && !answer.isCorrect) {
+      button.classList.add("is-wrong");
+    }
+  });
+
+  elements.feedback.className = `feedback is-visible ${answer.isCorrect ? "is-correct" : "is-wrong"}`;
+  elements.feedback.textContent = formatFeedback(question, answer.isCorrect);
+  elements.nextButton.disabled = false;
 }
 
 function selectAnswer(selectedIndex) {
@@ -405,13 +648,16 @@ function selectAnswer(selectedIndex) {
     state.correct += 1;
   }
 
-  state.answers.push({
+  state.answers[state.current] = {
     question: question.question,
     selected: selectedChoice.text,
+    selectedOriginalIndex: selectedChoice.originalIndex,
     correct: correctChoice.text,
+    correctOriginalIndex: question.answerIndex,
     isCorrect,
     axisScores: selectedChoice.axisScores
-  });
+  };
+  state.answers = state.answers.slice(0, state.current + 1);
 
   [...elements.choiceList.children].forEach((button, index) => {
     button.disabled = true;
@@ -429,6 +675,7 @@ function selectAnswer(selectedIndex) {
   elements.feedback.className = `feedback is-visible ${isCorrect ? "is-correct" : "is-wrong"}`;
   elements.feedback.textContent = formatFeedback(question, isCorrect);
   elements.nextButton.disabled = false;
+  saveProgress();
 }
 
 function goNext() {
@@ -442,17 +689,14 @@ function goNext() {
   }
 
   state.current += 1;
+  state.currentChoices = [];
   renderQuestion();
 }
 
-function renderResult() {
-  elements.quizPanel.hidden = true;
-  elements.resultPanel.hidden = false;
-  elements.resultScore.textContent = String(state.score);
-  elements.resultMessage.textContent = getResultMessage(state.score);
+function renderReviewList(answers) {
   elements.reviewList.innerHTML = "";
 
-  state.answers.forEach((answer, index) => {
+  answers.forEach((answer, index) => {
     const item = document.createElement("div");
     const badge = document.createElement("span");
     const body = document.createElement("p");
@@ -468,8 +712,25 @@ function renderResult() {
     item.append(badge, body);
     elements.reviewList.appendChild(item);
   });
+}
 
-  saveThemeResult();
+function renderResult(options = {}) {
+  showResultPanel();
+  elements.resultScore.textContent = String(state.score);
+  elements.resultMessage.textContent = getResultMessage(state.score);
+  renderReviewList(state.answers);
+
+  if (options.save !== false) {
+    saveThemeResult();
+  }
+}
+
+function renderStoredResult(result) {
+  const score = getResultScore(result);
+  showResultPanel();
+  elements.resultScore.textContent = String(score);
+  elements.resultMessage.textContent = getResultMessage(score);
+  renderReviewList(Array.isArray(result.answers) ? result.answers : []);
 }
 
 function saveThemeResult() {
@@ -478,12 +739,12 @@ function saveThemeResult() {
   }
 
   window.MoralResultStore.saveThemeResult({
-    themeId: "outsideCompany",
-    themeName: "社外交流",
-    questionCount: state.answers.length,
+    themeId,
+    themeName,
+    questionCount: questions.length,
     score: {
       earned: state.answers.filter((answer) => answer.isCorrect).length,
-      max: state.answers.length
+      max: questions.length
     },
     axisTotals: window.MoralResultStore.buildAxisTotals(state.answers.map((answer) => answer.axisScores)),
     answers: state.answers
@@ -503,7 +764,66 @@ function getResultMessage(score) {
   return "まずは、遅刻連絡・機密情報・写真投稿の3つを意識すると改善しやすいです。";
 }
 
-elements.nextButton.addEventListener("click", goNext);
-elements.restartButton.addEventListener("click", startQuiz);
+function handleStart() {
+  const storedResult = getStoredResult();
+  const progress = getStoredProgress();
 
-startQuiz();
+  if (storedResult && !progress) {
+    const shouldRestart = window.confirm("社外編を最初からやり直しますか？保存済みの社外編結果はリセットされます。");
+    if (!shouldRestart) {
+      return;
+    }
+    resetStoredTheme();
+    startQuiz();
+    return;
+  }
+
+  if (progress && restoreProgress(progress)) {
+    if (state.answers.length >= questions.length) {
+      renderResult();
+      return;
+    }
+
+    elements.totalCount.textContent = String(questions.length);
+    showQuizPanel();
+    renderQuestion({ keepAnswer: state.answered, keepChoices: true });
+    return;
+  }
+
+  startQuiz();
+}
+
+function handleSavedResult() {
+  const storedResult = getStoredResult();
+  if (storedResult) {
+    renderStoredResult(storedResult);
+  }
+}
+
+function handleReset() {
+  const shouldReset = window.confirm("社外編の途中経過と完了結果をリセットしますか？");
+  if (!shouldReset) {
+    return;
+  }
+
+  resetStoredTheme();
+  showIntro();
+}
+
+function handleRestart() {
+  const shouldRestart = window.confirm("社外編を最初からやり直しますか？保存済みの社外編結果はリセットされます。");
+  if (!shouldRestart) {
+    return;
+  }
+
+  resetStoredTheme();
+  startQuiz();
+}
+
+elements.startButton.addEventListener("click", handleStart);
+elements.savedResultButton.addEventListener("click", handleSavedResult);
+elements.resetButton.addEventListener("click", handleReset);
+elements.nextButton.addEventListener("click", goNext);
+elements.restartButton.addEventListener("click", handleRestart);
+
+showIntro();
