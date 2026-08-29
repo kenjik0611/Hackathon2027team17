@@ -595,68 +595,7 @@
     URL.revokeObjectURL(url);
   }
 
-  function drawShareArtwork(context, x, y, size, options) {
-    const code = options.code || "--";
-    const name = options.name || "未測定";
-    const visual = options.visual;
-
-    fillRoundRect(context, x, y, size, size, 28, visual.soft);
-    strokeRoundRect(context, x, y, size, size, 28, "#17202a", 7);
-
-    context.save();
-    context.beginPath();
-    drawRoundRect(context, x, y, size, size, 28);
-    context.clip();
-
-    context.fillStyle = visual.secondary;
-    context.globalAlpha = 0.32;
-    context.beginPath();
-    context.moveTo(x, y + size * 0.23);
-    context.bezierCurveTo(x + size * 0.2, y, x + size * 0.42, y + size * 0.1, x + size * 0.62, y + size * 0.04);
-    context.bezierCurveTo(x + size * 0.82, y - size * 0.02, x + size, y + size * 0.14, x + size, y + size * 0.1);
-    context.lineTo(x + size, y + size);
-    context.lineTo(x, y + size);
-    context.closePath();
-    context.fill();
-
-    context.fillStyle = visual.primary;
-    context.globalAlpha = 0.25;
-    context.beginPath();
-    context.moveTo(x, y + size * 0.8);
-    context.bezierCurveTo(x + size * 0.18, y + size * 0.58, x + size * 0.34, y + size * 0.72, x + size * 0.52, y + size * 0.68);
-    context.bezierCurveTo(x + size * 0.72, y + size * 0.64, x + size * 0.82, y + size * 0.48, x + size, y + size * 0.62);
-    context.lineTo(x + size, y + size);
-    context.lineTo(x, y + size);
-    context.closePath();
-    context.fill();
-    context.restore();
-
-    context.globalAlpha = 1;
-    fillRoundRect(context, x + size * 0.22, y + size * 0.2, size * 0.56, size * 0.46, 26, "#ffffff");
-    strokeRoundRect(context, x + size * 0.22, y + size * 0.2, size * 0.56, size * 0.46, 26, "#17202a", 7);
-
-    context.fillStyle = visual.primary;
-    context.beginPath();
-    context.arc(x + size * 0.5, y + size * 0.43, size * 0.17, 0, Math.PI * 2);
-    context.fill();
-    context.strokeStyle = "#17202a";
-    context.lineWidth = 7;
-    context.stroke();
-
-    context.fillStyle = "#ffffff";
-    context.font = "900 30px sans-serif";
-    context.textAlign = "center";
-    context.fillText(visual.symbol, x + size * 0.5, y + size * 0.45);
-
-    context.fillStyle = "#17202a";
-    context.font = "900 42px sans-serif";
-    context.fillText(code, x + size * 0.5, y + size * 0.82);
-    context.font = "900 24px sans-serif";
-    drawWrappedText(context, name, x + size * 0.5, y + size * 0.92, size * 0.82, 30, 1);
-  }
-
   async function createShareImageBlob() {
-    const codes = getVisualCodes();
     const imageSources = getVisualImageSources();
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
