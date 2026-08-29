@@ -11,11 +11,10 @@
   <header class="app-header">
     <div class="header-inner">
       <div class="hero-copy">
-        
         <h1 class="app-title">
-  <img src="./assets/kuukiyomi-logo.png" alt="空気読メーター" class="app-logo">
-</h1>
-        <p class="lead">最初に遊ぶモードを選び、問題バンクから重複なしでランダム出題します。</p>
+          <img src="./assets/kuukiyomi-logo.png" alt="空気読メーター" class="app-logo">
+        </h1>
+        <p class="lead">場の空気を読む力と、相手の考えを読み取る力を遊びながらチェック。</p>
       </div>
 
       <div class="hero-visual" aria-hidden="true">
@@ -60,7 +59,12 @@
           <span>
             <strong>モラルチェッカー</strong>
             <small>日常判断クイズ</small>
+            <span class="mode-preview" aria-hidden="true">
+              <span>5シーン</span>
+              <span>総合スコア</span>
+            </span>
           </span>
+          <span class="mode-hint" aria-hidden="true">社外・職場・オンラインなどで「この場面どうする？」を聞くよ</span>
         </button>
         <button class="mode-tab" id="insight-mode-button" type="button" role="tab" aria-selected="false" data-mode="insight">
           <span class="mode-icon" aria-hidden="true">
@@ -72,7 +76,12 @@
           <span>
             <strong>男心理解ゲーム</strong>
             <small>会話読み取りクイズ</small>
+            <span class="mode-preview" aria-hidden="true">
+              <span>5人</span>
+              <span>相性診断</span>
+            </span>
           </span>
+          <span class="mode-hint" aria-hidden="true">LINE・デート・飲み会で「どう返すと刺さる？」を聞くよ</span>
         </button>
       </div>
 
@@ -82,7 +91,7 @@
 
       <div class="panel-actions">
         <a class="ghost-button" href="overall.html">総合診断結果を見る</a>
-        <button class="primary-button" id="start-button" type="button">スタート</button>
+        <button class="primary-button" id="start-button" type="button">モラル編を始める</button>
       </div>
     </section>
   </main>

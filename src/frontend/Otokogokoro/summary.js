@@ -99,6 +99,34 @@
     });
   }
 
+  function setupAxisReveal() {
+    const rows = Array.from(document.querySelectorAll(".axis-row"));
+    if (rows.length === 0) {
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      rows.forEach((row) => row.classList.add("is-axis-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-axis-visible");
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.28,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    rows.forEach((row) => observer.observe(row));
+  }
+
   function renderMemberList() {
     return;
   }
@@ -732,6 +760,7 @@
   renderSharePreview();
   renderAxisList("mbti-axis-list", aggregate.mbtiPairs);
   renderAxisList("love-type-axis-list", aggregate.loveTypePairs);
+  setupAxisReveal();
   renderMemberList();
 
   const shareButton = document.getElementById("share-result");
