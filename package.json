@@ -1,0 +1,17 @@
+{
+  "name": "hackathon2027team17",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint:js": "eslint src/frontend",
+    "lint:html": "htmlhint \"src/frontend/**/*.html\"",
+    "check:links": "node scripts/check-local-refs.mjs",
+    "ci": "npm run lint:js && npm run lint:html && npm run check:links"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^15.0.0",
+    "htmlhint": "^1.0.0"
+  }
+}
