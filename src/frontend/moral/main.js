@@ -22,6 +22,7 @@
     if (card) {
       card.classList.toggle("is-complete", isComplete);
       card.classList.toggle("is-in-progress", isInProgress);
+      card.classList.toggle("is-incomplete", !isComplete && !isInProgress);
     }
 
     if (status) {

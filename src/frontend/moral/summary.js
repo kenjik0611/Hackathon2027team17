@@ -23,6 +23,7 @@
     meta: document.getElementById("summary-meta"),
     totalScore: document.getElementById("total-score"),
     completionBox: document.getElementById("completion-box"),
+    scoreRule: document.getElementById("score-rule"),
     axisList: document.getElementById("axis-list"),
     themeList: document.getElementById("theme-list"),
     resultTypeSection: document.getElementById("result-type-section"),
@@ -49,6 +50,9 @@
       ? "5テーマすべて完了しています。集計結果を最新結果として保存できます。"
       : `未完了テーマがあります。現在 ${aggregate.completedCount} / ${aggregate.totalThemes} テーマ完了です。`;
     elements.completionBox.classList.toggle("is-incomplete", !aggregate.complete);
+    elements.scoreRule.textContent = aggregate.complete
+      ? "各テーマを100点換算してから平均しているため、5テーマすべてが同じ重みで反映されます。"
+      : "完了済みテーマだけを100点換算して平均しています。未完了テーマは総合スコアに含めていません。";
     elements.resultTypeSection.className = `summary-section result-type-section ${resultType.themeClass || "type-starter"}`;
     elements.resultTypeImage.src = resultType.image;
     elements.resultTypeImage.alt = `${resultType.name}のイラスト`;
