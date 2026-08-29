@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>深澤理解ゲーム - 個人結果</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="fukazawa.css">
+  <link rel="stylesheet" href="result.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner fukazawa-header">
+      <div class="hero-copy">
+        <p class="kicker">Fukazawa Result</p>
+        <h1>深澤理解ゲーム 個人結果</h1>
+        <p class="lead">10問の回答から、深澤本人との一致度とタイプを表示します。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout fukazawa-result-layout">
+    <section class="start-panel personal-result-panel" aria-labelledby="personal-result-title">
+      <p class="kicker">Score</p>
+      <div class="score-hero">
+        <span>深澤一致度</span>
+        <strong id="score-text">-- / 100</strong>
+      </div>
+
+      <div class="result-type-hero">
+        <img id="type-image" src="assets/result-fukazawa-wildcard.png" alt="">
+        <div>
+          <p class="kicker">Result Type</p>
+          <h2 id="personal-result-title">未測定</h2>
+          <p id="one-liner">まずは10問すべて回答すると、深澤理解タイプが表示されます。</p>
+        </div>
+      </div>
+
+      <div class="result-comment-grid">
+        <article>
+          <h3>良い点</h3>
+          <p id="good-point">まだ結果がありません。</p>
+        </article>
+        <article>
+          <h3>気を付けたい点</h3>
+          <p id="caution-point">10問回答後に表示されます。</p>
+        </article>
+      </div>
+
+      <p class="result-disclaimer">この結果は一般論ではなく、深澤本人の主観をもとにしたエンタメ用の診断です。</p>
+
+      <div class="profile-actions result-navigation">
+        <a class="ghost-button" href="fukazawa.html">もう一度遊ぶ</a>
+        <a class="primary-button" href="../summary.html">全体集計へ進む</a>
+        <a class="ghost-button" href="../main.html">担当選択へ</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="../insightResultStore.js"></script>
+  <script src="result.js"></script>
+</body>
+</html>

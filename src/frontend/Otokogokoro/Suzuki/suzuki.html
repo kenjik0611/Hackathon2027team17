@@ -91,7 +91,7 @@
         <strong id="final-score">0</strong><span>/ <span id="final-max-score">5</span> 一致</span>
       </div>
       <p class="result-message" id="result-message"></p>
-      <p class="result-note">表示している一致数は、このページ内の仮の生データです。男心編全体の採点ルールが決まった後に、集計方法は差し替えられます。</p>
+      <p class="result-note">この結果は、男心編の全体集計にも反映されます。</p>
 
       <div class="review-panel">
         <h3>今回の回答レビュー</h3>
@@ -100,6 +100,7 @@
 
       <div class="panel-actions">
         <a class="ghost-button" href="../main.html">担当選択へ</a>
+        <a class="primary-button" href="../summary.html">全体集計へ進む</a>
         <button class="primary-button" id="restart-button" type="button">もう一度挑戦</button>
       </div>
     </section>
@@ -109,6 +110,8 @@
     <p>Hackathon 2027 Team 17</p>
   </footer>
 
+  <script src="../insightResultStore.js"></script>
+  <script src="../memberQuizScoring.js"></script>
   <script src="suzuki.js"></script>
 </body>
 </html>

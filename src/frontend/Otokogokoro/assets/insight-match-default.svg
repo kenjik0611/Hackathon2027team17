@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">MBTIとLove Typeの相性イメージ</title>
+  <desc id="desc">MBTIとLove Typeの組み合わせを示すポップな抽象イラスト</desc>
+  <rect width="640" height="420" fill="#fff1df"/>
+  <path d="M0 86c84-54 176-68 276-42 76 20 136 8 204-28 66-34 116-22 160 14v390H0Z" fill="#dffcf5"/>
+  <path d="M64 338c48-72 102-108 162-108 74 0 96 62 166 54 54-6 94-52 166-36 34 8 60 26 82 50v122H64Z" fill="#ffd1df"/>
+  <circle cx="158" cy="112" r="42" fill="#ffcf5a" stroke="#17202a" stroke-width="8"/>
+  <circle cx="498" cy="124" r="34" fill="#00a896" stroke="#17202a" stroke-width="8"/>
+  <rect x="112" y="158" width="172" height="132" rx="18" fill="#ffffff" stroke="#17202a" stroke-width="8"/>
+  <rect x="356" y="158" width="172" height="132" rx="18" fill="#ffffff" stroke="#17202a" stroke-width="8"/>
+  <path d="M284 224h72" fill="none" stroke="#17202a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M330 198l30 26-30 26" fill="none" stroke="#17202a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="198" y="236" text-anchor="middle" fill="#17202a" font-family="Arial, sans-serif" font-size="44" font-weight="900">MBTI</text>
+  <text x="442" y="236" text-anchor="middle" fill="#17202a" font-family="Arial, sans-serif" font-size="40" font-weight="900">LOVE</text>
+  <path d="M310 320c-36-32-76-10-72 24 4 42 72 58 72 58s68-16 72-58c4-34-36-56-72-24Z" fill="#ff8a3d" stroke="#17202a" stroke-width="8" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>男心理解ゲーム - 集計結果</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="summary.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner scene-select-header">
+      <div class="hero-copy">
+        <p class="kicker">Insight Summary</p>
+        <h1>男心理解ゲーム 集計結果</h1>
+        <p class="lead">各メンバーとの一致度をまとめ、相性が良さそうなMBTIとLove Typeの傾向を表示します。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout insight-summary-layout">
+    <section class="start-panel summary-panel" aria-labelledby="summary-title">
+      <p class="kicker">Summary</p>
+      <h2 id="summary-title">現在の集計</h2>
+
+      <div class="best-match-hero" aria-live="polite">
+        <p class="best-match-label">相性が高い組み合わせ</p>
+        <div class="best-match-visual" aria-label="一番一致度の高いMBTIとLove Typeの組み合わせ">
+          <article class="match-type-card match-type-card-mbti">
+            <img id="best-match-mbti-art" src="assets/insight-match-default.svg" alt="">
+            <span class="match-type-name" id="best-match-mbti-name">未測定</span>
+          </article>
+          <div class="match-cross" aria-hidden="true">×</div>
+          <article class="match-type-card match-type-card-love">
+            <img id="best-match-love-art" src="assets/insight-match-default.svg" alt="">
+            <span class="match-type-name" id="best-match-love-name">未測定</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="summary-grid" aria-live="polite">
+        <article class="summary-card">
+          <span>完了人数</span>
+          <strong id="completed-count">0 / 5人</strong>
+        </article>
+        <article class="summary-card">
+          <span>相性トップ</span>
+          <strong id="best-match-member">未測定</strong>
+        </article>
+        <article class="summary-card">
+          <span>MBTI相性候補</span>
+          <strong id="suggested-mbti">未測定</strong>
+        </article>
+        <article class="summary-card">
+          <span>Love Type相性候補</span>
+          <strong id="suggested-love-type">未測定</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="start-panel summary-panel" aria-labelledby="axis-title">
+      <p class="kicker">Tendency</p>
+      <h2 id="axis-title">相性傾向の土台</h2>
+      <p class="summary-note">回答傾向を左右バーで表示します。中心からどちら側に寄っているかを見ると、相性の方向性が分かります。</p>
+
+      <div class="axis-section">
+        <h3>MBTI傾向</h3>
+        <div class="axis-poles" aria-hidden="true">
+          <span class="axis-pole-left">ESTJ側</span>
+          <span class="axis-pole-right">INFP側</span>
+        </div>
+        <div class="axis-list" id="mbti-axis-list"></div>
+      </div>
+
+      <div class="axis-section">
+        <h3>Love Type傾向</h3>
+        <div class="axis-poles" aria-hidden="true">
+          <span class="axis-pole-left">LCRO側</span>
+          <span class="axis-pole-right">FAPE側</span>
+        </div>
+        <div class="axis-list" id="love-type-axis-list"></div>
+      </div>
+    </section>
+
+    <section class="start-panel summary-panel" aria-labelledby="comment-title">
+      <p class="kicker">Comment</p>
+      <h2 id="comment-title">ひとことコメント</h2>
+      <p class="summary-comment" id="summary-comment">まだ結果が少ないため、コメントは仮表示です。</p>
+      <p class="summary-disclaimer">この結果は一般論ではなく、Team17メンバーの主観をもとにしたエンタメ用の相性傾向です。</p>
+    </section>
+
+    <section class="start-panel summary-panel share-section" aria-labelledby="share-title">
+      <p class="kicker">Share</p>
+      <h2 id="share-title">結果を共有</h2>
+      <p class="share-note" id="share-status" aria-live="polite">画像とひとことコメント付きで共有できます。</p>
+
+      <div class="share-preview-card" id="share-preview-card">
+        <p class="share-preview-label">相性が高い組み合わせ</p>
+        <div class="share-preview-visual" aria-hidden="true">
+          <img class="share-preview-image" id="share-mbti-art" src="assets/insight-match-default.svg" alt="">
+          <span class="share-preview-cross">×</span>
+          <img class="share-preview-image" id="share-love-art" src="assets/insight-match-default.svg" alt="">
+        </div>
+        <strong class="share-preview-title" id="share-title-text">未測定</strong>
+        <p class="share-preview-comment" id="share-one-liner">まずは1人分遊ぶと、相性の方向性が見えてきます。</p>
+      </div>
+
+      <button class="primary-button" id="share-result" type="button">結果を共有</button>
+      <div class="panel-actions">
+        <a class="ghost-button" href="main.html">担当選択へ戻る</a>
+        <a class="ghost-button" href="../index.html">トップへ戻る</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="insightResultStore.js"></script>
+  <script src="summary.js"></script>
+</body>
+</html>

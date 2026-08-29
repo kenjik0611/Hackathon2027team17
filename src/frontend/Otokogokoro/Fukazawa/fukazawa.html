@@ -69,20 +69,42 @@
         </div>
       </div>
 
+      <div class="play-status" id="play-status" aria-live="polite">
+        <span class="play-status-label" id="play-status-label">未完了</span>
+        <strong id="play-status-title">まだ始めていません</strong>
+        <p id="play-status-detail">問題に進むと、深澤編の途中経過がこのブラウザに保存されます。</p>
+      </div>
+
       <div class="profile-actions">
         <a class="ghost-button" href="../main.html">担当選択へ</a>
+        <a class="ghost-button" id="saved-result-link" href="result.html" hidden>結果を見る</a>
         <button class="primary-button" id="start-button" type="button">問題に進む</button>
+        <button class="ghost-button reset-button" id="reset-button" type="button" hidden>リセット</button>
       </div>
     </section>
 
     <section class="start-panel quiz-panel" id="quiz-panel" aria-labelledby="quiz-title" hidden>
       <p class="kicker">Quiz</p>
       <h2 id="quiz-title">深澤の回答を予想しよう</h2>
-      <p class="quiz-lead">ここに10問のクイズを入れていきます。まずは自己紹介から問題へ進む流れを確認できます。</p>
+      <p class="quiz-lead">どの選択肢も不正解ではありません。深澤本人に一番刺さりそうな返し方を選んでください。</p>
 
-      <div class="empty-question">
-        <span>Q</span>
-        <p>問題内容は次の作業で追加します。</p>
+      <article class="question-card" aria-live="polite">
+        <img class="question-image" id="question-image" src="assets/q1-drinking-party.png" alt="飲み会で少し静かになった深澤くんのシチュエーション画像">
+        <div class="question-body">
+          <span class="question-count" id="question-count">Q1 / 10</span>
+          <p class="question-text" id="question-text"></p>
+          <div class="answer-list" id="answer-list" aria-label="回答選択肢"></div>
+        </div>
+      </article>
+
+      <div class="result-panel" id="result-panel" hidden>
+        <p class="result-label">深澤一致度</p>
+        <strong id="match-result">--</strong>
+        <p id="result-message"></p>
+        <div class="result-actions">
+          <button class="primary-button" id="next-question-button" type="button">次の問題へ</button>
+          <a class="primary-button" id="summary-link" href="result.html" hidden>個人結果を見る</a>
+        </div>
       </div>
 
       <div class="profile-actions">
@@ -96,6 +118,7 @@
     <p>Hackathon 2027 Team 17</p>
   </footer>
 
+  <script src="../insightResultStore.js"></script>
   <script src="fukazawa.js"></script>
 </body>
 </html>

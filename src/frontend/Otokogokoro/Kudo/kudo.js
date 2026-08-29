@@ -258,6 +258,7 @@ const kudoCommentText =
 let currentQuestion = 0;
 
 let totalScore = 0;
+let answerLog = [];
 
 
 // =======================================
@@ -275,6 +276,7 @@ function startQuiz() {
   currentQuestion = 0;
 
   totalScore = 0;
+  answerLog = [];
 
 
   startScreen.classList.remove(
@@ -344,7 +346,13 @@ function showQuestion() {
   // ===================================
 
   const shuffledChoices =
-    [...question.choices]
+    question.choices
+      .map(
+        (choice, choiceIndex) => ({
+          ...choice,
+          optionIndex: choiceIndex
+        })
+      )
       .sort(
         () =>
           Math.random() - 0.5
@@ -385,7 +393,7 @@ function showQuestion() {
         "click",
         () =>
           selectChoice(
-            choice.score
+            choice
           )
       );
 
@@ -404,9 +412,18 @@ function showQuestion() {
 // 回答したとき
 // =======================================
 
-function selectChoice(score) {
+function selectChoice(choice) {
+
+  const score =
+    Number(choice.score) || 0;
 
   totalScore += score;
+  answerLog.push({
+    questionIndex: currentQuestion,
+    optionIndex: choice.optionIndex,
+    selectedText: choice.text,
+    score: score
+  });
 
   currentQuestion++;
 
@@ -442,6 +459,17 @@ function showResult() {
   resultScreen.classList.add(
     "active"
   );
+
+  if (
+    window.OtokogokoroMemberScoring
+    && typeof window.OtokogokoroMemberScoring.saveKudoResult
+      === "function"
+  ) {
+    window.OtokogokoroMemberScoring.saveKudoResult(
+      answerLog,
+      questions.length
+    );
+  }
 
 
   // 500点満点を100%に変換
@@ -573,6 +601,7 @@ retryBtn.addEventListener(
     currentQuestion = 0;
 
     totalScore = 0;
+    answerLog = [];
 
 
     resultScreen.classList.remove(
