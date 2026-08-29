@@ -783,10 +783,8 @@ function selectAnswer(
     selected:
       answer.text,
 
-    axisScores:
-      PUBLIC_AXIS_SCORES
-        [currentQuestionIndex]
-        [answerIndex],
+   axisScores:
+  PUBLIC_AXIS_SCORES[currentQuestionIndex][answerIndex],
 
     originalScore:
       answer.score
