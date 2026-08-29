@@ -448,6 +448,10 @@ function getResultMessage(score) {
 
 function showResult() {
   const result = buildQuizResult();
+  if (window.OtokogokoroMemberScoring && typeof window.OtokogokoroMemberScoring.saveSuzukiResult === "function") {
+    window.OtokogokoroMemberScoring.saveSuzukiResult(state.answerLog, questions.length);
+  }
+
   elements.finalScore.textContent = result.rawScore;
   elements.finalMaxScore.textContent = result.rawMaxScore;
   elements.resultMessage.textContent = getResultMessage(result.rawScore);

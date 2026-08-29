@@ -287,6 +287,8 @@ h1 span {
   align-items: center;
 
   gap: 12px;
+
+  text-decoration: none;
 }
 
 
@@ -298,6 +300,13 @@ h1 span {
   box-shadow:
     0 20px 50px
     rgba(70, 80, 255, 0.4);
+}
+
+.result-actions {
+
+  margin:
+    28px 0
+    14px;
 }
 
 
@@ -680,6 +689,7 @@ h1 span {
   }
 
 }
+
 /* ================================
    人物選択に戻るボタン
 ================================ */

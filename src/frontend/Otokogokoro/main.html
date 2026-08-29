@@ -24,11 +24,22 @@
       <p class="kicker">Scene Select</p>
       <h2 id="scene-select-title">誰の問題で遊びますか？</h2>
 
+      <div class="insight-progress" aria-live="polite">
+        <div>
+          <strong id="insight-progress-summary">0 / 5人 完了</strong>
+          <span id="insight-progress-note">一致度はメンバーごとに保存されます</span>
+        </div>
+        <a class="summary-button" href="summary.html">集計結果を見る</a>
+      </div>
+
       <div class="scene-grid">
-        <a class="scene-card" href="Arita/arita.html">
-          <span class="scene-icon" aria-hidden="true">👤</span>
+        <a class="scene-card" href="Arita/arita.html" data-member-id="arita">
+          <span class="scene-icon member-photo-frame" aria-hidden="true">
+            <img src="assets/member-photos/member-placeholder.svg" data-member-photo="arita" alt="">
+          </span>
           <span class="profile-body">
             <strong>有田</strong>
+            <small>決断力と包容力のギャップ型</small>
             <span class="type-row">
               <span class="type-pill">ENTJ</span>
               <span>指揮官</span>
@@ -37,61 +48,74 @@
               <span class="type-pill love-pill">FAPE</span>
               <span>最後の恋人</span>
             </span>
+            <span class="member-status" data-member-status="arita">未プレイ</span>
           </span>
         </a>
 
-        <a class="scene-card" href="Kiyose/kiyose.html">
-          <span class="scene-icon" aria-hidden="true">👤</span>
+        <a class="scene-card" href="Kiyose/kiyose.html" data-member-id="kiyose">
+          <span class="scene-icon member-photo-frame" aria-hidden="true">
+            <img src="assets/member-photos/member-placeholder.svg" data-member-photo="kiyose" alt="">
+          </span>
           <span class="profile-body">
             <strong>清瀬</strong>
-            <small>仮プロフィール</small>
+            <small>場に合わせて空気を動かす変幻自在型</small>
+            <span class="type-row">
+              <span class="type-pill">ESFP</span>
+              <span>エンターテイナー</span>
+            </span>
+            <span class="type-row">
+              <span class="type-pill love-pill">LAPO</span>
+              <span>パーフェクトカメレオン</span>
+            </span>
+            <span class="member-status" data-member-status="kiyose">未プレイ</span>
+          </span>
+        </a>
+
+        <a class="scene-card" href="Suzuki/suzuki.html" data-member-id="suzuki">
+          <span class="scene-icon member-photo-frame" aria-hidden="true">
+            <img src="assets/member-photos/member-placeholder.svg" data-member-photo="suzuki" alt="">
+          </span>
+          <span class="profile-body">
+            <strong>鈴木</strong>
+            <small>ひらめきで距離を詰める自由型</small>
+            <span class="type-row">
+              <span class="type-pill">ENTP</span>
+              <span>討論者</span>
+            </span>
+            <span class="type-row">
+              <span class="type-pill love-pill">FAPO</span>
+              <span>デビル天使</span>
+            </span>
+            <span class="member-status" data-member-status="suzuki">未プレイ</span>
+          </span>
+        </a>
+
+        <a class="scene-card" href="Kudo/kudo.html" data-member-id="kudo">
+          <span class="scene-icon member-photo-frame" aria-hidden="true">
+            <img src="assets/member-photos/member-placeholder.svg" data-member-photo="kudo" alt="">
+          </span>
+          <span class="profile-body">
+            <strong>工藤</strong>
+            <small>ノリと独自感で動く直感型</small>
             <span class="type-row">
               <span class="type-pill">ENFP</span>
               <span>運動家</span>
             </span>
             <span class="type-row">
-              <span class="type-pill love-pill">FCRO</span>
-              <span>恋愛マジシャン</span>
+              <span class="type-pill love-pill">FARO</span>
+              <span>不思議生命体</span>
             </span>
+            <span class="member-status" data-member-status="kudo">未プレイ</span>
           </span>
         </a>
 
-        <a class="scene-card" href="Suzuki/suzuki.html">
-          <span class="scene-icon" aria-hidden="true">👤</span>
-          <span class="profile-body">
-            <strong>鈴木</strong>
-            <small>仮プロフィール</small>
-            <span class="type-row">
-              <span class="type-pill">ISTP</span>
-              <span>巨匠</span>
-            </span>
-            <span class="type-row">
-              <span class="type-pill love-pill">FCRE</span>
-              <span>賢いウサギ</span>
-            </span>
+        <a class="scene-card" href="Fukazawa/fukazawa.html" data-member-id="fukazawa">
+          <span class="scene-icon member-photo-frame" aria-hidden="true">
+            <img src="assets/member-photos/member-placeholder.svg" data-member-photo="fukazawa" alt="">
           </span>
-        </a>
-
-        <a class="scene-card" href="Kudo/kudo.html">
-          <span class="scene-icon" aria-hidden="true">👤</span>
-          <span class="profile-body">
-            <strong>工藤</strong>
-            <small>仮プロフィール</small>
-            <span class="type-row">
-              <span class="type-pill">ENTJ</span>
-              <span>指揮官</span>
-            </span>
-            <span class="type-row">
-              <span class="type-pill love-pill">LAPE</span>
-              <span>キャプテンライオン</span>
-            </span>
-          </span>
-        </a>
-
-        <a class="scene-card" href="Fukazawa/fukazawa.html">
-          <span class="scene-icon" aria-hidden="true">👤</span>
           <span class="profile-body">
             <strong>深澤</strong>
+            <small>気持ちを拾って距離を縮める配慮型</small>
             <span class="type-row">
               <span class="type-pill">ESFJ</span>
               <span>領事</span>
@@ -100,6 +124,7 @@
               <span class="type-pill love-pill">FCPO</span>
               <span>恋愛モンスター</span>
             </span>
+            <span class="member-status" data-member-status="fukazawa">未プレイ</span>
           </span>
         </a>
       </div>
@@ -113,5 +138,8 @@
   <footer>
     <p>Hackathon 2027 Team 17</p>
   </footer>
+
+  <script src="insightResultStore.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
