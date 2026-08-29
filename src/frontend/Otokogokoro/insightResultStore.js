@@ -6,10 +6,10 @@
       id: "arita",
       name: "有田",
       path: "Arita/arita.html",
-      mbti: "INTJ",
-      mbtiLabel: "建築家",
-      loveType: "LCRO",
-      loveTypeLabel: "ボス猫"
+      mbti: "ENTJ",
+      mbtiLabel: "指揮官",
+      loveType: "FAPE",
+      loveTypeLabel: "最後の恋人"
     },
     {
       id: "kiyose",
@@ -24,19 +24,19 @@
       id: "suzuki",
       name: "鈴木",
       path: "Suzuki/suzuki.html",
-      mbti: "ISTP",
-      mbtiLabel: "巨匠",
-      loveType: "FCRE",
-      loveTypeLabel: "ちゃっかりうさぎ"
+      mbti: "ENTP",
+      mbtiLabel: "討論者",
+      loveType: "FAPO",
+      loveTypeLabel: "デビル天使"
     },
     {
       id: "kudo",
       name: "工藤",
       path: "Kudo/kudo.html",
-      mbti: "ENTJ",
-      mbtiLabel: "指揮官",
-      loveType: "LAPE",
-      loveTypeLabel: "キャプテンライオン"
+      mbti: "ENFP",
+      mbtiLabel: "運動家",
+      loveType: "FARO",
+      loveTypeLabel: "不思議生命体"
     },
     {
       id: "fukazawa",
