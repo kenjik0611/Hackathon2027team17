@@ -677,7 +677,7 @@ function renderQuestion() {
     }
   );
 
-if (isAnswerLocked) {
+  if (isAnswerLocked) {
 
     if (answerUnlockTimerId !== null) {
       window.clearTimeout(answerUnlockTimerId);
@@ -1427,7 +1427,7 @@ function animateNumber(
 
 function retryQuiz() {
 
-if (answerUnlockTimerId !== null) {
+  if (answerUnlockTimerId !== null) {
     window.clearTimeout(answerUnlockTimerId);
     answerUnlockTimerId = null;
   }
