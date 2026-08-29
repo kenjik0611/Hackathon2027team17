@@ -12,6 +12,7 @@
 
 <body>
 
+  <!-- 背景 -->
   <div class="background-decoration" aria-hidden="true">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -20,6 +21,7 @@
 
 
   <main class="app">
+
 
     <!-- ========================================
          START
@@ -48,7 +50,7 @@
 
         <p class="start-description">
           電車、街中、公共施設——。<br>
-          日常のちょっとした場面で、
+          日常のちょっとした場面で、<br>
           あなたならどう行動しますか？
         </p>
 
@@ -113,7 +115,7 @@
 
 
         <p class="start-note">
-          深く考えすぎず、
+          深く考えすぎず、<br>
           「自分ならこうする」で選んでみてください。
         </p>
 
@@ -131,6 +133,8 @@
 
       <div class="quiz-container">
 
+
+        <!-- 上部 -->
 
         <header class="quiz-header">
 
@@ -195,12 +199,16 @@
 
 
 
-        <!-- 問題カード -->
+        <!-- ========================================
+             問題カード
+        ========================================= -->
 
         <article
           id="question-card"
           class="question-card">
 
+
+          <!-- カテゴリー -->
 
           <div class="question-meta">
 
@@ -225,6 +233,22 @@
 
 
 
+          <!-- 問題番号 -->
+
+          <div class="scene-label">
+
+            SCENE
+
+            <span id="scene-number">
+              01
+            </span>
+
+          </div>
+
+
+
+          <!-- 問題タイトル -->
+
           <h2
             id="question-title"
             class="question-title">
@@ -235,58 +259,9 @@
 
 
 
-          <!-- AI画像 -->
-
-          <div class="scenario-image-wrapper">
-
-            <img
-              id="scenario-image"
-              class="scenario-image"
-              src=""
-              alt=""
-            >
-
-
-            <div
-              id="image-placeholder"
-              class="image-placeholder">
-
-              <div
-                id="placeholder-icon"
-                class="placeholder-icon">
-
-                🚉
-
-              </div>
-
-
-              <p>
-                SCENARIO IMAGE
-              </p>
-
-
-              <span>
-                AI生成画像を追加予定
-              </span>
-
-            </div>
-
-
-            <div class="image-number">
-
-              SCENE
-
-              <span id="scene-number">
-                01
-              </span>
-
-            </div>
-
-          </div>
-
-
-
-          <!-- 状況 -->
+          <!-- ========================================
+               状況説明
+          ========================================= -->
 
           <div class="scenario-box">
 
@@ -313,7 +288,9 @@
 
 
 
-          <!-- 質問 -->
+          <!-- ========================================
+               質問
+          ========================================= -->
 
           <div class="question-prompt">
 
@@ -332,7 +309,9 @@
 
 
 
-          <!-- 4択 -->
+          <!-- ========================================
+               4択
+          ========================================= -->
 
           <div
             id="answer-list"
@@ -346,6 +325,7 @@
             最も自分の行動に近いものを選んでください
 
           </p>
+
 
         </article>
 
@@ -363,6 +343,8 @@
 
       <div class="result-container">
 
+
+        <!-- タイトル -->
 
         <div class="result-heading">
 
@@ -382,7 +364,9 @@
 
 
 
-        <!-- 総合結果 -->
+        <!-- ========================================
+             総合結果
+        ========================================= -->
 
         <div class="overall-score-card">
 
@@ -450,7 +434,7 @@
 
 
         <!-- ========================================
-             3軸
+             3つの評価軸
         ========================================= -->
 
         <div class="analysis-card">
@@ -782,7 +766,9 @@
 
 
 
-        <!-- ボタン -->
+        <!-- ========================================
+             ボタン
+        ========================================= -->
 
         <div class="result-actions">
 
@@ -840,6 +826,7 @@
       </div>
 
     </section>
+
 
   </main>
 

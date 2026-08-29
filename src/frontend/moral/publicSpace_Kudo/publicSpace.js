@@ -4,7 +4,7 @@
 
    公共モラル編
    ・全5問 / 4択
-   ・回答後のコメント画面なし
+   ・画像なし
    ・選択したら即次の問題
    ・Q5回答後に結果発表
 ========================================================= */
@@ -22,7 +22,6 @@ const questions = [
   {
     category: "🚉 駅・落とし物",
     focus: "MORAL CHECK",
-    icon: "👛",
 
     title: "目の前で財布が落ちた。でも電車はあと1分。",
 
@@ -31,8 +30,6 @@ const questions = [
 
     prompt:
       "あなたなら、どう行動する？",
-
-    image: "images/q1.webp",
 
     answers: [
       {
@@ -88,7 +85,6 @@ const questions = [
   {
     category: "🚃 電車",
     focus: "CONSIDERATION CHECK",
-    icon: "💺",
 
     title: "目の前に、席を必要としていそうな人が。",
 
@@ -97,8 +93,6 @@ const questions = [
 
     prompt:
       "こんなとき、あなたならどうする？",
-
-    image: "images/q2.webp",
 
     answers: [
       {
@@ -154,7 +148,6 @@ const questions = [
   {
     category: "🏙️ 街中",
     focus: "MORAL CHECK",
-    icon: "🗑️",
 
     title: "友達がゴミを植え込みに。あなたはどうする？",
 
@@ -163,8 +156,6 @@ const questions = [
 
     prompt:
       "あなたなら、その場でどうする？",
-
-    image: "images/q3.webp",
 
     answers: [
       {
@@ -220,7 +211,6 @@ const questions = [
   {
     category: "🗺️ 駅・公共空間",
     focus: "JUDGMENT CHECK",
-    icon: "🌍",
 
     title: "困っている人。でも自分も待ち合わせギリギリ。",
 
@@ -229,8 +219,6 @@ const questions = [
 
     prompt:
       "あなたならどう行動する？",
-
-    image: "images/q4.webp",
 
     answers: [
       {
@@ -286,7 +274,6 @@ const questions = [
   {
     category: "🎬 映画館",
     focus: "TOTAL MORAL CHECK",
-    icon: "🍿",
 
     title: "上映中、隣の人のおしゃべりが止まらない。",
 
@@ -295,8 +282,6 @@ const questions = [
 
     prompt:
       "あなたならどう対応する？",
-
-    image: "images/q5.webp",
 
     answers: [
       {
@@ -448,16 +433,6 @@ const questionPrompt =
 const answerList =
   document.getElementById("answer-list");
 
-
-const scenarioImage =
-  document.getElementById("scenario-image");
-
-const imagePlaceholder =
-  document.getElementById("image-placeholder");
-
-const placeholderIcon =
-  document.getElementById("placeholder-icon");
-
 const sceneNumber =
   document.getElementById("scene-number");
 
@@ -578,6 +553,8 @@ function renderQuestion() {
     currentQuestionIndex + 1;
 
 
+  /* 問題番号 */
+
   currentQuestionNumber.textContent =
     displayNumber;
 
@@ -618,14 +595,6 @@ function renderQuestion() {
 
   questionPrompt.textContent =
     question.prompt;
-
-  placeholderIcon.textContent =
-    question.icon;
-
-
-  /* 画像 */
-
-  setScenarioImage(question);
 
 
   /* 選択肢 */
@@ -669,7 +638,7 @@ function renderQuestion() {
   );
 
 
-  /* 問題が切り替わった感じを出す */
+  /* 問題切り替えアニメーション */
 
   const questionCard =
     document.getElementById("question-card");
@@ -695,48 +664,10 @@ function renderQuestion() {
 
 
 /* =========================================================
-   7. 画像
-========================================================= */
+   7. 回答
 
-function setScenarioImage(question) {
-
-  scenarioImage.classList.remove("visible");
-
-  imagePlaceholder.style.display =
-    "flex";
-
-  scenarioImage.alt =
-    `${question.title}のシチュエーション画像`;
-
-
-  scenarioImage.onload = () => {
-
-    scenarioImage.classList.add("visible");
-
-    imagePlaceholder.style.display =
-      "none";
-  };
-
-
-  scenarioImage.onerror = () => {
-
-    scenarioImage.classList.remove("visible");
-
-    imagePlaceholder.style.display =
-      "flex";
-  };
-
-
-  scenarioImage.src =
-    question.image;
-}
-
-
-/* =========================================================
-   8. 回答
-
-   ★ここが今回の重要ポイント
-   コメント画面を挟まず即次へ
+   Q1〜Q4 → 即次へ
+   Q5     → 結果発表
 ========================================================= */
 
 function selectAnswer(answerIndex) {
@@ -767,14 +698,6 @@ function selectAnswer(answerIndex) {
   });
 
 
-  /*
-    Q1〜Q4
-    → 即次の問題
-
-    Q5
-    → 即結果発表
-  */
-
   if (
     currentQuestionIndex <
     questions.length - 1
@@ -792,12 +715,11 @@ function selectAnswer(answerIndex) {
 
 
 /* =========================================================
-   9. スコア計算
+   8. スコア計算
 
-   各軸
-   最大20点 → 100点換算
+   各軸 最大20点 → 100点換算
 
-   総合：
+   総合
    モラル     50%
    思いやり   25%
    状況判断   25%
@@ -845,7 +767,7 @@ function calculateScores() {
 
 
 /* =========================================================
-   10. 総合ランク
+   9. 総合ランク
 ========================================================= */
 
 function getOverallResult(score) {
@@ -854,10 +776,12 @@ function getOverallResult(score) {
 
     return {
       rank: "EXCELLENT",
-      title: "公共モラル、ほぼ完璧！",
+
+      title:
+        "公共モラル、ほぼ完璧！",
 
       comment:
-        "あなたは公共のルールを守るだけでなく、その場にいる人の気持ちや状況まで自然に考えられるタイプです。『自分が正しいか』だけではなく、『みんなが気持ちよく過ごせるか』まで視野に入れられるのが大きな強みです。"
+        "あなたは公共のルールを守るだけでなく、その場にいる人の気持ちや状況まで自然に考えられるタイプです。「自分が正しいか」だけではなく、「みんなが気持ちよく過ごせるか」まで視野に入れられるのが大きな強みです。"
     };
   }
 
@@ -866,7 +790,9 @@ function getOverallResult(score) {
 
     return {
       rank: "GREAT",
-      title: "かなりのモラル上級者！",
+
+      title:
+        "かなりのモラル上級者！",
 
       comment:
         "基本的な公共モラルはかなり高めです。ルール、周囲への配慮、その場での判断をバランスよく使えている傾向があります。迷う場面でも、自分だけでなく周囲への影響まで考えられるタイプです。"
@@ -878,7 +804,9 @@ function getOverallResult(score) {
 
     return {
       rank: "GOOD",
-      title: "モラル感覚はいい感じ！",
+
+      title:
+        "モラル感覚はいい感じ！",
 
       comment:
         "基本的なマナーや公共のルールはしっかり意識できています。一方で、状況によっては自分の都合やその場の空気を優先することもありそうです。あと一歩だけ周囲の立場を想像すると、さらにスマートな判断ができそうです。"
@@ -890,17 +818,21 @@ function getOverallResult(score) {
 
     return {
       rank: "KEEP GOING",
-      title: "モラル力、まだまだ伸びる！",
+
+      title:
+        "モラル力、まだまだ伸びる！",
 
       comment:
-        "あなたは常にルールを最優先するというより、そのときの状況や自分の感覚を大切にする傾向がありそうです。それ自体が悪いわけではありませんが、公共の場では『自分以外の人はどう感じるか』を一度考えるだけで判断が大きく変わります。"
+        "あなたは常にルールを最優先するというより、そのときの状況や自分の感覚を大切にする傾向がありそうです。公共の場では「自分以外の人はどう感じるか」を一度考えるだけでも判断が変わります。"
     };
   }
 
 
   return {
     rank: "CHALLENGE",
-    title: "かなりの自由人かも！？",
+
+    title:
+      "かなりの自由人かも！？",
 
     comment:
       "あなたは周囲のルールや一般的なマナーより、自分自身の感覚を優先する場面が多いかもしれません。公共空間では、自分には小さな行動でも誰かにとっては大きな迷惑になることがあります。逆の立場だったらどう感じるかを考えてみると、新しい発見がありそうです。"
@@ -909,7 +841,7 @@ function getOverallResult(score) {
 
 
 /* =========================================================
-   11. 9タイプ診断
+   10. 9タイプ診断
 ========================================================= */
 
 function getMoralType(result) {
@@ -922,7 +854,8 @@ function getMoralType(result) {
   } = result;
 
 
-  /* 1 */
+  /* 1 モラルマスター */
+
   if (
     moral >= 85 &&
     care >= 85 &&
@@ -944,7 +877,8 @@ function getMoralType(result) {
   }
 
 
-  /* 2 */
+  /* 2 バランスモラリスト */
+
   if (
     overall >= 75 &&
     Math.max(moral, care, judgment) -
@@ -966,7 +900,8 @@ function getMoralType(result) {
   }
 
 
-  /* 3 */
+  /* 3 気配りモラリスト */
+
   if (
     moral >= 75 &&
     care >= 75 &&
@@ -980,7 +915,7 @@ function getMoralType(result) {
         "気配りモラリスト",
 
       description:
-        "『正しいこと』と『人への優しさ』をどちらも大切にするタイプ。誰かが困っている状況では自然と行動に移しやすい傾向があります。",
+        "「正しいこと」と「人への優しさ」をどちらも大切にするタイプ。誰かが困っている状況では自然と行動に移しやすい傾向があります。",
 
       comment:
         "ちゃんとしてる。そして、ちゃんと優しい。"
@@ -988,7 +923,8 @@ function getMoralType(result) {
   }
 
 
-  /* 4 */
+  /* 4 堅実モラリスト */
+
   if (
     moral >= 75 &&
     judgment >= 75 &&
@@ -1010,7 +946,8 @@ function getMoralType(result) {
   }
 
 
-  /* 5 */
+  /* 5 ルール優等生 */
+
   if (
     moral >= care &&
     moral >= judgment &&
@@ -1024,7 +961,7 @@ function getMoralType(result) {
         "ルール優等生",
 
       description:
-        "公共のルールや基本的なマナーへの意識が強いタイプ。『やっていいこと・悪いこと』の線引きをしっかり持っています。",
+        "公共のルールや基本的なマナーへの意識が強いタイプ。「やっていいこと・悪いこと」の線引きをしっかり持っています。",
 
       comment:
         "ルールはバッチリ。次はその先の気配りへ。"
@@ -1032,7 +969,8 @@ function getMoralType(result) {
   }
 
 
-  /* 6 */
+  /* 6 思いやりヒーロー */
+
   if (
     care > moral &&
     care >= judgment &&
@@ -1054,7 +992,8 @@ function getMoralType(result) {
   }
 
 
-  /* 7 */
+  /* 7 スマート判断型 */
+
   if (
     judgment > moral &&
     judgment > care &&
@@ -1076,7 +1015,8 @@ function getMoralType(result) {
   }
 
 
-  /* 8 */
+  /* 8 やさしい自由人 */
+
   if (
     care >= 50 &&
     moral < 60
@@ -1097,7 +1037,8 @@ function getMoralType(result) {
   }
 
 
-  /* 9 */
+  /* 9 我が道チャレンジャー */
+
   return {
     icon: "🔥",
 
@@ -1114,7 +1055,7 @@ function getMoralType(result) {
 
 
 /* =========================================================
-   12. 最終総評
+   11. 最終総評
 ========================================================= */
 
 function getFinalAnalysis(result) {
@@ -1124,10 +1065,12 @@ function getFinalAnalysis(result) {
       name: "モラル・常識",
       value: result.moral
     },
+
     {
       name: "思いやり・配慮",
       value: result.care
     },
+
     {
       name: "状況判断",
       value: result.judgment
@@ -1149,46 +1092,63 @@ function getFinalAnalysis(result) {
 
 
   let strongText = "";
-
   let weakText = "";
 
 
-  if (strongest.name === "モラル・常識") {
+  if (
+    strongest.name ===
+    "モラル・常識"
+  ) {
 
     strongText =
       "特に強く表れたのは「モラル・常識」です。公共のルールや基本的なマナーを基準にして、行動の良し悪しを判断する力が高い傾向があります。";
   }
 
 
-  if (strongest.name === "思いやり・配慮") {
+  if (
+    strongest.name ===
+    "思いやり・配慮"
+  ) {
 
     strongText =
       "特に強く表れたのは「思いやり・配慮」です。自分の都合だけではなく、相手がどう感じるか、困っている人はいないかを自然に考える傾向があります。";
   }
 
 
-  if (strongest.name === "状況判断") {
+  if (
+    strongest.name ===
+    "状況判断"
+  ) {
 
     strongText =
       "特に強く表れたのは「状況判断」です。単純にルールだけで判断するのではなく、その場の状況を見ながら現実的な選択肢を考える力があります。";
   }
 
 
-  if (weakest.name === "モラル・常識") {
+  if (
+    weakest.name ===
+    "モラル・常識"
+  ) {
 
     weakText =
       "一方で、公共のルールや一般的なマナーをもう少し意識すると、判断のバランスがさらに良くなりそうです。";
   }
 
 
-  if (weakest.name === "思いやり・配慮") {
+  if (
+    weakest.name ===
+    "思いやり・配慮"
+  ) {
 
     weakText =
-      "一方で、『自分が正しいか』だけではなく『相手からはどう見えるか』まで考えてみると、さらに思いやりのある判断につながりそうです。";
+      "一方で、「自分が正しいか」だけではなく「相手からはどう見えるか」まで考えてみると、さらに思いやりのある判断につながりそうです。";
   }
 
 
-  if (weakest.name === "状況判断") {
+  if (
+    weakest.name ===
+    "状況判断"
+  ) {
 
     weakText =
       "一方で、正しい行動でも状況によっては別の方法が適していることがあります。周囲の状況や自分への負担まで含めて考えると、さらにスマートな判断ができそうです。";
@@ -1196,21 +1156,19 @@ function getFinalAnalysis(result) {
 
 
   return `
-    ${strongText}
+${strongText}
 
-    ${weakText}
+${weakText}
 
-    もちろん、公共の場での行動にいつも一つだけの正解があるわけではありません。
-    大切なのは、自分・相手・周囲の3つの視点を持ちながら、
-    その場に合った行動を考えること。
-    今回の5問から見えたあなたの判断傾向を、
-    ちょっとだけ普段の生活でも意識してみてください。
+もちろん、公共の場での行動にいつも一つだけの正解があるわけではありません。
+大切なのは、自分・相手・周囲の3つの視点を持ちながら、その場に合った行動を考えること。
+今回の5問から見えたあなたの判断傾向を、ちょっとだけ普段の生活でも意識してみてください。
   `;
 }
 
 
 /* =========================================================
-   13. 結果表示
+   12. 結果表示
 ========================================================= */
 
 function showResult() {
@@ -1329,7 +1287,7 @@ function showResult() {
     `「${moralType.comment}」`;
 
 
-  /* 最後の長めコメント */
+  /* 最終総評 */
 
   finalAnalysis.textContent =
     getFinalAnalysis(result);
@@ -1357,7 +1315,7 @@ function saveThemeResult(result) {
 
 
 /* =========================================================
-   14. 数字アニメーション
+   13. 数字アニメーション
 ========================================================= */
 
 function animateNumber(
@@ -1413,7 +1371,7 @@ function animateNumber(
 
 
 /* =========================================================
-   15. もう一度診断
+   14. もう一度診断
 ========================================================= */
 
 function retryQuiz() {
@@ -1433,10 +1391,8 @@ function retryQuiz() {
   moralBar.style.width =
     "0%";
 
-
   careBar.style.width =
     "0%";
-
 
   judgmentBar.style.width =
     "0%";
@@ -1460,7 +1416,7 @@ function retryQuiz() {
 
 
 /* =========================================================
-   16. ボタン
+   15. ボタン
 ========================================================= */
 
 startButton.addEventListener(
@@ -1476,7 +1432,7 @@ retryButton.addEventListener(
 
 
 /* =========================================================
-   17. 初期化
+   16. 初期化
 ========================================================= */
 
 totalQuestionNumber.textContent =
