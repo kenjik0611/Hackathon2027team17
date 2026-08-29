@@ -380,6 +380,12 @@ let scores = {
 
 let answerHistory = [];
 
+const ANSWER_TRANSITION_DELAY = 350;
+
+let isAnswerLocked = false;
+
+let answerUnlockTimerId = null;
+
 
 /* =========================================================
    3. HTML要素
@@ -520,6 +526,13 @@ function showScreen(screen) {
 
 function startQuiz() {
 
+  if (answerUnlockTimerId !== null) {
+    window.clearTimeout(answerUnlockTimerId);
+    answerUnlockTimerId = null;
+  }
+
+  isAnswerLocked = false;
+
   currentQuestionIndex = 0;
 
   scores = {
@@ -616,6 +629,9 @@ function renderQuestion() {
       button.className =
         "answer-button";
 
+      button.disabled =
+        isAnswerLocked;
+
       button.innerHTML = `
         <span class="answer-letter">
           ${letters[index]}
@@ -660,6 +676,28 @@ function renderQuestion() {
       easing: "ease"
     }
   );
+
+  if (isAnswerLocked) {
+
+    if (answerUnlockTimerId !== null) {
+      window.clearTimeout(answerUnlockTimerId);
+    }
+
+    answerUnlockTimerId =
+      window.setTimeout(() => {
+
+        isAnswerLocked = false;
+
+        answerUnlockTimerId = null;
+
+        answerList
+          .querySelectorAll(".answer-button")
+          .forEach(button => {
+            button.disabled = false;
+          });
+
+      }, ANSWER_TRANSITION_DELAY);
+  }
 }
 
 
@@ -671,6 +709,19 @@ function renderQuestion() {
 ========================================================= */
 
 function selectAnswer(answerIndex) {
+
+  if (isAnswerLocked) {
+    return;
+  }
+
+  isAnswerLocked = true;
+
+  answerList
+    .querySelectorAll(".answer-button")
+    .forEach(button => {
+      button.disabled = true;
+    });
+
 
   const question =
     questions[currentQuestionIndex];
@@ -1375,6 +1426,13 @@ function animateNumber(
 ========================================================= */
 
 function retryQuiz() {
+
+  if (answerUnlockTimerId !== null) {
+    window.clearTimeout(answerUnlockTimerId);
+    answerUnlockTimerId = null;
+  }
+
+  isAnswerLocked = false;
 
   currentQuestionIndex = 0;
 
