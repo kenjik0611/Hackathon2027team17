@@ -8,6 +8,56 @@
   const aggregate = store.getAggregate();
   const summaryElement = document.getElementById("insight-progress-summary");
   const noteElement = document.getElementById("insight-progress-note");
+  const memberPhotoBasePath = "assets/member-photos";
+  const memberPhotoExtensions = ["jpg", "jpeg", "png", "webp", "JPG", "JPEG", "PNG", "WEBP"];
+  const memberPhotoFolders = {
+    arita: "有田",
+    kiyose: "清瀬",
+    suzuki: "鈴木",
+    kudo: "工藤",
+    fukazawa: "深澤"
+  };
+  const memberPhotoFiles = {
+    arita: "有田/Arita.jpg",
+    kiyose: "清瀬/IMG_1298.JPG",
+    suzuki: "鈴木/selfphoto.jpg",
+    kudo: "工藤/0A004F10-99F3-434A-A524-D6D81D02BD60_1_105_c.jpeg",
+    fukazawa: "深澤/pic.2025.jpg"
+  };
+
+  function loadMemberPhoto(image) {
+    const memberId = image.dataset.memberPhoto;
+    const explicitFile = image.dataset.memberPhotoFile || memberPhotoFiles[memberId];
+    if (!memberId && !explicitFile) {
+      return;
+    }
+
+    const memberFolder = memberPhotoFolders[memberId];
+    if (!memberFolder && !explicitFile) {
+      return;
+    }
+
+    const candidates = [
+      ...(explicitFile ? [`${memberPhotoBasePath}/${explicitFile}`] : []),
+      ...(memberFolder ? memberPhotoExtensions.map((extension) => `${memberPhotoBasePath}/${memberFolder}/profile.${extension}`) : [])
+    ];
+    let currentIndex = 0;
+
+    image.onerror = () => {
+      currentIndex += 1;
+      if (currentIndex >= candidates.length) {
+        image.onerror = null;
+        image.src = `${memberPhotoBasePath}/member-placeholder.svg`;
+        return;
+      }
+
+      image.src = candidates[currentIndex];
+    };
+
+    image.src = candidates[currentIndex];
+  }
+
+  document.querySelectorAll("[data-member-photo]").forEach(loadMemberPhoto);
 
   if (summaryElement) {
     summaryElement.textContent = `${aggregate.completedCount} / ${aggregate.totalMembers}人 完了`;

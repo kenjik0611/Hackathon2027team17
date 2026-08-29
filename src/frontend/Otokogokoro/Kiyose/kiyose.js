@@ -146,7 +146,10 @@ function shuffleArray(items) {
 function prepareQuestion(question) {
   return {
     ...question,
-    options: shuffleArray(question.options)
+    options: shuffleArray(question.options.map((option, optionIndex) => ({
+      ...option,
+      optionIndex
+    })))
   };
 }
 
@@ -214,6 +217,7 @@ function selectAnswer(selectedIndex) {
   state.answerLog.push({
     questionTitle: question.title,
     selectedText: selectedOption.text,
+    optionIndex: selectedOption.optionIndex,
     points: selectedOption.points,
     reason: selectedOption.reason
   });
@@ -269,6 +273,10 @@ function goNext() {
 function showResult() {
   elements.gamePanel.hidden = true;
   elements.resultPanel.hidden = false;
+
+  if (window.OtokogokoroMemberScoring && typeof window.OtokogokoroMemberScoring.saveKiyoseResult === "function") {
+    window.OtokogokoroMemberScoring.saveKiyoseResult(state.answerLog, state.preparedQuestions.length);
+  }
 
   elements.finalScore.textContent = state.totalScore;
   elements.finalMaxScore.textContent = maxScore;

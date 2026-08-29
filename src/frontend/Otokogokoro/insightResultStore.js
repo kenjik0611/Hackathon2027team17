@@ -15,10 +15,10 @@
       id: "kiyose",
       name: "清瀬",
       path: "Kiyose/kiyose.html",
-      mbti: "ENFP",
-      mbtiLabel: "運動家",
-      loveType: "FCRO",
-      loveTypeLabel: "ロマンスマジシャン"
+      mbti: "ESFP",
+      mbtiLabel: "エンターテイナー",
+      loveType: "LAPO",
+      loveTypeLabel: "パーフェクトカメレオン"
     },
     {
       id: "suzuki",
