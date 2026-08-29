@@ -12,10 +12,16 @@
         ├── index.html             # トップページ（モラル／男心理解のモード選択）
         ├── style.css              # 全ページ共通のスタイル
         ├── script.js              # トップページの挙動（モード切替・遷移）
+        ├── overall.html           # 両編をまとめた総合診断結果画面
+        ├── overall.css
+        ├── overall.js
+        ├── overallResultStore.js  # 総合DTO・OKF Markdown生成
         │
         ├── moral/                 # モラルチェック編
         │   ├── main.html           # シーン選択画面
         │   ├── main.css
+        │   ├── summary.html        # モラル編の集計結果
+        │   ├── moralResultStore.js
         │   ├── house_Kiyose/           # シーンごとに担当者が実装
         │   ├── office_Arita/
         │   ├── online_Suzuki/
@@ -25,6 +31,9 @@
         └── Otokogokoro/           # 男心理解ゲーム編
             ├── main.html           # 担当者選択画面
             ├── main.css
+            ├── summary.html        # 男心編の集計結果
+            ├── insightResultStore.js
+            ├── memberQuizScoring.js
             ├── Arita/
             ├── Kiyose/
             ├── Suzuki/
@@ -34,6 +43,7 @@
 
 - `moral/` と `Otokogokoro/` はそれぞれ「シーン／担当者ごとのフォルダ」に分かれており、各フォルダの中には同名の `.html` / `.css` / `.js` が入っています（例: `house_Kiyose/house.html`, `house.css`, `house.js`）。担当者は自分のフォルダの3ファイルだけを編集すればよく、他の人のファイルとは衝突しません。
 - `index.html` でモードを選んでスタートすると `moral/main.html` または `Otokogokoro/main.html` に遷移し、そこからさらに各シーン／担当者のページへ進みます。
+- `overall.html` では両編の完了状況と結果をまとめ、匿名IDや回答ログを含まないOKF互換のMarkdownファイルをブラウザ内で生成・保存できます。
 
 
 ## セットアップ

@@ -37,3 +37,6 @@ jobs:
 
       - name: Check local file references
         run: npm run check:links
+
+      - name: Check overall result and OKF export
+        run: npm run check:overall
