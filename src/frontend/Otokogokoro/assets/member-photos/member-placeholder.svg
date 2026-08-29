@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Member photo placeholder</title>
+  <desc id="desc">A simple placeholder icon for a member photo.</desc>
+  <rect width="160" height="160" rx="24" fill="#ffd1df"/>
+  <circle cx="80" cy="58" r="28" fill="#fffdfa" stroke="#17202a" stroke-width="8"/>
+  <path d="M35 133c6-29 26-45 45-45s39 16 45 45" fill="#fffdfa" stroke="#17202a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M42 31 28 17M118 31l14-14M80 20V6" fill="none" stroke="#17202a" stroke-width="8" stroke-linecap="round"/>
+</svg>

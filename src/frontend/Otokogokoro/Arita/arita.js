@@ -144,7 +144,8 @@ function chooseAnswer(selectedIndex) {
   if (isCorrect) score += 1;
   results[currentQuestionIndex] = {
     correct: isCorrect,
-    selectedIndex: selectedIndex
+    selectedIndex: selectedIndex,
+    optionIndex: selectedIndex
   };
 
   buttons.forEach(function (button, index) {
@@ -198,6 +199,10 @@ function getResultCopy() {
 
 function renderResult() {
   const copy = getResultCopy();
+  if (window.OtokogokoroMemberScoring && typeof window.OtokogokoroMemberScoring.saveAritaResult === "function") {
+    window.OtokogokoroMemberScoring.saveAritaResult(results, questions.length);
+  }
+
   document.getElementById("result-score").textContent = score + " / " + questions.length;
   document.getElementById("result-rank").textContent = copy.rank;
   document.getElementById("result-message").textContent = copy.message;
