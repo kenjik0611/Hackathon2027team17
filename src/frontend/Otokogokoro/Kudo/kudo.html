@@ -4,143 +4,342 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>工藤の心、わかってる？</title>
+  <title>工藤理解ゲーム - 男心理解ゲーム</title>
 
+  <!-- 男心編の共通デザイン -->
+  <link rel="stylesheet" href="../../style.css">
+
+  <!-- 工藤専用デザイン -->
   <link rel="stylesheet" href="kudo.css">
+
+  <link rel="icon" href="data:,">
 </head>
 
 <body>
-    <a href="../main.html" class="back-person-btn">
-  ← 人物選択に戻る
-</a>
 
-  <div class="bg-circle circle1"></div>
-  <div class="bg-circle circle2"></div>
+  <!-- ========================================
+       ヘッダー
+  ========================================= -->
+  <header class="app-header">
+    <div class="header-inner kudo-header">
 
-  <main class="app">
+      <div class="hero-copy">
+        <p class="kicker">Kudo Profile</p>
 
-    <!-- =========================
-         スタート画面
-    ========================== -->
+        <h1>工藤理解ゲーム</h1>
 
-    <section id="start-screen" class="screen active">
-
-      <p class="mini-title">
-        HOW WELL DO YOU KNOW ME?
-      </p>
-
-      <h1>
-        俺のこと、<br>
-        <span>ちゃんと分かってる？</span>
-      </h1>
-
-      <p class="intro">
-        普段はわりとサバサバ。<br>
-        言いたいことは結構そのまま言う。<br><br>
-
-        でも、そんな工藤にも<br>
-        「こういう時はこうしてほしい」があります。
-      </p>
-
-      <div class="challenge-box">
-
-        <p class="challenge-title">
-          工藤理解度チェック
+        <p class="lead">
+          ENFPとFAROの工藤が、
+          恋愛や会話の場面でどんな考え方をするのか。
+          5つのシチュエーションから工藤の本音を予想するゲームです。
         </p>
-
-        <p class="challenge-text">
-          5つのシチュエーションから、<br>
-          工藤の本音を当ててください。
-        </p>
-
       </div>
 
-      <button id="start-btn" class="main-btn">
-        挑戦する
-        <span>→</span>
-      </button>
-
-    </section>
+    </div>
+  </header>
 
 
-    <!-- =========================
-         質問画面
-    ========================== -->
+  <!-- ========================================
+       メイン
+  ========================================= -->
+  <main class="app-layout kudo-layout">
 
-    <section id="question-screen" class="screen">
 
-      <div class="question-top">
+    <!-- ======================================
+         プロフィール画面
+    ======================================= -->
+    <section
+      class="start-panel intro-panel"
+      id="intro-panel"
+      aria-labelledby="profile-title"
+    >
 
-        <span id="question-number">
-          QUESTION 01
-        </span>
-
-        <span id="question-count">
-          1 / 5
-        </span>
-
-      </div>
-
-      <div class="progress-bar">
-        <div id="progress"></div>
+      <div class="profile-heading">
+        <p class="kicker">Profile</p>
+        <h2 id="profile-title">工藤</h2>
       </div>
 
 
-      <div class="situation">
-        KUDO'S MIND
-      </div>
-
-      <h2 id="question-text"></h2>
-
-      <p class="question-guide">
-        工藤の本音に一番近いものは？
-      </p>
-
+      <!-- MBTI / Love Type -->
       <div
-        id="choices"
-        class="choices">
+        class="type-gallery"
+        aria-label="工藤のタイプ"
+      >
+
+        <!-- MBTI -->
+        <article class="type-card">
+
+          <img
+            src="https://www.16personalities.com/static/images/types/headers/campaigner-mobile.svg"
+            alt="ENFP 運動家タイプのイメージ画像"
+          >
+
+          <div>
+            <span class="type-label">
+              MBTI
+            </span>
+
+            <strong>
+              ENFP【運動家】
+            </strong>
+          </div>
+
+        </article>
+
+
+        <!-- Love Type -->
+        <article class="type-card">
+
+          <img
+            src="https://assets.lovetype16.net/public/images/personalities/FARO.webp"
+            alt="FAROタイプのイメージ画像"
+          >
+
+          <div>
+            <span class="type-label love-label">
+              Love Type
+            </span>
+
+            <strong>
+              FARO
+            </strong>
+          </div>
+
+        </article>
+
+      </div>
+
+
+      <!-- プロフィール説明 -->
+      <div class="profile-summary">
+
+        <div>
+          <h3>ひとことで</h3>
+
+          <p>
+            サバサバしていて基本はシンプル。
+            言いたいことは言って、解決したことは引きずらず、
+            お互い自由に過ごせる関係を大切にするタイプ。
+          </p>
+        </div>
+
+
+        <div>
+          <h3>攻略ヒント</h3>
+
+          <ul>
+            <li>
+              言葉を必要以上に深読みしない
+            </li>
+
+            <li>
+              解決したことは引きずらず、いつも通りに戻りたい
+            </li>
+
+            <li>
+              頑張ったときは、結果だけでなく過程も認めてほしい
+            </li>
+
+            <li>
+              一人で集中しているときは、ある程度自由にしてほしい
+            </li>
+          </ul>
+        </div>
+
+
+        <div>
+          <h3>このゲームについて</h3>
+
+          <p>
+            一般的な「男心」の正解ではなく、
+            工藤本人の考え方をもとにした5問です。
+            一番工藤が選びそうな回答を予想してください。
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- ボタン -->
+      <div class="profile-actions">
+
+        <a
+          class="ghost-button"
+          href="../main.html"
+        >
+          担当選択へ
+        </a>
+
+        <button
+          class="primary-button"
+          id="start-button"
+          type="button"
+        >
+          5問に挑戦する
+        </button>
+
       </div>
 
     </section>
 
 
-    <!-- =========================
-         結果画面
-    ========================== -->
+    <!-- ======================================
+         クイズ画面
+    ======================================= -->
+    <section
+      class="start-panel quiz-panel"
+      id="quiz-panel"
+      aria-labelledby="quiz-title"
+      hidden
+    >
 
-    <section id="result-screen" class="screen">
+      <!-- 問題番号 / 理解度 -->
+      <div class="quiz-meta">
 
-      <p class="mini-title">
-        YOUR RESULT
+        <span
+          class="question-count"
+          id="question-count"
+        >
+          Q1 / 5
+        </span>
+
+        <span
+          class="score-count"
+          id="score-count"
+        >
+          理解度 0%
+        </span>
+
+      </div>
+
+
+      <!-- プログレスバー -->
+      <div
+        class="progress-track"
+        aria-hidden="true"
+      >
+
+        <div
+          class="progress-bar"
+          id="progress-bar"
+        ></div>
+
+      </div>
+
+
+      <!-- 問題カテゴリー -->
+      <p
+        class="kicker"
+        id="question-category"
+      >
+        KUDO'S MIND
       </p>
 
-      <h2 class="result-heading">
-        工藤理解度
+
+      <h2 id="quiz-title">
+        工藤の本音は？
       </h2>
 
-      <div class="score-wrapper">
 
-        <span id="score">0</span>
-
-        <span class="percent">
-          %
-        </span>
-
-      </div>
-
-
-      <div
-        id="result-rank"
-        class="result-rank">
-      </div>
-
-
+      <!-- 問題文 -->
       <p
-        id="result-message"
-        class="result-message">
+        class="question-text"
+        id="question-text"
+      ></p>
+
+
+      <!-- 選択肢 -->
+      <div
+        class="answer-list"
+        id="answer-list"
+        aria-label="回答の選択肢"
+      ></div>
+
+
+      <!-- 回答後コメント -->
+      <div
+        class="feedback"
+        id="feedback"
+        aria-live="polite"
+        hidden
+      >
+
+        <strong id="feedback-title"></strong>
+
+        <p id="feedback-text"></p>
+
+        <div
+          class="trait-row"
+          id="trait-row"
+        ></div>
+
+      </div>
+
+
+      <!-- 操作ボタン -->
+      <div class="profile-actions quiz-actions">
+
+        <button
+          class="ghost-button"
+          id="back-profile-button"
+          type="button"
+        >
+          プロフィールへ戻る
+        </button>
+
+        <button
+          class="primary-button"
+          id="next-button"
+          type="button"
+          disabled
+        >
+          次の問題へ
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================
+         結果画面
+    ======================================= -->
+    <section
+      class="start-panel result-panel"
+      id="result-panel"
+      aria-labelledby="result-title"
+      hidden
+    >
+
+      <p class="kicker">
+        Result
       </p>
 
+      <h2 id="result-title">
+        工藤理解度チェック
+      </h2>
 
+
+      <!-- スコア -->
+      <div class="score-board">
+
+        <span id="result-score">
+          0%
+        </span>
+
+        <p id="result-rank"></p>
+
+      </div>
+
+
+      <!-- 結果コメント -->
+      <p
+        class="result-message"
+        id="result-message"
+      ></p>
+
+
+      <!-- 工藤本人コメント -->
       <div class="kudo-comment">
 
         <span>
@@ -151,35 +350,65 @@
 
       </div>
 
-      <div class="result-actions">
 
-        <a
-          class="main-btn"
-          href="../summary.html">
+      <!-- 5問の振り返り -->
+      <div class="result-review">
 
-          全体集計へ進む
-          <span>→</span>
+        <h3>
+          5問の振り返り
+        </h3>
 
-        </a>
+        <div
+          class="review-list"
+          id="review-list"
+        ></div>
 
       </div>
 
-      <button
-        id="retry-btn"
-        class="main-btn">
 
-        もう一回やる
-        <span>↻</span>
+      <!-- 注意書き -->
+      <p class="personality-note">
+        この結果は、工藤本人のゲーム用プロフィールを
+        もとにしたものです。
+        MBTIやLove Typeだけで実際の人の行動が
+        決まるわけではありません。
+      </p>
 
-      </button>
+
+      <!-- 最後のボタン -->
+      <div class="profile-actions">
+
+        <a
+          class="ghost-button"
+          href="../main.html"
+        >
+          担当選択へ
+        </a>
+
+        <button
+          class="primary-button"
+          id="restart-button"
+          type="button"
+        >
+          もう一度挑戦する
+        </button>
+
+      </div>
 
     </section>
 
   </main>
 
 
-  <script src="../insightResultStore.js"></script>
-  <script src="../memberQuizScoring.js"></script>
+  <!-- ========================================
+       フッター
+  ========================================= -->
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+
+  <!-- 工藤ゲームの処理 -->
   <script src="kudo.js"></script>
 
 </body>
