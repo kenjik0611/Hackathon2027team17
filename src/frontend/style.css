@@ -148,7 +148,8 @@ a:focus-visible {
 
 .app-logo {
   display: block;
-  width: min(100%, 460px);
+  width: 100%;
+  max-width: 420px;
   height: auto;
   filter: drop-shadow(8px 10px 0 rgba(23, 32, 42, 0.14));
 }
@@ -576,7 +577,7 @@ footer {
   }
 
   .header-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-visual {

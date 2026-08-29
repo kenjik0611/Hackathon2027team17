@@ -2,11 +2,12 @@
    PUBLIC SPACE MORAL CHECKER
    publicSpace.js
 
-   公共モラル編
-   ・全5問 / 4択
-   ・画像なし
-   ・選択したら即次の問題
-   ・Q5回答後に結果発表
+   工藤担当：公共空間・移動
+   ・全5問
+   ・4択
+   ・回答後すぐ次へ
+   ・3軸分析
+   ・9タイプ診断
 ========================================================= */
 
 
@@ -23,7 +24,8 @@ const questions = [
     category: "🚉 駅・落とし物",
     focus: "MORAL CHECK",
 
-    title: "目の前で財布が落ちた。でも電車はあと1分。",
+    title:
+      "目の前で財布が落ちた。でも電車はあと1分。",
 
     situation:
       "駅のホームを歩いていると、前を歩いていた人が財布を落としました。本人は気づかないまま先へ進んでいます。一方、あなたが乗りたい電車はあと1分で発車します。逃すと次の電車は約10分後です。",
@@ -86,7 +88,8 @@ const questions = [
     category: "🚃 電車",
     focus: "CONSIDERATION CHECK",
 
-    title: "目の前に、席を必要としていそうな人が。",
+    title:
+      "目の前に、席を必要としていそうな人が。",
 
     situation:
       "帰宅時間帯の電車であなたは座っています。途中の駅から、杖を持った高齢の方が乗ってきて目の前に立ちました。車内は混んでいて、近くに空席はありません。ただ、あなた自身も一日中歩き回ってかなり疲れています。",
@@ -149,7 +152,8 @@ const questions = [
     category: "🏙️ 街中",
     focus: "MORAL CHECK",
 
-    title: "友達がゴミを植え込みに。あなたはどうする？",
+    title:
+      "友達がゴミを植え込みに。あなたはどうする？",
 
     situation:
       "友達と街を歩いています。飲み終わったカップを捨てようとしましたが、近くにゴミ箱がありません。すると友達が『どうせ誰か片付けるでしょ』と言って、カップを植え込みの陰に置きました。",
@@ -212,7 +216,8 @@ const questions = [
     category: "🗺️ 駅・公共空間",
     focus: "JUDGMENT CHECK",
 
-    title: "困っている人。でも自分も待ち合わせギリギリ。",
+    title:
+      "困っている人。でも自分も待ち合わせギリギリ。",
 
     situation:
       "大きな駅を歩いていると、券売機の前で外国人旅行者が困った様子で路線図とスマートフォンを何度も見比べています。周囲に駅員は見当たりません。一方、あなたは友達との待ち合わせ時刻まであと3分です。",
@@ -275,7 +280,8 @@ const questions = [
     category: "🎬 映画館",
     focus: "TOTAL MORAL CHECK",
 
-    title: "上映中、隣の人のおしゃべりが止まらない。",
+    title:
+      "上映中、隣の人のおしゃべりが止まらない。",
 
     situation:
       "楽しみにしていた映画を観ています。しかし隣の2人が上映中も小声で会話を続けています。あなた以外の観客も何度か気にしている様子です。映画はまだ1時間以上残っています。",
@@ -332,42 +338,53 @@ const questions = [
 
 ];
 
+
+/* =========================================================
+   2. 集計用4軸データ
+========================================================= */
+
 const PUBLIC_AXIS_SCORES = [
+
   [
     { "常識": 5, "思いやり": 5, "対応力": 3 },
     { "常識": 5, "思いやり": 4, "対応力": 5 },
     { "常識": 2, "思いやり": 2, "対応力": 1 },
     { "常識": 0, "思いやり": 0, "対応力": 1 }
   ],
+
   [
     { "思いやり": 5, "常識": 5, "対応力": 4 },
     { "思いやり": 5, "常識": 4, "対応力": 5 },
     { "思いやり": 2, "常識": 2, "対応力": 3 },
     { "思いやり": 0, "常識": 1, "対応力": 1 }
   ],
+
   [
     { "常識": 5, "責任感": 5, "対応力": 5 },
     { "常識": 5, "責任感": 4, "対応力": 4 },
     { "常識": 1, "責任感": 1, "対応力": 2 },
     { "常識": 0, "責任感": 0, "対応力": 0 }
   ],
+
   [
     { "思いやり": 5, "対応力": 4, "責任感": 4 },
     { "思いやり": 5, "対応力": 5, "責任感": 4 },
     { "思いやり": 1, "対応力": 2, "責任感": 1 },
     { "思いやり": 5, "対応力": 2, "責任感": 3 }
   ],
+
   [
     { "常識": 5, "対応力": 5, "思いやり": 4 },
     { "常識": 5, "対応力": 5, "思いやり": 4 },
     { "常識": 2, "対応力": 1, "思いやり": 2 },
     { "常識": 1, "対応力": 1, "思いやり": 0 }
   ]
+
 ];
 
 
 /* =========================================================
-   2. 状態管理
+   3. 状態管理
 ========================================================= */
 
 let currentQuestionIndex = 0;
@@ -380,15 +397,13 @@ let scores = {
 
 let answerHistory = [];
 
-const ANSWER_TRANSITION_DELAY = 350;
-
 let isAnswerLocked = false;
 
-let answerUnlockTimerId = null;
+const ANSWER_TRANSITION_DELAY = 350;
 
 
 /* =========================================================
-   3. HTML要素
+   4. HTML要素
 ========================================================= */
 
 const startScreen =
@@ -443,7 +458,7 @@ const sceneNumber =
   document.getElementById("scene-number");
 
 
-/* 結果画面 */
+/* 結果 */
 
 const overallScoreElement =
   document.getElementById("overall-score");
@@ -490,13 +505,12 @@ const typeDescription =
 const typeComment =
   document.getElementById("type-comment");
 
-
 const finalAnalysis =
   document.getElementById("final-analysis");
 
 
 /* =========================================================
-   4. 画面切り替え
+   5. 画面切り替え
 ========================================================= */
 
 function showScreen(screen) {
@@ -508,30 +522,30 @@ function showScreen(screen) {
   ];
 
   screens.forEach(item => {
-    item.classList.remove("active");
-  });
 
-  screen.classList.add("active");
+    if (item === screen) {
+      item.hidden = false;
+      item.classList.add("active");
+    } else {
+      item.hidden = true;
+      item.classList.remove("active");
+    }
+
+  });
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 
 /* =========================================================
-   5. 診断開始
+   6. 診断開始
 ========================================================= */
 
 function startQuiz() {
-
-  if (answerUnlockTimerId !== null) {
-    window.clearTimeout(answerUnlockTimerId);
-    answerUnlockTimerId = null;
-  }
-
-  isAnswerLocked = false;
 
   currentQuestionIndex = 0;
 
@@ -543,18 +557,19 @@ function startQuiz() {
 
   answerHistory = [];
 
-  moralBar.style.width = "0%";
-  careBar.style.width = "0%";
-  judgmentBar.style.width = "0%";
+  isAnswerLocked = false;
+
+  resetResultVisuals();
 
   showScreen(quizScreen);
 
   renderQuestion();
+
 }
 
 
 /* =========================================================
-   6. 問題表示
+   7. 問題表示
 ========================================================= */
 
 function renderQuestion() {
@@ -591,6 +606,16 @@ function renderQuestion() {
   progressBar.style.width =
     `${progress}%`;
 
+  const progressTrack =
+    progressBar.parentElement;
+
+  if (progressTrack) {
+    progressTrack.setAttribute(
+      "aria-valuenow",
+      progress
+    );
+  }
+
 
   /* 問題内容 */
 
@@ -610,13 +635,12 @@ function renderQuestion() {
     question.prompt;
 
 
-  /* 選択肢 */
+  /* 回答生成 */
 
   answerList.innerHTML = "";
 
   const letters =
     ["A", "B", "C", "D"];
-
 
   question.answers.forEach(
     (answer, index) => {
@@ -629,9 +653,6 @@ function renderQuestion() {
       button.className =
         "answer-button";
 
-      button.disabled =
-        isAnswerLocked;
-
       button.innerHTML = `
         <span class="answer-letter">
           ${letters[index]}
@@ -642,85 +663,64 @@ function renderQuestion() {
         </span>
       `;
 
-
       button.addEventListener(
         "click",
-        () => selectAnswer(index)
+        () => selectAnswer(index, button)
       );
 
-
       answerList.appendChild(button);
+
     }
   );
 
 
-  /* 問題切り替えアニメーション */
+  /* カードアニメーション */
 
   const questionCard =
     document.getElementById("question-card");
 
-  questionCard.animate(
-    [
-      {
-        opacity: 0,
-        transform: "translateY(12px)"
-      },
+  if (
+    questionCard &&
+    typeof questionCard.animate === "function"
+  ) {
 
+    questionCard.animate(
+      [
+        {
+          opacity: 0,
+          transform: "translateY(12px)"
+        },
+
+        {
+          opacity: 1,
+          transform: "translateY(0)"
+        }
+      ],
       {
-        opacity: 1,
-        transform: "translateY(0)"
+        duration: 300,
+        easing: "ease"
       }
-    ],
-    {
-      duration: 300,
-      easing: "ease"
-    }
-  );
+    );
 
-  if (isAnswerLocked) {
-
-    if (answerUnlockTimerId !== null) {
-      window.clearTimeout(answerUnlockTimerId);
-    }
-
-    answerUnlockTimerId =
-      window.setTimeout(() => {
-
-        isAnswerLocked = false;
-
-        answerUnlockTimerId = null;
-
-        answerList
-          .querySelectorAll(".answer-button")
-          .forEach(button => {
-            button.disabled = false;
-          });
-
-      }, ANSWER_TRANSITION_DELAY);
   }
+
 }
 
 
 /* =========================================================
-   7. 回答
-
-   Q1〜Q4 → 即次へ
-   Q5     → 結果発表
+   8. 回答
 ========================================================= */
 
-function selectAnswer(answerIndex) {
+function selectAnswer(
+  answerIndex,
+  selectedButton
+) {
 
   if (isAnswerLocked) {
     return;
   }
 
   isAnswerLocked = true;
-
-  answerList
-    .querySelectorAll(".answer-button")
-    .forEach(button => {
-      button.disabled = true;
-    });
 
 
   const question =
@@ -730,7 +730,38 @@ function selectAnswer(answerIndex) {
     question.answers[answerIndex];
 
 
-  /* 裏側で採点 */
+  /* 全ボタンをロック */
+
+  const buttons =
+    answerList.querySelectorAll(
+      ".answer-button"
+    );
+
+  buttons.forEach(button => {
+    button.disabled = true;
+  });
+
+
+  /* 選択したボタン */
+
+  if (selectedButton) {
+
+    selectedButton.style.borderColor =
+      "#17202a";
+
+    selectedButton.style.background =
+      "#fff4bd";
+
+    selectedButton.style.transform =
+      "translateY(-2px)";
+
+    selectedButton.style.boxShadow =
+      "4px 5px 0 #17202a";
+
+  }
+
+
+  /* 採点 */
 
   scores.moral +=
     answer.score.moral;
@@ -741,39 +772,63 @@ function selectAnswer(answerIndex) {
   scores.judgment +=
     answer.score.judgment;
 
+
+  /* 集計用履歴 */
+
   answerHistory.push({
-    question: question.title,
-    selected: answer.text,
-    axisScores: PUBLIC_AXIS_SCORES[currentQuestionIndex][answerIndex],
-    originalScore: answer.score
+
+    question:
+      question.title,
+
+    selected:
+      answer.text,
+
+   axisScores:
+  PUBLIC_AXIS_SCORES[currentQuestionIndex][answerIndex],
+
+    originalScore:
+      answer.score
+
   });
 
 
-  if (
-    currentQuestionIndex <
-    questions.length - 1
-  ) {
+  /* 次へ */
 
-    currentQuestionIndex++;
+  window.setTimeout(() => {
 
-    renderQuestion();
+    if (
+      currentQuestionIndex <
+      questions.length - 1
+    ) {
 
-  } else {
+      currentQuestionIndex++;
 
-    showResult();
-  }
+      isAnswerLocked = false;
+
+      renderQuestion();
+
+    } else {
+
+      isAnswerLocked = false;
+
+      showResult();
+
+    }
+
+  }, ANSWER_TRANSITION_DELAY);
+
 }
 
 
 /* =========================================================
-   8. スコア計算
+   9. スコア計算
 
-   各軸 最大20点 → 100点換算
+   各軸 最大20点 → 100点
 
    総合
-   モラル     50%
-   思いやり   25%
-   状況判断   25%
+   モラル      50%
+   思いやり    25%
+   状況判断    25%
 ========================================================= */
 
 function calculateScores() {
@@ -814,11 +869,12 @@ function calculateScores() {
     judgment,
     overall
   };
+
 }
 
 
 /* =========================================================
-   9. 総合ランク
+   10. 総合ランク
 ========================================================= */
 
 function getOverallResult(score) {
@@ -826,73 +882,93 @@ function getOverallResult(score) {
   if (score >= 90) {
 
     return {
-      rank: "EXCELLENT",
+
+      rank:
+        "EXCELLENT",
 
       title:
         "公共モラル、ほぼ完璧！",
 
       comment:
         "あなたは公共のルールを守るだけでなく、その場にいる人の気持ちや状況まで自然に考えられるタイプです。「自分が正しいか」だけではなく、「みんなが気持ちよく過ごせるか」まで視野に入れられるのが大きな強みです。"
+
     };
+
   }
 
 
   if (score >= 80) {
 
     return {
-      rank: "GREAT",
+
+      rank:
+        "GREAT",
 
       title:
         "かなりのモラル上級者！",
 
       comment:
         "基本的な公共モラルはかなり高めです。ルール、周囲への配慮、その場での判断をバランスよく使えている傾向があります。迷う場面でも、自分だけでなく周囲への影響まで考えられるタイプです。"
+
     };
+
   }
 
 
   if (score >= 65) {
 
     return {
-      rank: "GOOD",
+
+      rank:
+        "GOOD",
 
       title:
         "モラル感覚はいい感じ！",
 
       comment:
         "基本的なマナーや公共のルールはしっかり意識できています。一方で、状況によっては自分の都合やその場の空気を優先することもありそうです。あと一歩だけ周囲の立場を想像すると、さらにスマートな判断ができそうです。"
+
     };
+
   }
 
 
   if (score >= 50) {
 
     return {
-      rank: "KEEP GOING",
+
+      rank:
+        "KEEP GOING",
 
       title:
         "モラル力、まだまだ伸びる！",
 
       comment:
         "あなたは常にルールを最優先するというより、そのときの状況や自分の感覚を大切にする傾向がありそうです。公共の場では「自分以外の人はどう感じるか」を一度考えるだけでも判断が変わります。"
+
     };
+
   }
 
 
   return {
-    rank: "CHALLENGE",
+
+    rank:
+      "CHALLENGE",
 
     title:
       "かなりの自由人かも！？",
 
     comment:
       "あなたは周囲のルールや一般的なマナーより、自分自身の感覚を優先する場面が多いかもしれません。公共空間では、自分には小さな行動でも誰かにとっては大きな迷惑になることがあります。逆の立場だったらどう感じるかを考えてみると、新しい発見がありそうです。"
+
   };
+
 }
 
 
 /* =========================================================
-   10. 9タイプ診断
+   11. 9タイプ診断
 ========================================================= */
 
 function getMoralType(result) {
@@ -914,7 +990,9 @@ function getMoralType(result) {
   ) {
 
     return {
-      icon: "👑",
+
+      icon:
+        "👑",
 
       name:
         "モラルマスター",
@@ -924,7 +1002,9 @@ function getMoralType(result) {
 
       comment:
         "あなたがいるだけで、公共空間がちょっと平和。"
+
     };
+
   }
 
 
@@ -932,12 +1012,22 @@ function getMoralType(result) {
 
   if (
     overall >= 75 &&
-    Math.max(moral, care, judgment) -
-    Math.min(moral, care, judgment) <= 15
+    Math.max(
+      moral,
+      care,
+      judgment
+    ) -
+    Math.min(
+      moral,
+      care,
+      judgment
+    ) <= 15
   ) {
 
     return {
-      icon: "⚖️",
+
+      icon:
+        "⚖️",
 
       name:
         "バランスモラリスト",
@@ -947,7 +1037,9 @@ function getMoralType(result) {
 
       comment:
         "迷ったときも、だいたい“ちょうどいい答え”に着地する。"
+
     };
+
   }
 
 
@@ -960,7 +1052,9 @@ function getMoralType(result) {
   ) {
 
     return {
-      icon: "🤝",
+
+      icon:
+        "🤝",
 
       name:
         "気配りモラリスト",
@@ -970,7 +1064,9 @@ function getMoralType(result) {
 
       comment:
         "ちゃんとしてる。そして、ちゃんと優しい。"
+
     };
+
   }
 
 
@@ -983,7 +1079,9 @@ function getMoralType(result) {
   ) {
 
     return {
-      icon: "🛡️",
+
+      icon:
+        "🛡️",
 
       name:
         "堅実モラリスト",
@@ -993,7 +1091,9 @@ function getMoralType(result) {
 
       comment:
         "派手じゃない。でも判断が堅い。"
+
     };
+
   }
 
 
@@ -1006,7 +1106,9 @@ function getMoralType(result) {
   ) {
 
     return {
-      icon: "📚",
+
+      icon:
+        "📚",
 
       name:
         "ルール優等生",
@@ -1016,7 +1118,9 @@ function getMoralType(result) {
 
       comment:
         "ルールはバッチリ。次はその先の気配りへ。"
+
     };
+
   }
 
 
@@ -1029,7 +1133,9 @@ function getMoralType(result) {
   ) {
 
     return {
-      icon: "❤️",
+
+      icon:
+        "❤️",
 
       name:
         "思いやりヒーロー",
@@ -1039,7 +1145,9 @@ function getMoralType(result) {
 
       comment:
         "困っている人を見つけるセンサー、かなり高性能。"
+
     };
+
   }
 
 
@@ -1052,7 +1160,9 @@ function getMoralType(result) {
   ) {
 
     return {
-      icon: "🧠",
+
+      icon:
+        "🧠",
 
       name:
         "スマート判断型",
@@ -1062,7 +1172,9 @@ function getMoralType(result) {
 
       comment:
         "マニュアルより現場を見る。立ち回り上手。"
+
     };
+
   }
 
 
@@ -1074,7 +1186,9 @@ function getMoralType(result) {
   ) {
 
     return {
-      icon: "🌿",
+
+      icon:
+        "🌿",
 
       name:
         "やさしい自由人",
@@ -1084,14 +1198,18 @@ function getMoralType(result) {
 
       comment:
         "人には優しい。ルールにも、あとちょっとだけ優しく。"
+
     };
+
   }
 
 
   /* 9 我が道チャレンジャー */
 
   return {
-    icon: "🔥",
+
+    icon:
+      "🔥",
 
     name:
       "我が道チャレンジャー",
@@ -1101,17 +1219,20 @@ function getMoralType(result) {
 
     comment:
       "我が道を行く。でも公共空間では周りも一緒に歩いてるぞ。"
+
   };
+
 }
 
 
 /* =========================================================
-   11. 最終総評
+   12. 最終総評
 ========================================================= */
 
 function getFinalAnalysis(result) {
 
   const values = [
+
     {
       name: "モラル・常識",
       value: result.moral
@@ -1126,6 +1247,7 @@ function getFinalAnalysis(result) {
       name: "状況判断",
       value: result.judgment
     }
+
   ];
 
 
@@ -1146,6 +1268,8 @@ function getFinalAnalysis(result) {
   let weakText = "";
 
 
+  /* 強み */
+
   if (
     strongest.name ===
     "モラル・常識"
@@ -1153,6 +1277,7 @@ function getFinalAnalysis(result) {
 
     strongText =
       "特に強く表れたのは「モラル・常識」です。公共のルールや基本的なマナーを基準にして、行動の良し悪しを判断する力が高い傾向があります。";
+
   }
 
 
@@ -1163,6 +1288,7 @@ function getFinalAnalysis(result) {
 
     strongText =
       "特に強く表れたのは「思いやり・配慮」です。自分の都合だけではなく、相手がどう感じるか、困っている人はいないかを自然に考える傾向があります。";
+
   }
 
 
@@ -1173,8 +1299,11 @@ function getFinalAnalysis(result) {
 
     strongText =
       "特に強く表れたのは「状況判断」です。単純にルールだけで判断するのではなく、その場の状況を見ながら現実的な選択肢を考える力があります。";
+
   }
 
+
+  /* 改善ポイント */
 
   if (
     weakest.name ===
@@ -1183,6 +1312,7 @@ function getFinalAnalysis(result) {
 
     weakText =
       "一方で、公共のルールや一般的なマナーをもう少し意識すると、判断のバランスがさらに良くなりそうです。";
+
   }
 
 
@@ -1193,6 +1323,7 @@ function getFinalAnalysis(result) {
 
     weakText =
       "一方で、「自分が正しいか」だけではなく「相手からはどう見えるか」まで考えてみると、さらに思いやりのある判断につながりそうです。";
+
   }
 
 
@@ -1203,6 +1334,7 @@ function getFinalAnalysis(result) {
 
     weakText =
       "一方で、正しい行動でも状況によっては別の方法が適していることがあります。周囲の状況や自分への負担まで含めて考えると、さらにスマートな判断ができそうです。";
+
   }
 
 
@@ -1214,12 +1346,13 @@ ${weakText}
 もちろん、公共の場での行動にいつも一つだけの正解があるわけではありません。
 大切なのは、自分・相手・周囲の3つの視点を持ちながら、その場に合った行動を考えること。
 今回の5問から見えたあなたの判断傾向を、ちょっとだけ普段の生活でも意識してみてください。
-  `;
+  `.trim();
+
 }
 
 
 /* =========================================================
-   12. 結果表示
+   13. 結果表示
 ========================================================= */
 
 function showResult() {
@@ -1229,7 +1362,9 @@ function showResult() {
 
 
   const overallResult =
-    getOverallResult(result.overall);
+    getOverallResult(
+      result.overall
+    );
 
 
   const moralType =
@@ -1251,10 +1386,8 @@ function showResult() {
   overallRank.textContent =
     overallResult.rank;
 
-
   overallTitle.textContent =
     overallResult.title;
-
 
   overallComment.textContent =
     overallResult.comment;
@@ -1263,27 +1396,33 @@ function showResult() {
   /* 円グラフ */
 
   const ring =
-    document.querySelector(".score-ring");
-
+    document.querySelector(
+      ".score-ring"
+    );
 
   const degree =
     result.overall * 3.6;
 
 
-  setTimeout(() => {
+  window.setTimeout(() => {
+
+    if (!ring) {
+      return;
+    }
 
     ring.style.background = `
       conic-gradient(
         #ffffff 0deg,
         #ffffff ${degree}deg,
-        rgba(255,255,255,0.18) ${degree}deg
+        rgba(255,255,255,0.20)
+        ${degree}deg
       )
     `;
 
   }, 100);
 
 
-  /* 3軸 */
+  /* 3軸数字 */
 
   animateNumber(
     moralScoreElement,
@@ -1291,13 +1430,11 @@ function showResult() {
     900
   );
 
-
   animateNumber(
     careScoreElement,
     result.care,
     900
   );
-
 
   animateNumber(
     judgmentScoreElement,
@@ -1306,7 +1443,9 @@ function showResult() {
   );
 
 
-  setTimeout(() => {
+  /* 3軸バー */
+
+  window.setTimeout(() => {
 
     moralBar.style.width =
       `${result.moral}%`;
@@ -1325,48 +1464,75 @@ function showResult() {
   typeIcon.textContent =
     moralType.icon;
 
-
   typeName.textContent =
     moralType.name;
 
-
   typeDescription.textContent =
     moralType.description;
-
 
   typeComment.textContent =
     `「${moralType.comment}」`;
 
 
-  /* 最終総評 */
+  /* 最終分析 */
 
   finalAnalysis.textContent =
     getFinalAnalysis(result);
 
+
+  /* チーム共通集計へ保存 */
+
   saveThemeResult(result);
-}
 
-function saveThemeResult(result) {
-  if (!window.MoralResultStore) {
-    return;
-  }
-
-  window.MoralResultStore.saveThemeResult({
-    themeId: "publicSpace",
-    themeName: "公共空間・移動",
-    questionCount: answerHistory.length,
-    score: {
-      earned: result.overall,
-      max: 100
-    },
-    axisTotals: window.MoralResultStore.buildAxisTotals(answerHistory.map((answer) => answer.axisScores)),
-    answers: answerHistory
-  });
 }
 
 
 /* =========================================================
-   13. 数字アニメーション
+   14. 集計結果保存
+========================================================= */
+
+function saveThemeResult(result) {
+
+  if (!window.MoralResultStore) {
+    return;
+  }
+
+
+  window.MoralResultStore.saveThemeResult({
+
+    themeId:
+      "publicSpace",
+
+    themeName:
+      "公共空間・移動",
+
+    questionCount:
+      answerHistory.length,
+
+    score: {
+      earned: result.overall,
+      max: 100
+    },
+
+    axisTotals:
+      window.MoralResultStore
+        .buildAxisTotals(
+          answerHistory.map(
+            answer =>
+              answer.axisScores
+          )
+        ),
+
+    answers:
+      answerHistory
+
+  });
+
+}
+
+
+/* =========================================================
+   15. 数字アニメーション
 ========================================================= */
 
 function animateNumber(
@@ -1374,6 +1540,11 @@ function animateNumber(
   target,
   duration
 ) {
+
+  if (!element) {
+    return;
+  }
+
 
   const startTime =
     performance.now();
@@ -1412,38 +1583,39 @@ function animateNumber(
 
     if (progress < 1) {
 
-      requestAnimationFrame(update);
+      requestAnimationFrame(
+        update
+      );
+
     }
+
   }
 
 
-  requestAnimationFrame(update);
+  requestAnimationFrame(
+    update
+  );
+
 }
 
 
 /* =========================================================
-   14. もう一度診断
+   16. 結果表示リセット
 ========================================================= */
 
-function retryQuiz() {
+function resetResultVisuals() {
 
-  if (answerUnlockTimerId !== null) {
-    window.clearTimeout(answerUnlockTimerId);
-    answerUnlockTimerId = null;
-  }
+  overallScoreElement.textContent =
+    "0";
 
-  isAnswerLocked = false;
+  moralScoreElement.textContent =
+    "0";
 
-  currentQuestionIndex = 0;
+  careScoreElement.textContent =
+    "0";
 
-
-  scores = {
-    moral: 0,
-    care: 0,
-    judgment: 0
-  };
-
-  answerHistory = [];
+  judgmentScoreElement.textContent =
+    "0";
 
 
   moralBar.style.width =
@@ -1457,24 +1629,53 @@ function retryQuiz() {
 
 
   const ring =
-    document.querySelector(".score-ring");
+    document.querySelector(
+      ".score-ring"
+    );
 
 
-  ring.style.background = `
-    conic-gradient(
-      #ffffff 0deg,
-      #ffffff 0deg,
-      rgba(255,255,255,0.18) 0deg
-    )
-  `;
+  if (ring) {
 
+    ring.style.background = `
+      conic-gradient(
+        #ffffff 0deg,
+        #ffffff 0deg,
+        rgba(255,255,255,0.20) 0deg
+      )
+    `;
 
-  showScreen(startScreen);
+  }
+
 }
 
 
 /* =========================================================
-   15. ボタン
+   17. もう一度診断
+========================================================= */
+
+function retryQuiz() {
+
+  currentQuestionIndex = 0;
+
+  scores = {
+    moral: 0,
+    care: 0,
+    judgment: 0
+  };
+
+  answerHistory = [];
+
+  isAnswerLocked = false;
+
+  resetResultVisuals();
+
+  showScreen(startScreen);
+
+}
+
+
+/* =========================================================
+   18. ボタン
 ========================================================= */
 
 startButton.addEventListener(
@@ -1490,8 +1691,13 @@ retryButton.addEventListener(
 
 
 /* =========================================================
-   16. 初期化
+   19. 初期化
 ========================================================= */
 
 totalQuestionNumber.textContent =
   questions.length;
+
+
+/* HTMLの初期表示を確実にする */
+
+showScreen(startScreen);
