@@ -19,15 +19,56 @@
     </div>
   </header>
 
-  <main class="app-layout scene-select-layout">
-    <section class="start-panel" id="start-panel" aria-labelledby="start-title">
-      <p class="kicker">清瀬編</p>
-      <h2 id="start-title">清瀬シナリオ、はじめますか？</h2>
-      <p class="lead">全10問、会話の場面ごとに3つの選択肢から好感度が一番上がる対応を選んでください。</p>
+  <main class="app-layout scene-select-layout kiyose-layout">
+    <section class="start-panel intro-panel" id="start-panel" aria-labelledby="profile-title">
+      <div class="profile-heading">
+        <p class="kicker">Profile</p>
+        <h2 id="profile-title">清瀬</h2>
+      </div>
 
-      <div class="panel-actions">
-        <a class="ghost-button" href="../main.html">シーン選択へ</a>
-        <button class="primary-button" id="start-button" type="button">はじめる</button>
+      <div class="type-gallery" aria-label="清瀬のタイプ">
+        <article class="type-card">
+          <img src="https://www.16personalities.com/static/images/types/headers/entertainer-mobile.svg" alt="ESFP エンターテイナータイプのイメージ画像">
+          <div>
+            <span class="type-label">MBTI</span>
+            <strong>ESFP【エンターテイナー】</strong>
+          </div>
+        </article>
+
+        <article class="type-card">
+          <img src="https://assets.lovetype16.net/public/images/personalities/LAPO.webp" alt="LAPO パーフェクトカメレオンタイプのイメージ画像">
+          <div>
+            <span class="type-label love-label">Love Type</span>
+            <strong>LAPO【パーフェクトカメレオン】</strong>
+          </div>
+        </article>
+      </div>
+
+      <div class="profile-summary">
+        <div>
+          <h3>ひとことで</h3>
+          <p>場の空気を読んでキャラを自在に変えるけど、素は自由人で実は甘えたがり。束縛より信頼を大事にするタイプ。</p>
+        </div>
+
+        <div>
+          <h3>攻略ヒント</h3>
+          <ul>
+            <li>既読無視やペースの乱れがあっても、詮索せず束縛しない</li>
+            <li>「本当のあなたは？」と核心を突きすぎず、理解しようとしすぎない</li>
+            <li>たまに見せる弱さや甘えを、さりげなく受け止めてあげる</li>
+            <li>予定はガチガチに決めず、変化や新しい体験を楽しむ余白を残す</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>このゲームについて</h3>
+          <p>この先の10問では、一般的な正解ではなく「束縛より信頼」「理解しようとしすぎない」という清瀬の価値観に沿った対応を選んでください。選択肢ごとに好感度が変わり、合計スコアでエンディングが分岐します。</p>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <a class="ghost-button" href="../main.html">担当選択へ</a>
+        <button class="primary-button" id="start-button" type="button">10問に挑戦する</button>
       </div>
     </section>
 
