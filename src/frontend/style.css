@@ -235,7 +235,7 @@ a:focus-visible {
   color: var(--text);
   background: #fffdfa;
   text-align: left;
-  animation: card-in 0.48s var(--ease-pop) both;
+  animation: card-in 0.48s var(--ease-pop) backwards;
 }
 
 .mode-tab:hover,
@@ -381,7 +381,7 @@ a:focus-visible {
   color: #2f3a43;
   background: #eefcf8;
   font-weight: 700;
-  animation: card-in 0.48s var(--ease-pop) 0.14s both;
+  animation: card-in 0.48s var(--ease-pop) 0.14s backwards;
 }
 
 .mode-description.insight {
@@ -501,7 +501,7 @@ body[data-selected-mode="insight"] .primary-button:hover:not(:disabled) {
 .question-area,
 .result-panel,
 .personal-result-panel {
-  animation: card-in 0.5s var(--ease-pop) both;
+  animation: card-in 0.5s var(--ease-pop) backwards;
 }
 
 .axis-bar,
@@ -529,6 +529,14 @@ body[data-selected-mode="insight"] .primary-button:hover:not(:disabled) {
 .choice-button.is-correct,
 .choice-button.is-wrong {
   animation: selected-pop 0.28s ease both;
+}
+
+.answer-button:disabled:not(.is-selected)::before {
+  transform: scaleY(0);
+}
+
+.choice-button:disabled:not(.is-correct):not(.show-correct):not(.is-wrong)::before {
+  transform: scaleY(0);
 }
 
 [hidden] {
