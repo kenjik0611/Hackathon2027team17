@@ -1,0 +1,501 @@
+:root {
+  --suzuki-blue: #285d85;
+  --suzuki-blue-dark: #19415f;
+  --suzuki-orange: #f06f38;
+  --suzuki-cream: #fff6e5;
+  --suzuki-yellow: #ffd66b;
+  --suzuki-mint: #dff4ec;
+  --suzuki-red: #d9534f;
+}
+
+.suzuki-header {
+  background: linear-gradient(135deg, #ffad78, #ffd66b 46%, #8ed7cb);
+}
+
+.suzuki-header-inner {
+  grid-template-columns: minmax(0, 1fr) 260px;
+}
+
+.suzuki-layout {
+  max-width: 860px;
+}
+
+.suzuki-intro,
+.suzuki-game,
+.suzuki-result {
+  min-height: 0;
+}
+
+.suzuki-hero-illustration .hero-card {
+  fill: #fffdf9;
+  stroke: var(--line);
+  stroke-width: 5;
+}
+
+.suzuki-hero-illustration .hero-lines {
+  fill: none;
+  stroke: #7591a4;
+  stroke-linecap: round;
+  stroke-width: 9;
+}
+
+.suzuki-hero-illustration .hero-circle {
+  fill: var(--suzuki-yellow);
+  stroke: var(--line);
+  stroke-width: 5;
+}
+
+.suzuki-hero-illustration .hero-check,
+.suzuki-hero-illustration .hero-shadow-line {
+  fill: none;
+  stroke: var(--line);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 7;
+}
+
+.suzuki-hero-illustration .hero-person {
+  fill: #8ed7cb;
+  stroke: var(--line);
+  stroke-width: 5;
+}
+
+.intro-copy {
+  max-width: 680px;
+  margin-top: 14px;
+  color: #33434f;
+  font-weight: 700;
+}
+
+.intro-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.intro-points article {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 98px;
+  padding: 13px;
+  border: 3px solid var(--line);
+  border-radius: 10px;
+  background: #fffdfa;
+}
+
+.intro-points article:nth-child(1) { background: #fff0d7; }
+.intro-points article:nth-child(2) { background: #ffe3db; }
+.intro-points article:nth-child(3) { background: #e3f6ef; }
+
+.intro-points span {
+  font-size: 2rem;
+}
+
+.intro-points strong,
+.intro-points p {
+  display: block;
+}
+
+.intro-points strong {
+  font-size: 0.94rem;
+}
+
+.intro-points p {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.question-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.category-tag,
+.score-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 3px 10px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 rgba(23, 32, 42, 0.12);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.category-tag { background: var(--suzuki-yellow); }
+.score-tag { background: var(--suzuki-mint); }
+
+.progress-track {
+  height: 13px;
+  margin-top: 14px;
+  overflow: hidden;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: #e8edf0;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background: var(--suzuki-orange);
+  transition: width 0.24s ease;
+}
+
+.scene-label {
+  margin-top: 23px;
+  color: var(--suzuki-blue-dark);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.suzuki-game h2 {
+  margin-top: 3px;
+}
+
+.question-text {
+  margin-top: 9px;
+  color: #40505d;
+  font-weight: 700;
+}
+
+.scene-visual {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 3px solid var(--line);
+  border-radius: 12px;
+  background: var(--suzuki-cream);
+  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.12);
+}
+
+.scene-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+#answer-area {
+  margin-top: 24px;
+}
+
+.answer-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+
+.answer-heading h3 {
+  font-size: 1.08rem;
+}
+
+.answer-heading p {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.ramen-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.choice-fieldset {
+  min-width: 0;
+  border: 0;
+}
+
+.choice-fieldset legend {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.choice-stack {
+  display: grid;
+  gap: 8px;
+}
+
+.choice-button,
+.image-choice,
+.role-choice {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  color: var(--text);
+  border: 3px solid var(--line);
+  border-radius: 9px;
+  background: #fffdfa;
+  text-align: left;
+}
+
+.choice-button {
+  box-shadow: none;
+  font-size: 0.9rem;
+}
+
+.choice-button:hover:not(:disabled),
+.image-choice:hover:not(:disabled),
+.role-choice:hover:not(:disabled) {
+  border-color: var(--suzuki-blue);
+  background: #edf8f5;
+}
+
+.choice-button.is-selected,
+.image-choice.is-selected,
+.role-choice.is-selected {
+  border-color: var(--suzuki-blue-dark);
+  background: var(--suzuki-mint);
+  box-shadow: inset 0 0 0 2px #fffdfa;
+}
+
+.choice-button.is-selected::before,
+.role-choice.is-selected::before {
+  margin-right: 7px;
+  content: "✓";
+  color: var(--suzuki-blue-dark);
+}
+
+.image-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.image-choice {
+  min-height: 190px;
+  padding: 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.image-choice-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 132px;
+  border-bottom: 3px solid var(--line);
+  background: #fff2dc;
+}
+
+.food-image {
+  display: block;
+  width: 100%;
+  height: 132px;
+  object-fit: cover;
+}
+
+.image-choice-label {
+  display: block;
+  padding: 12px 10px;
+  font-size: 0.96rem;
+  font-weight: 900;
+}
+
+.role-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.role-choice {
+  min-height: 74px;
+  box-shadow: none;
+  font-weight: 900;
+}
+
+.role-choice small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.answer-action {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 22px;
+}
+
+.answer-action .primary-button {
+  background: var(--suzuki-orange);
+}
+
+.answer-action .primary-button:hover:not(:disabled) {
+  background: #d95827;
+}
+
+.feedback {
+  margin-top: 23px;
+  padding: 18px;
+  border: 3px solid var(--line);
+  border-left: 9px solid var(--suzuki-orange);
+  border-radius: 10px;
+  background: #fff3e7;
+}
+
+.feedback.is-perfect { border-left-color: #23846f; background: #e8faf3; }
+.feedback.is-partial { border-left-color: #e7a526; background: #fff9df; }
+.feedback.is-miss { border-left-color: var(--suzuki-red); background: #fff0ed; }
+
+.feedback strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.feedback p {
+  margin-top: 5px;
+  color: #42525e;
+  font-weight: 700;
+}
+
+.feedback .correct-answer {
+  margin-top: 9px;
+  color: var(--suzuki-blue-dark);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.game-actions {
+  margin-top: 24px;
+}
+
+.result-score {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 7px;
+  margin: 24px auto 11px;
+  padding: 16px;
+  border: 3px solid var(--line);
+  border-radius: 12px;
+  background: var(--suzuki-cream);
+  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.12);
+}
+
+.result-score strong {
+  color: var(--suzuki-orange);
+  font-size: clamp(2.9rem, 12vw, 4.5rem);
+  line-height: 1;
+}
+
+.result-score span {
+  color: #53616b;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.result-message,
+.result-note {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.result-message {
+  color: #33434f;
+  font-size: 1.03rem;
+  font-weight: 800;
+}
+
+.result-note {
+  margin-top: 13px;
+  color: var(--muted);
+  font-size: 0.81rem;
+  font-weight: 700;
+}
+
+.review-panel {
+  margin-top: 27px;
+}
+
+.review-panel h3 {
+  font-size: 1.1rem;
+}
+
+.review-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.review-item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 12px;
+  padding: 13px;
+  border: 3px solid var(--line);
+  border-radius: 10px;
+  background: #fffdfa;
+}
+
+.review-item.is-perfect { border-left: 8px solid #23846f; }
+.review-item.is-partial { border-left: 8px solid #e7a526; }
+.review-item.is-miss { border-left: 8px solid var(--suzuki-red); }
+
+.review-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--suzuki-yellow);
+  font-weight: 900;
+}
+
+.review-item strong,
+.review-item span,
+.review-item small {
+  display: block;
+}
+
+.review-item strong {
+  line-height: 1.45;
+}
+
+.review-item span {
+  margin-top: 4px;
+  font-size: 0.87rem;
+  font-weight: 800;
+}
+
+.review-item small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .suzuki-header-inner { grid-template-columns: 1fr; }
+  .suzuki-hero-illustration { width: min(100%, 250px); }
+  .intro-points { grid-template-columns: 1fr; }
+  .intro-points article { min-height: 76px; }
+}
+
+@media (max-width: 580px) {
+  .ramen-fields,
+  .image-choice-grid { grid-template-columns: 1fr; }
+  .image-choice { min-height: 0; }
+  .image-choice-art,
+  .food-image { min-height: 110px; height: 110px; }
+  .role-choice-grid { grid-template-columns: 1fr; }
+  .answer-heading { display: block; }
+  .answer-heading p { margin-top: 3px; text-align: left; }
+  .answer-action .primary-button { width: 100%; }
+}

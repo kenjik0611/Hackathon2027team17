@@ -1,2 +1,169 @@
-<meta charset="UTF-8">
-<a href="../../index.html">トップへ戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>工藤の心、わかってる？</title>
+
+  <link rel="stylesheet" href="kudo.css">
+</head>
+
+<body>
+
+  <div class="bg-circle circle1"></div>
+  <div class="bg-circle circle2"></div>
+
+  <main class="app">
+
+    <!-- =========================
+         スタート画面
+    ========================== -->
+
+    <section id="start-screen" class="screen active">
+
+      <p class="mini-title">
+        HOW WELL DO YOU KNOW ME?
+      </p>
+
+      <h1>
+        俺のこと、<br>
+        <span>ちゃんと分かってる？</span>
+      </h1>
+
+      <p class="intro">
+        普段はわりとサバサバ。<br>
+        言いたいことは結構そのまま言う。<br><br>
+
+        でも、そんな工藤にも<br>
+        「こういう時はこうしてほしい」があります。
+      </p>
+
+      <div class="challenge-box">
+
+        <p class="challenge-title">
+          工藤理解度チェック
+        </p>
+
+        <p class="challenge-text">
+          5つのシチュエーションから、<br>
+          工藤の本音を当ててください。
+        </p>
+
+      </div>
+
+      <button id="start-btn" class="main-btn">
+        挑戦する
+        <span>→</span>
+      </button>
+
+    </section>
+
+
+    <!-- =========================
+         質問画面
+    ========================== -->
+
+    <section id="question-screen" class="screen">
+
+      <div class="question-top">
+
+        <span id="question-number">
+          QUESTION 01
+        </span>
+
+        <span id="question-count">
+          1 / 5
+        </span>
+
+      </div>
+
+      <div class="progress-bar">
+        <div id="progress"></div>
+      </div>
+
+
+      <div class="situation">
+        KUDO'S MIND
+      </div>
+
+      <h2 id="question-text"></h2>
+
+      <p class="question-guide">
+        工藤の本音に一番近いものは？
+      </p>
+
+      <div
+        id="choices"
+        class="choices">
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         結果画面
+    ========================== -->
+
+    <section id="result-screen" class="screen">
+
+      <p class="mini-title">
+        YOUR RESULT
+      </p>
+
+      <h2 class="result-heading">
+        工藤理解度
+      </h2>
+
+      <div class="score-wrapper">
+
+        <span id="score">0</span>
+
+        <span class="percent">
+          %
+        </span>
+
+      </div>
+
+
+      <div
+        id="result-rank"
+        class="result-rank">
+      </div>
+
+
+      <p
+        id="result-message"
+        class="result-message">
+      </p>
+
+
+      <div class="kudo-comment">
+
+        <span>
+          FROM KUDO
+        </span>
+
+        <p id="kudo-comment-text"></p>
+
+      </div>
+
+
+      <button
+        id="retry-btn"
+        class="main-btn">
+
+        もう一回やる
+        <span>↻</span>
+
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <script src="kudo.js"></script>
+
+</body>
+</html>

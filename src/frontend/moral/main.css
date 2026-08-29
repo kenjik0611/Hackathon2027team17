@@ -113,6 +113,14 @@
   background: #a7f3d0;
 }
 
+.scene-card.is-in-progress {
+  background: #fff8e7;
+}
+
+.scene-card.is-in-progress .theme-status {
+  background: #ffcf5a;
+}
+
 .scene-icon {
   display: inline-flex;
   align-items: center;
