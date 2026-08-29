@@ -307,8 +307,7 @@
       const image = new Image();
       image.onload = () => resolve(image);
       image.onerror = reject;
-      const imageData = window.MoralResultImageData || {};
-      image.src = imageData[src] || src;
+      image.src = src;
     });
   }
 
