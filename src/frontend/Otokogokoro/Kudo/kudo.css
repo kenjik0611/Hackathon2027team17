@@ -1,757 +1,680 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --kudo-teal: #2a9d8f;
+  --kudo-teal-dark: #176b63;
+  --kudo-purple: #88639a;
+  --kudo-pink: #ffd1df;
+  --kudo-yellow: #ffe08a;
+  --kudo-ink: #17202a;
 }
 
 
-body {
-
-  min-height: 100vh;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Noto Sans JP",
-    sans-serif;
-
-  background:
-    radial-gradient(
-      circle at 15% 15%,
-      rgba(64, 104, 255, 0.22),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 85% 85%,
-      rgba(122, 73, 255, 0.18),
-      transparent 35%
-    ),
-    #080b12;
-
-  color: #ffffff;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  overflow-x: hidden;
-}
-
-
-/* =========================
-   背景
-========================= */
-
-.bg-circle {
-
-  position: fixed;
-
-  width: 400px;
-  height: 400px;
-
-  border-radius: 50%;
-
-  filter: blur(110px);
-
-  opacity: 0.22;
-
-  pointer-events: none;
-}
-
-
-.circle1 {
-
-  background: #315cff;
-
-  top: -180px;
-  left: -150px;
-}
-
-
-.circle2 {
-
-  background: #8b45ff;
-
-  bottom: -200px;
-  right: -150px;
-}
-
-
-/* =========================
+/* ================================
    全体
-========================= */
+================================ */
 
-.app {
+.kudo-header {
+  grid-template-columns: 1fr;
+}
+
+.kudo-layout {
+  max-width: 900px;
+}
+
+.intro-panel,
+.quiz-panel,
+.result-panel {
+  min-height: 0;
+}
+
+
+/* ================================
+   プロフィール
+================================ */
+
+.profile-heading h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* MBTI / Love Type */
+
+.type-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.type-card {
+  overflow: hidden;
+  border: 3px solid var(--line);
+  border-radius: 8px;
+  background: #fffdfa;
+  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.13);
+}
+
+.type-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #ffffff;
+}
+
+.type-card div {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+.type-card strong {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+
+/* ================================
+   ラベル
+================================ */
+
+.type-label,
+.question-count,
+.score-count,
+.trait-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 26px;
+  padding: 2px 9px;
+
+  border: 2px solid var(--line);
+  border-radius: 999px;
+
+  background: #dffcf5;
+
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.love-label {
+  background: var(--kudo-pink);
+}
+
+
+/* ================================
+   プロフィール説明
+================================ */
+
+.profile-summary {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.profile-summary > div {
+  padding: 16px;
+
+  border-left: 8px solid var(--primary);
+  border-radius: 8px;
+
+  background: #eefcf8;
+}
+
+.profile-summary > div:nth-child(2) {
+  border-left-color: var(--sun);
+  background: #fff9e6;
+}
+
+.profile-summary > div:nth-child(3) {
+  border-left-color: var(--accent);
+  background: #fff0d8;
+}
+
+.profile-summary h3 {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.profile-summary p,
+.profile-summary li {
+  color: #2f3a43;
+  font-weight: 700;
+}
+
+.profile-summary p {
+  margin-top: 6px;
+}
+
+.profile-summary ul {
+  display: grid;
+  gap: 6px;
+
+  margin-top: 8px;
+  padding-left: 1.2em;
+}
+
+
+/* ================================
+   ボタン
+================================ */
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-top: 24px;
+}
+
+.profile-actions a,
+.profile-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+  min-width: 150px;
+
+  padding: 0 18px;
+
+  border: 2px solid var(--line);
+  border-radius: 8px;
+
+  font-weight: 800;
+  text-decoration: none;
+
+  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.16);
+
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.profile-actions a:hover,
+.profile-actions button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(23, 32, 42, 0.2);
+}
+
+.profile-actions a:active,
+.profile-actions button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 rgba(23, 32, 42, 0.18);
+}
+
+.primary-button {
+  color: #ffffff;
+  background: var(--primary);
+}
+
+.primary-button:disabled {
+  color: #66727b;
+  background: #d8dee2;
+
+  cursor: not-allowed;
+  transform: none;
+
+  box-shadow: 2px 2px 0 rgba(23, 32, 42, 0.12);
+}
+
+
+/* ================================
+   表示切り替え
+================================ */
+
+.quiz-panel[hidden],
+.result-panel[hidden],
+.feedback[hidden] {
+  display: none;
+}
+
+
+/* ================================
+   クイズ上部
+================================ */
+
+.quiz-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.question-count {
+  min-height: 32px;
+  background: var(--kudo-yellow);
+  font-size: 0.82rem;
+}
+
+.score-count {
+  min-height: 32px;
+  background: #ffffff;
+  font-size: 0.82rem;
+}
+
+
+/* ================================
+   プログレスバー
+================================ */
+
+.progress-track {
+  height: 12px;
+
+  margin: 14px 0 24px;
+
+  overflow: hidden;
+
+  border: 2px solid var(--line);
+  border-radius: 999px;
+
+  background: #edf1f3;
+}
+
+.progress-bar {
+  width: 20%;
+  height: 100%;
+
+  background: var(--kudo-teal);
+
+  transition: width 0.25s ease;
+}
+
+
+/* ================================
+   問題
+================================ */
+
+.quiz-panel h2,
+.result-panel h2 {
+  margin-top: 12px;
+}
+
+.question-text {
+  margin-top: 14px;
+  padding: 18px;
+
+  border: 3px solid var(--line);
+  border-radius: 8px;
+
+  background: #fff8dc;
+
+  color: #26333c;
+
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.75;
+
+  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.13);
+}
+
+
+/* ================================
+   選択肢
+================================ */
+
+.answer-list {
+  display: grid;
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+.answer-option {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
 
   width: 100%;
+  min-height: 66px;
 
-  max-width: 720px;
+  padding: 12px 14px;
 
-  padding: 50px 25px;
+  border: 3px solid var(--line);
+  border-radius: 8px;
 
-  position: relative;
+  background: #fffdfa;
+  color: var(--text);
 
-  z-index: 1;
+  text-align: left;
+
+  box-shadow: 3px 3px 0 rgba(23, 32, 42, 0.12);
+
+  transition:
+    background-color 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.answer-option:not(:disabled):hover {
+  background: #eefcf8;
+
+  transform: translate(-2px, -2px);
+
+  box-shadow: 5px 5px 0 rgba(23, 32, 42, 0.17);
+}
+
+.answer-option:disabled {
+  color: var(--text);
+  cursor: default;
+  opacity: 1;
+}
+
+.answer-option.selected-best {
+  border-color: var(--kudo-teal-dark);
+  background: #dff8ef;
+}
+
+.answer-option.selected-good {
+  border-color: #d39a24;
+  background: #fff4cf;
+}
+
+.answer-option.selected-mid {
+  border-color: #9c7ab0;
+  background: #f3eafa;
+}
+
+.answer-option.selected-low {
+  border-color: #b84258;
+  background: #ffe7eb;
 }
 
 
-.screen {
+/* A B C D */
 
-  display: none;
+.answer-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  animation: fade 0.4s ease;
+  width: 36px;
+  height: 36px;
+
+  border: 2px solid var(--line);
+  border-radius: 50%;
+
+  background: var(--kudo-yellow);
+
+  font-weight: 900;
 }
 
 
-.screen.active {
+/* ================================
+   回答後コメント
+================================ */
 
-  display: block;
+.feedback {
+  margin-top: 20px;
+  padding: 17px;
+
+  border: 3px solid var(--line);
+  border-radius: 8px;
+
+  background: #e9fbf5;
 }
 
-
-@keyframes fade {
-
-  from {
-
-    opacity: 0;
-
-    transform: translateY(12px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform: translateY(0);
-
-  }
-
+.feedback.best {
+  border-left: 9px solid var(--kudo-teal);
+  background: #e9fbf5;
 }
 
-
-/* =========================
-   スタート
-========================= */
-
-#start-screen {
-
-  text-align: center;
+.feedback.good {
+  border-left: 9px solid #e0aa37;
+  background: #fff8df;
 }
 
-
-.mini-title {
-
-  color: #8497ff;
-
-  font-size: 11px;
-
-  letter-spacing: 3px;
-
-  font-weight: 800;
-
-  margin-bottom: 22px;
+.feedback.mid {
+  border-left: 9px solid var(--kudo-purple);
+  background: #f5eff8;
 }
 
-
-h1 {
-
-  font-size: clamp(
-    38px,
-    7vw,
-    62px
-  );
-
-  line-height: 1.3;
-
-  letter-spacing: -2px;
-
-  margin-bottom: 30px;
+.feedback.low {
+  border-left: 9px solid #d65a70;
+  background: #fff0f3;
 }
 
-
-h1 span {
-
-  background:
-    linear-gradient(
-      90deg,
-      #6484ff,
-      #ae68ff
-    );
-
-  -webkit-background-clip: text;
-
-  -webkit-text-fill-color: transparent;
+.feedback strong {
+  font-size: 1.05rem;
 }
 
+.feedback p {
+  margin-top: 7px;
 
-.intro {
+  color: #35434c;
 
-  color: #b9becc;
-
-  line-height: 2;
-
-  font-size: 15px;
-
-  margin-bottom: 35px;
-}
-
-
-.challenge-box {
-
-  max-width: 430px;
-
-  margin:
-    0 auto
-    35px;
-
-  padding: 22px;
-
-  border-radius: 18px;
-
-  border:
-    1px solid
-    rgba(255,255,255,0.1);
-
-  background:
-    rgba(255,255,255,0.045);
-
-  backdrop-filter:
-    blur(10px);
-}
-
-
-.challenge-title {
-
-  font-weight: 800;
-
-  font-size: 17px;
-
-  margin-bottom: 8px;
-}
-
-
-.challenge-text {
-
-  color: #9299aa;
-
-  font-size: 13px;
-
+  font-weight: 700;
   line-height: 1.7;
 }
 
 
-/* =========================
-   メインボタン
-========================= */
+/* ================================
+   特徴タグ
+================================ */
 
-.main-btn {
+.trait-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 
-  width: 100%;
+  margin-top: 12px;
+}
 
-  max-width: 360px;
+.trait-tag {
+  min-height: 28px;
+  background: #ffffff;
+}
 
-  padding: 18px 25px;
+.trait-tag:last-child {
+  background: var(--kudo-pink);
+}
 
-  border: none;
 
-  border-radius: 14px;
+/* ================================
+   クイズ操作
+================================ */
 
-  background:
-    linear-gradient(
-      135deg,
-      #456bff,
-      #8656ff
-    );
+.quiz-actions {
+  justify-content: space-between;
+}
 
-  color: white;
 
-  font-size: 16px;
+/* ================================
+   結果
+================================ */
+
+.score-board {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+
+  min-height: 190px;
+
+  margin-top: 22px;
+  padding: 24px;
+
+  border: 3px solid var(--line);
+  border-radius: 8px;
+
+  background: #e7f9f4;
+
+  box-shadow: 6px 6px 0 rgba(23, 32, 42, 0.14);
+}
+
+.score-board span {
+  font-size: clamp(2.5rem, 8vw, 4.4rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.score-board p {
+  color: var(--kudo-teal-dark);
+
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.result-message {
+  margin-top: 18px;
+
+  color: #35434c;
 
   font-weight: 800;
-
-  cursor: pointer;
-
-  transition: 0.25s;
-
-  box-shadow:
-    0 15px 40px
-    rgba(70, 80, 255, 0.25);
-
-  display: inline-flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  gap: 12px;
-}
-
-
-.main-btn:hover {
-
-  transform:
-    translateY(-3px);
-
-  box-shadow:
-    0 20px 50px
-    rgba(70, 80, 255, 0.4);
-}
-
-
-/* =========================
-   問題画面
-========================= */
-
-.question-top {
-
-  display: flex;
-
-  justify-content:
-    space-between;
-
-  color: #8991a5;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
-  letter-spacing: 1px;
-
-  margin-bottom: 13px;
-}
-
-
-.progress-bar {
-
-  width: 100%;
-
-  height: 5px;
-
-  background:
-    rgba(255,255,255,0.08);
-
-  border-radius: 100px;
-
-  overflow: hidden;
-
-  margin-bottom: 55px;
-}
-
-
-#progress {
-
-  width: 20%;
-
-  height: 100%;
-
-  border-radius: 100px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #5678ff,
-      #9b61ff
-    );
-
-  transition:
-    width 0.35s ease;
-}
-
-
-.situation {
-
-  color: #7d91ff;
-
-  font-size: 11px;
-
-  font-weight: 900;
-
-  letter-spacing: 2px;
-
-  margin-bottom: 16px;
-}
-
-
-#question-text {
-
-  font-size:
-    clamp(
-      23px,
-      5vw,
-      33px
-    );
-
-  line-height: 1.6;
-
-  margin-bottom: 15px;
-}
-
-
-.question-guide {
-
-  color: #838b9f;
-
-  font-size: 13px;
-
-  margin-bottom: 27px;
-}
-
-
-/* =========================
-   選択肢
-========================= */
-
-.choices {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 13px;
-}
-
-
-.choice-btn {
-
-  width: 100%;
-
-  padding: 19px;
-
-  border-radius: 15px;
-
-  border:
-    1px solid
-    rgba(255,255,255,0.1);
-
-  background:
-    rgba(255,255,255,0.045);
-
-  color: white;
-
-  cursor: pointer;
-
-  text-align: left;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 15px;
-
-  font-size: 15px;
-
-  line-height: 1.6;
-
-  transition: 0.2s;
-}
-
-
-.choice-btn:hover {
-
-  transform:
-    translateX(5px);
-
-  border-color:
-    rgba(100,130,255,0.75);
-
-  background:
-    rgba(80,100,255,0.13);
-}
-
-
-.choice-letter {
-
-  min-width: 36px;
-
-  height: 36px;
-
-  border-radius: 10px;
-
-  background:
-    rgba(255,255,255,0.07);
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  color: #9cabff;
-
-  font-weight: 900;
-}
-
-
-/* =========================
-   結果画面
-========================= */
-
-#result-screen {
-
+  line-height: 1.8;
   text-align: center;
 }
 
 
-.result-heading {
-
-  font-size: 28px;
-
-  margin-bottom: 15px;
-}
-
-
-.score-wrapper {
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: baseline;
-
-  gap: 6px;
-
-  margin-bottom: 20px;
-}
-
-
-#score {
-
-  font-size: 95px;
-
-  line-height: 1;
-
-  font-weight: 900;
-
-  background:
-    linear-gradient(
-      135deg,
-      #6687ff,
-      #b36aff
-    );
-
-  -webkit-background-clip: text;
-
-  -webkit-text-fill-color: transparent;
-}
-
-
-.percent {
-
-  font-size: 22px;
-
-  color: #9299ac;
-}
-
-
-.result-rank {
-
-  display: inline-block;
-
-  padding: 8px 20px;
-
-  border-radius: 100px;
-
-  border:
-    1px solid
-    rgba(110,130,255,0.3);
-
-  background:
-    rgba(100,100,255,0.1);
-
-  font-weight: 800;
-
-  margin-bottom: 27px;
-}
-
-
-.result-message {
-
-  max-width: 520px;
-
-  margin:
-    0 auto
-    30px;
-
-  color: #bdc2cf;
-
-  line-height: 1.9;
-
-  font-size: 15px;
-}
-
-
-/* =========================
-   工藤コメント
-========================= */
-
-.kudo-comment {
-
-  max-width: 500px;
-
-  margin:
-    0 auto
-    35px;
-
-  padding: 22px;
-
-  text-align: left;
-
-  border-radius: 16px;
-
-  border:
-    1px solid
-    rgba(255,255,255,0.1);
-
-  background:
-    rgba(255,255,255,0.045);
-}
-
-
-.kudo-comment span {
-
-  color: #8295ff;
-
-  font-size: 10px;
-
-  font-weight: 900;
-
-  letter-spacing: 2px;
-}
-
-
-.kudo-comment p {
-
-  margin-top: 10px;
-
-  color: #d0d3dc;
-
-  line-height: 1.8;
-
-  font-size: 14px;
-}
-
-
-/* =========================
-   スマホ
-========================= */
-
-@media (
-  max-width: 600px
-) {
-
-  .app {
-
-    padding:
-      35px 20px;
-
-  }
-
-
-  h1 {
-
-    font-size: 38px;
-
-  }
-
-
-  .progress-bar {
-
-    margin-bottom: 40px;
-
-  }
-
-
-  .choice-btn {
-
-    padding: 16px;
-
-    font-size: 14px;
-
-  }
-
-
-  #score {
-
-    font-size: 78px;
-
-  }
-
-}
 /* ================================
-   人物選択に戻るボタン
+   FROM KUDO
 ================================ */
 
-.back-person-btn {
-  position: absolute;
-  top: 22px;
-  left: 22px;
-  z-index: 1000;
+.kudo-comment {
+  margin-top: 22px;
+  padding: 18px;
 
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  border: 3px solid var(--line);
+  border-left: 9px solid var(--kudo-teal);
+  border-radius: 8px;
 
-  padding: 10px 16px;
+  background: #eefcf8;
 
-  color: #333;
-  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 4px 4px 0 rgba(23, 32, 42, 0.11);
+}
 
-  border: 1px solid rgba(0, 0, 0, 0.08);
+.kudo-comment > span {
+  display: inline-block;
+
+  padding: 4px 10px;
+
+  border: 2px solid var(--line);
   border-radius: 999px;
 
-  text-decoration: none;
-  font-size: 14px;
+  background: var(--kudo-yellow);
+
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.kudo-comment p {
+  margin-top: 10px;
+
+  color: #26333c;
+
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+
+/* ================================
+   振り返り
+================================ */
+
+.result-review {
+  margin-top: 26px;
+}
+
+.review-list {
+  display: grid;
+  gap: 10px;
+
+  margin-top: 12px;
+}
+
+.review-item {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px;
+
+  border: 2px solid var(--line);
+  border-radius: 8px;
+
+  background: #fffdfa;
+}
+
+.review-number {
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+
+  border: 2px solid var(--line);
+  border-radius: 50%;
+
+  background: var(--kudo-yellow);
+
+  font-weight: 900;
+}
+
+.review-item strong,
+.review-item small {
+  display: block;
+}
+
+.review-item small {
+  margin-top: 3px;
+
+  color: #5b6670;
+
   font-weight: 700;
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
 }
 
-.back-person-btn:hover {
-  transform: translateY(-2px);
-  background: #fff;
-  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+.review-result {
+  font-size: 0.85rem;
+  font-weight: 900;
 }
 
-.back-person-btn:active {
-  transform: translateY(0);
+
+/* ================================
+   注意書き
+================================ */
+
+.personality-note {
+  margin-top: 22px;
+  padding: 14px 16px;
+
+  border-left: 7px solid var(--kudo-purple);
+
+  background: #f3edf6;
+
+  color: #3d3542;
+
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
-.back-arrow {
-  font-size: 18px;
-  line-height: 1;
-}
 
-/* スマホ */
-@media (max-width: 600px) {
-  .back-person-btn {
-    top: 12px;
-    left: 12px;
+/* ================================
+   スマホ
+================================ */
 
-    padding: 8px 12px;
-    font-size: 12px;
+@media (max-width: 680px) {
+
+  .type-gallery {
+    grid-template-columns: 1fr;
   }
 
-  .back-arrow {
-    font-size: 16px;
+  .profile-actions a,
+  .profile-actions button {
+    width: 100%;
   }
-}/* 戻るボタンを少し小さくする */
-.back-person-btn {
-  gap: 5px;
-  padding: 6px 10px;
-  font-size: 11px;
-}
 
-.back-arrow {
-  font-size: 14px;
+  .quiz-actions {
+    flex-direction: column-reverse;
+  }
+
+  .review-item {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+  }
+
 }
