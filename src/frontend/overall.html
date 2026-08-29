@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>空気読メーター - 総合診断結果</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="overall.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner overall-header">
+      <div class="hero-copy">
+        <p class="kicker">Overall Result</p>
+        <h1>空気読メーター 総合診断結果</h1>
+        <p class="lead">モラル編と男心編を別々の指標として振り返り、現在の回答傾向をひとつの画面にまとめます。</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout overall-layout">
+    <section class="start-panel overall-panel status-panel" aria-labelledby="overall-status-title">
+      <div class="status-heading">
+        <div>
+          <span class="status-chip" id="status-chip">未測定</span>
+          <h2 id="overall-status-title">診断結果を読み込んでいます</h2>
+        </div>
+        <strong class="completion-total" id="completion-total">0 / 10</strong>
+      </div>
+      <p class="status-description" id="status-description"></p>
+
+      <div class="completion-grid" aria-label="各編の完了状況">
+        <article class="completion-card completion-card-moral">
+          <span>モラル編</span>
+          <strong id="moral-completion">0 / 5テーマ</strong>
+          <a href="moral/summary.html">モラル集計を見る</a>
+        </article>
+        <article class="completion-card completion-card-insight">
+          <span>男心編</span>
+          <strong id="insight-completion">0 / 5人</strong>
+          <a href="Otokogokoro/summary.html">男心集計を見る</a>
+        </article>
+      </div>
+
+      <section class="incomplete-section" aria-labelledby="incomplete-title">
+        <h3 id="incomplete-title">未完了項目</h3>
+        <div class="incomplete-list" id="incomplete-list"></div>
+      </section>
+    </section>
+
+    <section class="start-panel overall-panel" aria-labelledby="moral-title">
+      <p class="kicker">Moral</p>
+      <h2 id="moral-title">モラル編の結果</h2>
+
+      <div class="metric-grid metric-grid-moral">
+        <article class="metric-card">
+          <span>総合スコア</span>
+          <strong id="moral-score">未測定</strong>
+        </article>
+        <article class="metric-card metric-card-wide">
+          <span>診断タイプ</span>
+          <strong id="moral-type">未測定</strong>
+          <p id="moral-type-description"></p>
+        </article>
+      </div>
+
+      <div class="reflection-grid">
+        <article class="reflection-card reflection-card-good">
+          <span>強み</span>
+          <p id="moral-good">未測定です。</p>
+        </article>
+        <article class="reflection-card reflection-card-improvement">
+          <span>振り返りポイント</span>
+          <p id="moral-improvement">未測定です。</p>
+        </article>
+      </div>
+
+      <div class="result-detail-grid">
+        <section class="result-detail" aria-labelledby="moral-axis-title">
+          <h3 id="moral-axis-title">5評価軸</h3>
+          <div class="score-list" id="moral-axis-list"></div>
+        </section>
+        <section class="result-detail" aria-labelledby="moral-theme-title">
+          <h3 id="moral-theme-title">テーマ別スコア</h3>
+          <div class="table-wrap">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th scope="col">テーマ</th>
+                  <th scope="col">状態</th>
+                  <th scope="col">スコア</th>
+                </tr>
+              </thead>
+              <tbody id="moral-theme-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="start-panel overall-panel" aria-labelledby="insight-title">
+      <p class="kicker">Insight</p>
+      <h2 id="insight-title">男心編の結果</h2>
+
+      <div class="metric-grid">
+        <article class="metric-card">
+          <span>総合一致度</span>
+          <strong id="insight-match">未測定</strong>
+        </article>
+        <article class="metric-card">
+          <span>相性トップ</span>
+          <strong id="insight-best">未測定</strong>
+        </article>
+        <article class="metric-card">
+          <span>MBTI相性候補</span>
+          <strong id="insight-mbti">未測定</strong>
+        </article>
+        <article class="metric-card">
+          <span>Love Type相性候補</span>
+          <strong id="insight-love">未測定</strong>
+        </article>
+      </div>
+
+      <section class="result-detail member-results" aria-labelledby="member-result-title">
+        <h3 id="member-result-title">メンバー別の結果</h3>
+        <div class="table-wrap">
+          <table class="result-table">
+            <thead>
+              <tr>
+                <th scope="col">メンバー</th>
+                <th scope="col">状態</th>
+                <th scope="col">一致度</th>
+              </tr>
+            </thead>
+            <tbody id="insight-member-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section class="start-panel overall-panel profile-panel" aria-labelledby="profile-title">
+      <p class="kicker">Profile</p>
+      <h2 id="profile-title">総合プロフィール</h2>
+      <div class="profile-copy" id="profile-copy"></div>
+    </section>
+
+    <section class="start-panel overall-panel export-panel" aria-labelledby="export-title">
+      <p class="kicker">OKF Export</p>
+      <h2 id="export-title">AIにも渡せる診断結果ファイル</h2>
+      <p class="export-description">YAMLフロントマターと読みやすい本文をひとつにした、UTF-8のMarkdownファイルをブラウザ内で作成します。</p>
+      <ul class="privacy-list">
+        <li>匿名IDや回答の生ログは含みません。</li>
+        <li>ファイルは外部へ送信せず、この端末へ保存します。</li>
+        <li>途中診断の場合は、未完了項目も一緒に記録します。</li>
+      </ul>
+      <button class="primary-button download-button" id="download-result" type="button" disabled>
+        診断結果（OKF Markdown）をダウンロード
+      </button>
+      <p class="download-status" id="download-status" aria-live="polite"></p>
+
+      <div class="panel-actions overall-actions">
+        <a class="ghost-button" href="index.html">トップへ戻る</a>
+        <a class="ghost-button" href="moral/main.html">モラル編を続ける</a>
+        <a class="ghost-button" href="Otokogokoro/main.html">男心編を続ける</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Hackathon 2027 Team 17</p>
+  </footer>
+
+  <script src="moral/moralResultStore.js"></script>
+  <script src="Otokogokoro/insightResultStore.js"></script>
+  <script src="overallResultStore.js"></script>
+  <script src="overall.js"></script>
+</body>
+</html>

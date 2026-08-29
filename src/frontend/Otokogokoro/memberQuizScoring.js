@@ -230,6 +230,29 @@
     return saveScoredResult(memberId, scoringItems, questionCount);
   }
 
+  function saveKudoResult(answerLog, questionCount) {
+    const store = getStore();
+    if (!store || typeof store.saveMemberResult !== "function") {
+      return null;
+    }
+
+    const answers = Array.isArray(answerLog) ? answerLog : [];
+    const scoringItems = answers
+      .map((answer, questionIndex) => getMatrixScore("kudo", questionIndex, answer && answer.optionIndex))
+      .filter(Boolean);
+    const result = combineScorings(scoringItems, questionCount);
+    const displayedScoreTotal = answers.reduce((total, answer) => total + toNumber(answer && answer.score), 0);
+
+    result.matchPercent = questionCount > 0
+      ? Math.round(displayedScoreTotal / questionCount)
+      : null;
+    result.matchScore = result.matchPercent === null
+      ? 0
+      : (result.matchPercent / 100) * result.maxMatchScore;
+
+    return store.saveMemberResult("kudo", result);
+  }
+
   function buildSuzukiCompoundScore(answer) {
     const questionScoring = SUZUKI_SCORING[answer.questionId];
     const selectedValues = answer.selectedValues || {};
@@ -275,7 +298,7 @@
   window.OtokogokoroMemberScoring = {
     saveAritaResult: (answerLog, questionCount) => saveByOptionIndex("arita", answerLog, questionCount),
     saveKiyoseResult: (answerLog, questionCount) => saveByOptionIndex("kiyose", answerLog, questionCount),
-    saveKudoResult: (answerLog, questionCount) => saveByOptionIndex("kudo", answerLog, questionCount),
+    saveKudoResult,
     saveSuzukiResult
   };
 })();

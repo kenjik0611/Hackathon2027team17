@@ -278,6 +278,7 @@ function chooseAnswer(choice, selectedButton) {
   totalScore += choice.score;
 
   results[currentQuestionIndex] = {
+    optionIndex: questions[currentQuestionIndex].choices.indexOf(choice),
     score: choice.score,
     takeaway: questions[currentQuestionIndex].takeaway
   };
@@ -476,6 +477,16 @@ function renderResult() {
 
   document.getElementById("kudo-comment-text").textContent =
     copy.comment;
+
+  if (
+    window.OtokogokoroMemberScoring &&
+    typeof window.OtokogokoroMemberScoring.saveKudoResult === "function"
+  ) {
+    window.OtokogokoroMemberScoring.saveKudoResult(
+      results,
+      questions.length
+    );
+  }
 
 
   // ===================================

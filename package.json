@@ -6,7 +6,8 @@
     "lint:js": "eslint src/frontend",
     "lint:html": "htmlhint \"src/frontend/**/*.html\"",
     "check:links": "node scripts/check-local-refs.mjs",
-    "ci": "npm run lint:js && npm run lint:html && npm run check:links"
+    "check:overall": "node scripts/check-overall-result.mjs",
+    "ci": "npm run lint:js && npm run lint:html && npm run check:links && npm run check:overall"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
