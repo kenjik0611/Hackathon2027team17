@@ -1,251 +1,255 @@
-const cases = [
+const questions = [
   {
-    label: "グループチャット",
-    title: "予定調整で返事がない",
-    context: "友人グループで休日の予定を相談中。ほかのメンバーは返事をしているが、彼からはまだ反応がありません。",
-    speaker: "グループ内の彼",
-    line: "（メッセージを読んだまま、まだ返信がない）",
-    interpretations: [
-      "仕事や用事の予定がまだ読めない",
-      "候補が多くて返事を後回しにしている",
-      "どの日でもよく、ほかの人に合わせたい",
-      "今は文章を考える余裕がない"
+    category: "デート計画",
+    question: "次の休日、二人で出かけることになりました。行き先がまだ決まっていないとき、有田が選びそうな行動は？",
+    options: [
+      "相手が全部決めるまで、特に提案せずに待つ",
+      "候補をいくつか調べ、相手の希望を聞いて早めに予定を決める",
+      "相談せず、自分が一番行きたい場所へ連れていく",
+      "当日の気分で決めればいいので、予定を立てない"
     ],
-    perspective: "沈黙だけでは、参加したくないのか、単に答えられないのかは判断できません。返事の負担を小さくすると、確認しやすくなります。",
-    responses: [
-      { text: "「A日とB日ならどっちが都合いい？ 明日までで大丈夫だよ」", helpful: true, feedback: "候補と期限が明確で、すぐ答えられなくてもよい余白があります。相手の事情を決めつけずに確認できる声かけです。" },
-      { text: "「みんな返事してるよ。早く決めて」", helpful: false, feedback: "急ぎたい気持ちは伝わりますが、周囲との比較は相手を追い込みやすい言い方です。期限と選択肢だけを共有すると答えやすくなります。" },
-      { text: "「返事がないなら参加しないってことだね」", helpful: false, feedback: "沈黙の理由を一つに決めています。参加意思と日程の都合を分けて、短く確認する方がすれ違いを減らせます。" }
-    ],
-    takeaway: "沈黙の理由を決めつけない"
+    correctIndex: 1,
+    explanation: "目的と選択肢を整理して前へ進めつつ、長く大切にしたい相手の希望も確認する行動です。有田の「決断力」と「相手への誠実さ」の両方が表れます。",
+    traits: ["ENTJ：計画と決断", "FAPE：相手への配慮"],
+    takeaway: "選択肢を整理し、二人で決める"
   },
   {
-    label: "ちょっとした贈り物",
-    title: "「気を遣わなくてよかったのに」",
-    context: "以前助けてもらったお礼に、小さなお菓子を渡しました。受け取った彼は少し驚いた表情です。",
-    speaker: "彼",
-    line: "「ありがとう。でも、気を遣わなくてよかったのに」",
-    interpretations: [
-      "うれしいが照れていて反応に迷っている",
-      "お返しを考える負担を感じている",
-      "本当にお礼は必要ないと思っている",
-      "予想外だったので、まず遠慮の言葉が出た"
+    category: "相手の挑戦",
+    question: "恋人が「新しい仕事に挑戦したいけれど、自信がない」と相談してきました。有田ならどう返しそう？",
+    options: [
+      "失敗するかもしれないので、今のままがいいと止める",
+      "気にしすぎだと言って、話題をすぐ変える",
+      "やりたい理由を聞き、実現までの手順を一緒に整理して応援する",
+      "自分が代わりに全部決め、相手にはその通り動いてもらう"
     ],
-    perspective: "感謝と遠慮は同時に存在できます。喜んでいないと断定せず、次回への希望があれば相手が言える形にしておきましょう。",
-    responses: [
-      { text: "「受け取ってくれてありがとう。ほんの気持ちだから、お返しは気にしないでね」", helpful: true, feedback: "お礼を伝えつつ、相手がお返しを考える負担を軽くしています。好みや境界については、次の機会に自然に確認できます。" },
-      { text: "「迷惑だった？ せっかく選んだのに」", helpful: false, feedback: "相手に否定やフォローを求める形になり、率直な反応を言いにくくします。まずは受け取ってくれたことへの感謝だけで十分です。" },
-      { text: "「絶対うれしいでしょ。遠慮しなくていいよ」", helpful: false, feedback: "相手の気持ちをこちらで確定しています。喜びと戸惑いの両方があり得るため、反応を決めつけない方が安心です。" }
-    ],
-    takeaway: "感謝と遠慮は両立する"
+    correctIndex: 2,
+    explanation: "相手の目標を尊重しながら、課題を具体的な行動へ変える選択です。解決へ導く力と、大切な人を長く支えようとする姿勢を組み合わせています。",
+    traits: ["ENTJ：問題解決", "FAPE：一途な支援"],
+    takeaway: "相手の目標を、具体的に支える"
   },
   {
-    label: "趣味の話",
-    title: "知らない分野を熱く語る",
-    context: "休憩中、彼が好きなカメラについて楽しそうに話し始めました。専門用語も多く、全部は理解できません。",
-    speaker: "彼",
-    line: "「このレンズ、光の入り方が本当に面白くてさ」",
-    interpretations: [
-      "好きなものを誰かに共有したい",
-      "詳しさを評価してほしい",
-      "あなたも興味があると思っている",
-      "話せるきっかけがうれしくて夢中になっている"
+    category: "意見のすれ違い",
+    question: "大切な相手と意見がぶつかり、少し気まずい空気になりました。有田が最も選びそうなのは？",
+    options: [
+      "事実と気持ちを整理して相手の話も聞き、次からどうするかを話し合う",
+      "自分が正しいと分かるまで、相手の意見を論破し続ける",
+      "何もなかったことにして、相手から話すまで放置する",
+      "関係が悪くなるのを避けるため、自分の意見をすべて取り下げる"
     ],
-    perspective: "熱心な説明は親しさの表現かもしれませんが、恋愛感情の証拠とは限りません。分からないことは、分からないまま興味を示せます。",
-    responses: [
-      { text: "「詳しくないけど、どんな写真になるのか見てみたい」", helpful: true, feedback: "知ったふりをせず、相手が好きなことへの関心を伝えています。会話を続けるかどうかも相手に委ねられる言い方です。" },
-      { text: "「つまり私に気があるから、そんなに話してるの？」", helpful: false, feedback: "趣味の共有を恋愛感情に直結させると、相手は話しづらくなるかもしれません。まずは目の前の話題を一緒に楽しみましょう。" },
-      { text: "「難しくて分からないから、別の話にしよう」", helpful: false, feedback: "率直さは大切ですが、関心そのものまで閉じる表現です。「初心者向けに教えて」と伝える選択肢もあります。" }
-    ],
-    takeaway: "関心と恋愛感情を直結させない"
+    correctIndex: 0,
+    explanation: "衝突を勝ち負けにせず、原因を整理して関係を前へ進める選択です。率直な対話と、関係を長く守るための歩み寄りを両立しています。",
+    traits: ["ENTJ：率直な対話", "FAPE：関係を守る"],
+    takeaway: "衝突を放置せず、次の約束を作る"
   },
   {
-    label: "ほめ言葉",
-    title: "ほめても反応が薄い",
-    context: "彼がまとめた資料が分かりやすかったので、その点を具体的に伝えました。",
-    speaker: "彼",
-    line: "「いや、別に普通だよ」",
-    interpretations: [
-      "ほめられることに慣れておらず照れている",
-      "自分では特別なことだと思っていない",
-      "注目されると少し居心地が悪い",
-      "どう返せばいいか分からず短く答えた"
+    category: "忙しい時期",
+    question: "仕事がとても忙しく、恋人と過ごす時間が減りそうです。有田ならどんな行動を取りそう？",
+    options: [
+      "忙しい間は説明せず、連絡を完全に止める",
+      "仕事を全部投げ出し、いつでも相手を最優先にする",
+      "分かってくれるはずなので、予定を決めずに待ってもらう",
+      "忙しい理由を伝え、短い連絡と次に会える予定を先に決めておく"
     ],
-    perspective: "反応が小さくても、ほめ言葉を嫌がったとは限りません。見返りの反応を求めず、伝えた事実をそのまま置く方法があります。",
-    responses: [
-      { text: "「そう感じたことだけ伝えたかったんだ。助かった、ありがとう」", helpful: true, feedback: "相手に喜ぶ演技を求めず、自分の感謝として伝え直しています。相手は自分のペースで受け取れます。" },
-      { text: "「もっと喜んでくれてもよくない？」", helpful: false, feedback: "ほめ言葉への反応まで指定すると、相手には評価の交換条件のように聞こえることがあります。感謝として完結させると自然です。" },
-      { text: "「謙遜するタイプなんだね」", helpful: false, feedback: "一度の反応から性格を決めつけています。照れ、集中、疲れなど別の理由も残したままにしておきましょう。" }
-    ],
-    takeaway: "反応の大きさを要求しない"
+    correctIndex: 3,
+    explanation: "責任ある仕事は進めながら、相手を不安なまま待たせない選択です。見通しを共有し、言葉だけでなく予定という行動で誠実さを示します。",
+    traits: ["ENTJ：優先順位", "FAPE：安心を行動で示す"],
+    takeaway: "忙しさと誠実さを両立する"
   },
   {
-    label: "手伝いの申し出",
-    title: "助けを断られたとき",
-    context: "作業に手間取っているように見えたため、手伝おうかと声をかけました。彼は画面を見たまま答えます。",
-    speaker: "彼",
-    line: "「大丈夫。これは自分でやるよ」",
-    interpretations: [
-      "自分の手順で最後まで試したい",
-      "説明するより自分で進める方が早い",
-      "困っている姿を見られて少し恥ずかしい",
-      "今は集中を切らしたくない"
+    category: "二人の未来",
+    question: "交際が長くなり、これからの関係について考える時期になりました。有田が大切にしそうなことは？",
+    options: [
+      "将来の話は重いので、できるだけ避け続ける",
+      "お互いの価値観や目標を話し、二人で実現できる未来を具体的に考える",
+      "相手が自分の人生設計に合わせることを当然と考える",
+      "その場の楽しさだけを優先し、先のことは一切決めない"
     ],
-    perspective: "断りは、あなたへの拒絶ではなく作業方法の希望かもしれません。まず境界を尊重し、必要になったとき戻れる道だけ残します。",
-    responses: [
-      { text: "「了解。必要になったら声かけて。今は任せるね」", helpful: true, feedback: "断りをそのまま尊重しながら、後から助けを求められる道を残しています。理由を説明させない点も穏やかです。" },
-      { text: "「意地を張らなくていいって。私がやるよ」", helpful: false, feedback: "断った理由を「意地」と決めつけ、意思を上書きしています。まず任せ、必要なら相手から頼める状態にしましょう。" },
-      { text: "「せっかく心配してるのに、もう知らない」", helpful: false, feedback: "手伝いを断ることと、あなたを拒むことは同じではありません。申し出を受けるかどうかは相手が選べる形が安心です。" }
-    ],
-    takeaway: "断りを尊重し、戻れる道を残す"
+    correctIndex: 1,
+    explanation: "将来を曖昧にせず、相手を対等なパートナーとして長期的な計画を作る選択です。ビジョンを描く力と、一人の相手に誠実に向き合う姿勢が重なります。",
+    traits: ["ENTJ：未来の設計", "FAPE：長く一途に向き合う"],
+    takeaway: "二人の未来を、対話して設計する"
   }
 ];
 
-const startPanel = document.getElementById("start-panel");
-const gamePanel = document.getElementById("game-panel");
+const introPanel = document.getElementById("intro-panel");
+const quizPanel = document.getElementById("quiz-panel");
 const resultPanel = document.getElementById("result-panel");
 const startButton = document.getElementById("start-button");
-const confirmLensesButton = document.getElementById("confirm-lenses-button");
+const backProfileButton = document.getElementById("back-profile-button");
 const nextButton = document.getElementById("next-button");
-const quitButton = document.getElementById("quit-button");
 const restartButton = document.getElementById("restart-button");
+const answerList = document.getElementById("answer-list");
+const feedback = document.getElementById("feedback");
 
-let currentCaseIndex = 0;
-let selectedLenses = [];
-let responseChosen = false;
+let currentQuestionIndex = 0;
+let score = 0;
+let answered = false;
+let results = [];
 
 function showOnly(panel) {
-  [startPanel, gamePanel, resultPanel].forEach((item) => {
+  [introPanel, quizPanel, resultPanel].forEach(function (item) {
     item.hidden = item !== panel;
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function renderCase() {
-  const current = cases[currentCaseIndex];
-  selectedLenses = [];
-  responseChosen = false;
+function renderQuestion() {
+  const current = questions[currentQuestionIndex];
+  answered = false;
 
-  document.getElementById("case-count").textContent = `CASE ${currentCaseIndex + 1} / ${cases.length}`;
-  document.getElementById("phase-tag").textContent = "見方を選ぶ";
-  document.getElementById("progress-bar").style.width = `${((currentCaseIndex + 1) / cases.length) * 100}%`;
-  document.getElementById("scene-label").textContent = current.label;
-  document.getElementById("case-title").textContent = current.title;
-  document.getElementById("case-context").textContent = current.context;
-  document.getElementById("speaker").textContent = current.speaker;
-  document.getElementById("case-line").textContent = current.line;
-  document.getElementById("lens-step").hidden = false;
-  document.getElementById("response-step").hidden = true;
-  document.getElementById("feedback").hidden = true;
-  confirmLensesButton.disabled = true;
+  document.getElementById("question-count").textContent =
+    "Q" + (currentQuestionIndex + 1) + " / " + questions.length;
+  document.getElementById("score-count").textContent = "正解 " + score;
+  document.getElementById("progress-bar").style.width =
+    ((currentQuestionIndex + 1) / questions.length) * 100 + "%";
+  document.getElementById("question-category").textContent = current.category;
+  document.getElementById("question-text").textContent = current.question;
+
+  feedback.hidden = true;
+  feedback.className = "feedback";
   nextButton.disabled = true;
-  nextButton.textContent = currentCaseIndex === cases.length - 1 ? "まとめを見る" : "次のケースへ";
-  renderLensBoard();
-  renderInterpretations(current);
-  renderResponses(current);
-}
+  nextButton.textContent =
+    currentQuestionIndex === questions.length - 1 ? "結果を見る" : "次の問題へ";
+  answerList.replaceChildren();
 
-function renderLensBoard() {
-  const current = cases[currentCaseIndex];
-  document.getElementById("lens-board").innerHTML = [0, 1].map((slotIndex) => {
-    const optionIndex = selectedLenses[slotIndex];
-    const isFilled = optionIndex !== undefined;
-    const text = isFilled ? current.interpretations[optionIndex] : "まだ選ばれていません";
-    return `<div class="lens-slot${isFilled ? " filled" : ""}"><span>レンズ ${slotIndex + 1}</span><strong>${text}</strong></div>`;
-  }).join("");
-  document.getElementById("selection-count").textContent = `${selectedLenses.length} / 2`;
-  confirmLensesButton.disabled = selectedLenses.length !== 2;
-}
-
-function renderInterpretations(current) {
-  const container = document.getElementById("interpretation-options");
-  container.innerHTML = "";
-  current.interpretations.forEach((text, index) => {
+  current.options.forEach(function (option, index) {
     const button = document.createElement("button");
+    const mark = document.createElement("span");
+    const text = document.createElement("span");
+
     button.type = "button";
-    button.className = "interpretation-option";
-    button.textContent = text;
+    button.className = "answer-option";
     button.setAttribute("aria-pressed", "false");
-    button.addEventListener("click", () => toggleLens(index, button));
-    container.appendChild(button);
+    mark.className = "answer-mark";
+    mark.setAttribute("aria-hidden", "true");
+    mark.textContent = String.fromCharCode(65 + index);
+    text.textContent = option;
+
+    button.append(mark, text);
+    button.addEventListener("click", function () {
+      chooseAnswer(index);
+    });
+    answerList.appendChild(button);
   });
 }
 
-function toggleLens(index, button) {
-  const selectedIndex = selectedLenses.indexOf(index);
-  if (selectedIndex >= 0) {
-    selectedLenses.splice(selectedIndex, 1);
-    button.classList.remove("selected");
-    button.setAttribute("aria-pressed", "false");
-  } else if (selectedLenses.length < 2) {
-    selectedLenses.push(index);
-    button.classList.add("selected");
-    button.setAttribute("aria-pressed", "true");
-  }
-  renderLensBoard();
-}
+function chooseAnswer(selectedIndex) {
+  if (answered) return;
+  answered = true;
 
-function renderResponses(current) {
-  const container = document.getElementById("response-options");
-  container.innerHTML = "";
-  current.responses.forEach((response, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "response-option";
-    button.innerHTML = `<span class="response-mark" aria-hidden="true">${index + 1}</span><span>${response.text}</span>`;
-    button.addEventListener("click", () => chooseResponse(index));
-    container.appendChild(button);
-  });
-}
+  const current = questions[currentQuestionIndex];
+  const isCorrect = selectedIndex === current.correctIndex;
+  const buttons = Array.from(answerList.querySelectorAll(".answer-option"));
 
-function openResponseStep() {
-  const current = cases[currentCaseIndex];
-  document.getElementById("lens-step").hidden = true;
-  document.getElementById("response-step").hidden = false;
-  document.getElementById("phase-tag").textContent = "声かけを選ぶ";
-  document.getElementById("perspective-note").innerHTML = `<strong>どちらも可能性の一つです</strong><p>${current.perspective}</p>`;
-  document.getElementById("response-step").scrollIntoView({ behavior: "smooth", block: "start" });
-}
+  if (isCorrect) score += 1;
+  results[currentQuestionIndex] = {
+    correct: isCorrect,
+    selectedIndex: selectedIndex
+  };
 
-function chooseResponse(index) {
-  if (responseChosen) return;
-  responseChosen = true;
-  const selected = cases[currentCaseIndex].responses[index];
-  [...document.querySelectorAll(".response-option")].forEach((button, buttonIndex) => {
+  buttons.forEach(function (button, index) {
     button.disabled = true;
-    if (buttonIndex === index) button.classList.add("selected");
+    if (index === current.correctIndex) {
+      button.classList.add(index === selectedIndex ? "selected-correct" : "correct-answer");
+    } else if (index === selectedIndex) {
+      button.classList.add("selected-wrong");
+    }
+    if (index === selectedIndex) button.setAttribute("aria-pressed", "true");
   });
-  const feedback = document.getElementById("feedback");
-  feedback.className = `feedback ${selected.helpful ? "helpful" : "caution"}`;
-  feedback.innerHTML = `<strong>${selected.helpful ? "余白のある声かけです" : "少し見方を広げてみましょう"}</strong><p>${selected.feedback}</p>`;
+
+  feedback.className = "feedback " + (isCorrect ? "correct" : "incorrect");
+  document.getElementById("feedback-title").textContent =
+    isCorrect ? "正解！ 有田らしい選択です" : "惜しい！ 有田が選びそうなのはこちら";
+  document.getElementById("feedback-text").textContent = current.explanation;
+
+  const traitRow = document.getElementById("trait-row");
+  traitRow.replaceChildren();
+  current.traits.forEach(function (trait) {
+    const tag = document.createElement("span");
+    tag.className = "trait-tag";
+    tag.textContent = trait;
+    traitRow.appendChild(tag);
+  });
+
   feedback.hidden = false;
   nextButton.disabled = false;
+  document.getElementById("score-count").textContent = "正解 " + score;
+  feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function getResultCopy() {
+  if (score === 5) {
+    return {
+      rank: "有田マスター",
+      message: "全問正解です。有田の決断力と、一途に関係を育てる姿勢をよく理解しています。"
+    };
+  }
+  if (score >= 3) {
+    return {
+      rank: "有田のよき理解者",
+      message: "かなり理解できています。計画だけでなく、相手と長く向き合う誠実さも有田らしさのポイントです。"
+    };
+  }
+  return {
+    rank: "これから有田研究員",
+    message: "まだ意外な一面がありそうです。5問の解説を見ながら、有田らしい考え方を振り返ってみましょう。"
+  };
 }
 
 function renderResult() {
-  document.getElementById("review-list").innerHTML = cases.map((item, index) => (
-    `<div class="review-item"><span>${index + 1}</span><div><strong>${item.title}</strong><small>${item.takeaway}</small></div></div>`
-  )).join("");
+  const copy = getResultCopy();
+  document.getElementById("result-score").textContent = score + " / " + questions.length;
+  document.getElementById("result-rank").textContent = copy.rank;
+  document.getElementById("result-message").textContent = copy.message;
+
+  const reviewList = document.getElementById("review-list");
+  reviewList.replaceChildren();
+
+  questions.forEach(function (question, index) {
+    const item = document.createElement("div");
+    const number = document.createElement("span");
+    const body = document.createElement("div");
+    const title = document.createElement("strong");
+    const takeaway = document.createElement("small");
+    const result = document.createElement("span");
+    const wasCorrect = results[index] && results[index].correct;
+
+    item.className = "review-item";
+    number.className = "review-number";
+    number.textContent = index + 1;
+    title.textContent = question.category;
+    takeaway.textContent = question.takeaway;
+    body.append(title, takeaway);
+    result.className = "review-result " + (wasCorrect ? "correct" : "incorrect");
+    result.textContent = wasCorrect ? "○" : "×";
+    result.setAttribute("aria-label", wasCorrect ? "正解" : "不正解");
+    item.append(number, body, result);
+    reviewList.appendChild(item);
+  });
+
   showOnly(resultPanel);
 }
 
 function startGame() {
-  currentCaseIndex = 0;
-  renderCase();
-  showOnly(gamePanel);
+  currentQuestionIndex = 0;
+  score = 0;
+  results = [];
+  renderQuestion();
+  showOnly(quizPanel);
 }
 
 startButton.addEventListener("click", startGame);
 restartButton.addEventListener("click", startGame);
-confirmLensesButton.addEventListener("click", openResponseStep);
-quitButton.addEventListener("click", () => { window.location.href = "../main.html"; });
-nextButton.addEventListener("click", () => {
-  if (!responseChosen) return;
-  if (currentCaseIndex === cases.length - 1) {
+backProfileButton.addEventListener("click", function () {
+  showOnly(introPanel);
+});
+nextButton.addEventListener("click", function () {
+  if (!answered) return;
+  if (currentQuestionIndex === questions.length - 1) {
     renderResult();
     return;
   }
-  currentCaseIndex += 1;
-  renderCase();
+  currentQuestionIndex += 1;
+  renderQuestion();
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
