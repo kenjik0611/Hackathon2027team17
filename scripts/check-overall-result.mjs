@@ -29,6 +29,7 @@ await import(pathToFileURL(STORE_PATH));
 
 const store = globalThis.OverallResultStore;
 assert.ok(store, "OverallResultStore must be exposed on globalThis");
+assert.equal(typeof store.buildAiCommunicationProfile, "function");
 
 function createMoralStore(completedCount, score = 72, axisPercents = null) {
   const themeSummaries = THEMES.map((theme, index) => ({
@@ -129,6 +130,8 @@ assert.equal(emptySnapshot.status, "partial");
 assert.equal(emptySnapshot.hasResults, false);
 assert.equal(emptySnapshot.incompleteItems.length, 10);
 assert.match(emptySnapshot.profile[0], /まだ診断結果がありません/);
+assert.match(emptySnapshot.aiProfile.summary.join("\n"), /会話傾向は推測できません/);
+assert.match(emptySnapshot.aiProfile.considerations[0].title, /推測せず本人へ確認/);
 
 const partialSnapshot = store.createSnapshot(createMoralStore(1, 0), createInsightStore(1, 0));
 assert.equal(partialSnapshot.status, "partial");
@@ -136,6 +139,8 @@ assert.equal(partialSnapshot.hasResults, true);
 assert.equal(partialSnapshot.moral.totalScore, 0, "A measured zero score must remain zero");
 assert.equal(partialSnapshot.insight.overallMatchPercent, 0, "A measured zero percent must remain zero");
 assert.equal(partialSnapshot.incompleteItems[0].status, "in_progress");
+assert.match(partialSnapshot.aiProfile.summary.join("\n"), /途中プロフィール/);
+assert.match(partialSnapshot.aiProfile.safeguards.join("\n"), /現在のユーザーの明示的な指示/);
 
 const completeSnapshot = store.createSnapshot(createMoralStore(5), createInsightStore(5));
 assert.equal(completeSnapshot.status, "complete");
@@ -158,6 +163,19 @@ const tiedAxesSnapshot = store.createSnapshot(
 );
 assert.match(tiedAxesSnapshot.profile.join("\n"), /常識・対応力がともに90点で、同率/);
 assert.match(tiedAxesSnapshot.profile.join("\n"), /情報管理・責任感が同率の振り返りポイント/);
+assert.match(tiedAxesSnapshot.aiProfile.summary.join("\n"), /常識・対応力.*判断材料/);
+assert.match(tiedAxesSnapshot.aiProfile.considerations.map((item) => item.title).join("\n"), /情報管理を補助的な確認項目/);
+
+const insightOnlySnapshot = store.createSnapshot(createMoralStore(0), createInsightStore(1));
+assert.match(insightOnlySnapshot.aiProfile.summary.join("\n"), /本人の性格や会話上の好みを直接示すものとしては扱いません/);
+assert.match(insightOnlySnapshot.aiProfile.considerations[0].detail, /本人の希望を質問/);
+
+const balancedAxesSnapshot = store.createSnapshot(
+  createMoralStore(5, 80, [70, 70, 70, 70, 70]),
+  createInsightStore(0)
+);
+assert.match(balancedAxesSnapshot.aiProfile.summary.join("\n"), /明確な優先差がなく/);
+assert.match(balancedAxesSnapshot.aiProfile.considerations[0].title, /一つの診断軸に決めつけない/);
 
 const sanitizedSnapshot = JSON.stringify(partialSnapshot);
 assert.doesNotMatch(sanitizedSnapshot, /anonymousId|answers|selectedValue|privateNote/);
@@ -169,27 +187,49 @@ assert.equal(store.quoteYamlString(specialYamlValue), JSON.stringify(specialYaml
 
 const generatedAt = new Date(2026, 7, 29, 12, 34, 56);
 const filename = store.buildFilename(generatedAt);
-assert.equal(filename, "kuukiyomi-result-20260829-1234.md");
+assert.equal(filename, "kuukiyomi-ai-profile-20260829-1234.md");
 
 const document = store.buildOkfMarkdown(partialSnapshot, generatedAt);
 assert.equal(document.charCodeAt(0), 45, "The file must begin with '-' and not a BOM");
 assert.ok(document.startsWith("---\n"));
-assert.match(document, /\n---\n\n# 空気読メーター 診断結果\n/);
-assert.match(document, /type: "Personal Diagnostic Result"/);
-assert.match(document, /generated:\n  by: "kuukiyomi-meter\/1"/);
+assert.match(document, /\n---\n\n# 空気読メーター AIコミュニケーションプロフィール\n/);
+assert.match(document, /type: "Personal Communication Profile"/);
+assert.match(document, /generated:\n  by: "kuukiyomi-meter\/2"/);
 assert.match(document, /  at: "\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}"/);
+assert.match(document, /status: "draft"/);
 assert.match(document, /result_status: "partial"/);
+assert.match(document, /profile_scope: "AI-assisted conversation"/);
+assert.match(document, /schema_version: 2/);
+assert.match(document, /sources:\n  - id: "diagnostic-result"\n    resource: "browser-local completed diagnostic results"/);
+assert.doesNotMatch(document, /^verified:/m, "The automatically generated profile must remain unverified");
 assert.match(document, /- 総合スコア: 0 \/ 100/);
 assert.match(document, /- 総合一致度: 0%/);
-assert.match(document, /## 完了状況/);
-assert.match(document, /## 未完了項目/);
-assert.match(document, /## モラル編/);
-assert.match(document, /## 男心編/);
-assert.match(document, /## 総合プロフィール/);
-assert.match(document, /## 利用上の注意/);
+assert.match(document, /## この文書の使い方/);
+assert.match(document, /## AI向け要約/);
+assert.match(document, /## 会話で考慮するとよいこと/);
+assert.match(document, /## AIが本人へ確認すべきこと/);
+assert.match(document, /## AIが断定・推測してはいけないこと/);
+assert.match(document, /## 根拠となる回答傾向/);
+assert.match(document, /## 診断結果の詳細（参考資料）/);
+assert.match(document, /### 完了状況/);
+assert.match(document, /### 未完了項目/);
+assert.match(document, /### モラル編/);
+assert.match(document, /### 男心編/);
+assert.match(document, /## プライバシーと限界/);
+assert.match(document, /現在のユーザーの明示的な指示と会話内の訂正を優先/);
+assert.match(document, /本人のMBTIではありません/);
+assert.doesNotMatch(document, /ユーザー本人のMBTIは[A-Z]{4}/);
+assert.ok(
+  document.indexOf("## AI向け要約") < document.indexOf("## 診断結果の詳細（参考資料）"),
+  "AI communication guidance must appear before diagnostic details"
+);
 assert.doesNotMatch(document, /\r/);
 assert.doesNotMatch(document, /\n- 総合点:/);
 assert.doesNotMatch(document, new RegExp(PRIVATE_MARKER));
+
+const completeDocument = store.buildOkfMarkdown(completeSnapshot, generatedAt);
+assert.match(completeDocument, /status: "stable"/);
+assert.match(completeDocument, /result_status: "complete"/);
 
 let savedKudoResult = null;
 globalThis.window = globalThis;

@@ -222,7 +222,7 @@
 
   function downloadResult() {
     elements.downloadButton.disabled = true;
-    elements.downloadStatus.textContent = "診断結果ファイルを作成しています。";
+    elements.downloadStatus.textContent = "AIコミュニケーションプロフィールを作成しています。";
 
     try {
       const snapshot = createCurrentSnapshot();
@@ -235,7 +235,7 @@
       const markdown = overallStore.buildOkfMarkdown(snapshot, generatedAt);
       const filename = overallStore.buildFilename(generatedAt);
       downloadTextFile(markdown, filename);
-      elements.downloadStatus.textContent = `${filename} を保存しました。外部への送信は行っていません。`;
+      elements.downloadStatus.textContent = `${filename} を端末へ保存しました。AIや外部サービスへの自動送信は行っていません。`;
     } catch (error) {
       elements.downloadStatus.textContent = "ファイルを作成できませんでした。ページを再読み込みして、もう一度お試しください。";
     } finally {
